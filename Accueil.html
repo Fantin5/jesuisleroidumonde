@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chef Elodie - Culinary Excellence</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --navy-dark: #1a2332;
+            --navy-primary: #2c3e50;
+            --navy-light: #34495e;
+            --white: #ffffff;
+            --black: #1c1c1c;
+            --gray-light: #f8f9fa;
+            --gray-medium: #6c757d;
+            --gray-dark: #495057;
+            --accent-gold: #d4af37;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.7;
+            color: var(--black);
+            background: var(--white);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Enhanced Header */
+        header {
+            background: var(--navy-dark);
+            color: var(--white);
+            padding: 1.5rem 0;
+            box-shadow: 0 2px 20px rgba(26, 35, 50, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--white);
+            letter-spacing: -0.5px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 3rem;
+        }
+
+        .nav-links a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.75rem 0;
+            position: relative;
+            transition: all 0.3s ease;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-gold);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--accent-gold);
+        }
+
+        /* Page Styles */
+        .page {
+            display: none;
+            min-height: calc(100vh - 80px);
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        /* Professional Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy-primary) 100%);
+            color: var(--white);
+            text-align: center;
+            padding: 8rem 0;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="25" cy="25" r="1" fill="%23ffffff10"/><circle cx="75" cy="75" r="1" fill="%23ffffff08"/></svg>') repeat;
+            opacity: 0.3;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            letter-spacing: -1px;
+            line-height: 1.1;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            max-width: 600px;
+            margin: 0 auto 2.5rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: var(--white);
+            color: var(--navy-dark);
+            padding: 1rem 2.5rem;
+            border: none;
+            border-radius: 0;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--accent-gold);
+            transition: left 0.3s ease;
+            z-index: -1;
+        }
+
+        .cta-button:hover::before {
+            left: 0;
+        }
+
+        .cta-button:hover {
+            color: var(--navy-dark);
+            transform: translateY(-2px);
+        }
+
+        /* Professional Welcome Section */
+        .welcome-section {
+            padding: 8rem 0;
+            background: var(--white);
+        }
+
+        .welcome-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6rem;
+            align-items: center;
+        }
+
+        .welcome-text h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.8rem;
+            color: var(--navy-dark);
+            margin-bottom: 2rem;
+            font-weight: 600;
+            line-height: 1.2;
+        }
+
+        .welcome-text p {
+            font-size: 1.1rem;
+            color: var(--gray-dark);
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .chef-photo {
+            position: relative;
+        }
+
+        .chef-photo img {
+            width: 100%;
+            height: auto;
+            border-radius: 0;
+            box-shadow: 0 20px 40px rgba(26, 35, 50, 0.15);
+            transition: all 0.4s ease;
+        }
+
+        .chef-photo::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            right: -20px;
+            bottom: -20px;
+            border: 2px solid var(--accent-gold);
+            z-index: -1;
+            transition: all 0.4s ease;
+        }
+
+        .chef-photo:hover::before {
+            top: 10px;
+            left: 10px;
+            right: -10px;
+            bottom: -10px;
+        }
+
+        .chef-photo:hover img {
+            transform: translateX(-10px) translateY(-10px);
+        }
+
+        /* Elegant Features Section */
+        .features-section {
+            padding: 8rem 0;
+            background: var(--gray-light);
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 5rem;
+        }
+
+        .section-title h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--navy-dark);
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .section-title p {
+            font-size: 1.1rem;
+            color: var(--gray-medium);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 3rem;
+        }
+
+        .feature {
+            background: var(--white);
+            padding: 3rem 2rem;
+            text-align: center;
+            border-radius: 0;
+            box-shadow: 0 10px 30px rgba(26, 35, 50, 0.08);
+            transition: all 0.3s ease;
+            border-top: 3px solid transparent;
+        }
+
+        .feature:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(26, 35, 50, 0.12);
+            border-top-color: var(--accent-gold);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--navy-primary);
+        }
+
+        .feature h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            color: var(--navy-dark);
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .feature p {
+            color: var(--gray-dark);
+            line-height: 1.7;
+        }
+
+        /* Professional Gallery */
+        .gallery-section {
+            padding: 8rem 0;
+            background: var(--white);
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .gallery-item {
+            background: var(--white);
+            border-radius: 0;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(26, 35, 50, 0.1);
+            transition: all 0.4s ease;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(26, 35, 50, 0.15);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .gallery-item-content {
+            padding: 2rem;
+        }
+
+        .gallery-item h3 {
+            font-family: 'Playfair Display', serif;
+            color: var(--navy-dark);
+            margin-bottom: 0.5rem;
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .gallery-item p {
+            color: var(--gray-dark);
+            line-height: 1.6;
+        }
+
+        /* About Page */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 4rem;
+            padding: 4rem 0;
+        }
+
+        .about-photo img {
+            width: 100%;
+            border-radius: 0;
+            box-shadow: 0 20px 40px rgba(26, 35, 50, 0.15);
+        }
+
+        .about-text h2 {
+            font-family: 'Playfair Display', serif;
+            color: var(--navy-dark);
+            margin-bottom: 2rem;
+            font-size: 2.2rem;
+            font-weight: 600;
+        }
+
+        .about-text h3 {
+            font-family: 'Playfair Display', serif;
+            color: var(--navy-primary);
+            margin: 2.5rem 0 1rem 0;
+            font-size: 1.4rem;
+            font-weight: 600;
+        }
+
+        .about-text p {
+            margin-bottom: 1.5rem;
+            color: var(--gray-dark);
+            font-size: 1.05rem;
+            line-height: 1.8;
+        }
+
+        /* Contact Page */
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            padding: 4rem 0;
+        }
+
+        .contact-form,
+        .contact-info {
+            background: var(--white);
+            padding: 3rem;
+            border-radius: 0;
+            box-shadow: 0 10px 30px rgba(26, 35, 50, 0.08);
+        }
+
+        .contact-form h3,
+        .contact-info h3 {
+            font-family: 'Playfair Display', serif;
+            color: var(--navy-dark);
+            margin-bottom: 2rem;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--navy-dark);
+            font-weight: 500;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid var(--gray-light);
+            border-radius: 0;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: var(--white);
+            color: var(--black);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--navy-primary);
+            box-shadow: 0 0 0 3px rgba(44, 62, 80, 0.1);
+        }
+
+        .btn {
+            background: var(--navy-dark);
+            color: var(--white);
+            padding: 1rem 2.5rem;
+            border: none;
+            border-radius: 0;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--accent-gold);
+            transition: left 0.3s ease;
+            z-index: -1;
+        }
+
+        .btn:hover::before {
+            left: 0;
+        }
+
+        .btn:hover {
+            color: var(--navy-dark);
+            transform: translateY(-2px);
+        }
+
+        .contact-info p {
+            margin-bottom: 1.5rem;
+            color: var(--gray-dark);
+            line-height: 1.7;
+        }
+
+        /* Legal Page */
+        .legal-content {
+            background: var(--white);
+            padding: 3rem;
+            border-radius: 0;
+            box-shadow: 0 10px 30px rgba(26, 35, 50, 0.08);
+            margin: 4rem 0;
+        }
+
+        .legal-content h2 {
+            font-family: 'Playfair Display', serif;
+            color: var(--navy-dark);
+            margin-bottom: 2rem;
+            font-size: 2rem;
+            font-weight: 600;
+        }
+
+        .legal-content h3 {
+            font-family: 'Playfair Display', serif;
+            color: var(--navy-primary);
+            margin: 2rem 0 1rem 0;
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .legal-content p {
+            color: var(--gray-dark);
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+        }
+
+        /* Professional Footer */
+        footer {
+            background: var(--navy-dark);
+            color: var(--white);
+            text-align: center;
+            padding: 3rem 0;
+            margin-top: 0;
+        }
+
+        footer p {
+            opacity: 0.8;
+            font-size: 0.95rem;
+        }
+
+        /* Page Headers */
+        .page-header {
+            text-align: center;
+            padding: 6rem 0 4rem;
+            background: var(--gray-light);
+        }
+
+        .page-header h1 {
+            font-family: 'Playfair Display', serif;
+            color: var(--navy-dark);
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .page-header p {
+            color: var(--gray-medium);
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 1rem;
+            }
+
+            .nav-links {
+                gap: 1.5rem;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .welcome-grid,
+            .about-content,
+            .contact-content {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+            }
+
+            .page-header h1 {
+                font-size: 2.2rem;
+            }
+
+            .section-title h2 {
+                font-size: 2rem;
+            }
+
+            .welcome-text h2 {
+                font-size: 2.2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav-links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .logo {
+                font-size: 1.8rem;
+            }
+
+            .hero {
+                padding: 4rem 0;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo">Chef Elodie</div>
+            <ul class="nav-links">
+                <li><a href="#" onclick="showPage('home')" class="active">Home</a></li>
+                <li><a href="#" onclick="showPage('gallery')">Gallery</a></li>
+                <li><a href="#" onclick="showPage('about')">About</a></li>
+                <li><a href="#" onclick="showPage('contact')">Contact</a></li>
+                <li><a href="#" onclick="showPage('legal')">Legal</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- HOME PAGE -->
+    <div id="home" class="page active">
+        <div class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h1>Culinary Excellence</h1>
+                    <p>Where passion meets precision in every carefully crafted dish</p>
+                    <a href="#" onclick="showPage('contact')" class="cta-button">Book Consultation</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="welcome-section">
+            <div class="container">
+                <div class="welcome-grid">
+                    <div class="welcome-text">
+                        <h2>Artistry in Every Dish</h2>
+                        <p>With decades of culinary expertise, I craft extraordinary dining experiences that celebrate the finest ingredients and traditional techniques.</p>
+                        <p>Each dish tells a story of passion, precision, and unwavering commitment to culinary excellence.</p>
+                        <p>From intimate gatherings to grand celebrations, discover the art of exceptional cuisine.</p>
+                    </div>
+                    <div class="chef-photo">
+                        <img src="../photos/photom.png" alt="Chef Elodie">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="features-section">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Signature Services</h2>
+                    <p>Exceptional culinary experiences crafted with precision and passion</p>
+                </div>
+                <div class="features">
+                    <div class="feature">
+                        <div class="feature-icon">🍽️</div>
+                        <h3>Bespoke Menus</h3>
+                        <p>Meticulously crafted menus tailored to your vision, preferences, and dietary requirements with uncompromising attention to detail.</p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">🌿</div>
+                        <h3>Premium Sourcing</h3>
+                        <p>Carefully selected seasonal ingredients from trusted local producers, ensuring exceptional quality and sustainable practices.</p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">👨‍🍳</div>
+                        <h3>Master Craftsmanship</h3>
+                        <p>Decades of culinary expertise combined with innovative techniques and impeccable presentation for unforgettable experiences.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- GALLERY PAGE -->
+    <div id="gallery" class="page">
+        <div class="page-header">
+            <div class="container">
+                <h1>Culinary Portfolio</h1>
+                <p>A showcase of artisanal dishes crafted with passion and precision</p>
+            </div>
+        </div>
+
+        <div class="gallery-section">
+            <div class="container">
+                <div class="gallery-grid">
+                    <div class="gallery-item">
+                        <img src="../photos/poulet.jpg" alt="Artisan Gnocchi with Seasonal Vegetables">
+                        <div class="gallery-item-content">
+                            <h3>Artisan Gnocchi with Seasonal Vegetables</h3>
+                            <p>Handcrafted potato gnocchi with roasted seasonal vegetables, fresh herbs, and a delicate butter sauce, served in a traditional cast iron pan.</p>
+                        </div>
+                    </div>
+
+                    <div class="gallery-item">
+                        <img src="../photos/choco.jpg" alt="Decadent Chocolate Muffins">
+                        <div class="gallery-item-content">
+                            <h3>Decadent Chocolate Muffins</h3>
+                            <p>Rich, moist chocolate muffins made with premium cocoa and dark chocolate chips, baked to perfection with a tender crumb.</p>
+                        </div>
+                    </div>
+
+                    <div class="gallery-item">
+                        <img src="../photos/etalage.jpg" alt="Farm-Fresh Vegetables">
+                        <div class="gallery-item-content">
+                            <h3>Farm-to-Table Fresh Vegetables</h3>
+                            <p>A vibrant selection of locally sourced vegetables, showcasing the beauty and natural flavors of seasonal produce from our trusted farmers.</p>
+                        </div>
+                    </div>
+
+                    <div class="gallery-item">
+                        <img src="../photos/poele.jpg" alt="Perfectly Grilled Steak">
+                        <div class="gallery-item-content">
+                            <h3>Perfectly Grilled Steak</h3>
+                            <p>Premium cut steak grilled to perfection with aromatic herbs and butter, achieving the ideal sear and tenderness for a memorable dining experience.</p>
+                        </div>
+                    </div>
+
+                    <div class="gallery-item">
+                        <img src="../photos/plat.jpg" alt="Nutritious Power Bowl">
+                        <div class="gallery-item-content">
+                            <h3>Nutritious Power Bowl</h3>
+                            <p>A colorful and nutritious bowl featuring fresh greens, seasoned protein, vibrant vegetables, and aromatic herbs for a healthy, satisfying meal.</p>
+                        </div>
+                    </div>
+
+                    <div class="gallery-item">
+                        <img src="../photos/pancakes.jpg" alt="Fluffy Pancakes with Berries">
+                        <div class="gallery-item-content">
+                            <h3>Fluffy Pancakes with Fresh Berries</h3>
+                            <p>Light and fluffy pancakes topped with fresh seasonal berries, delicate garnishes, and a drizzle of pure maple syrup for the perfect breakfast.</p>
+                        </div>
+                    </div>
+
+                    <div class="gallery-item">
+                        <img src="../photos/platviande.jpg" alt="Herb-Crusted Grilled Meat">
+                        <div class="gallery-item-content">
+                            <h3>Herb-Crusted Grilled Specialties</h3>
+                            <p>Expertly grilled meats with fresh herb crusts and aromatic seasonings, showcasing traditional cooking techniques with modern presentation.</p>
+                        </div>
+                    </div>
+
+                    <div class="gallery-item">
+                        <img src="../photos/carotte.jpg" alt="Fresh Market Carrots">
+                        <div class="gallery-item-content">
+                            <h3>Market Fresh Carrots</h3>
+                            <p>Vibrant, farm-fresh carrots with their greens still attached, representing our commitment to using the finest seasonal ingredients in our dishes.</p>
+                        </div>
+                    </div>
+
+                    <div class="gallery-item">
+                        <img src="../photos/champignons.jpg" alt="Gourmet Mushrooms">
+                        <div class="gallery-item-content">
+                            <h3>Gourmet Wild Mushrooms</h3>
+                            <p>Fresh wild mushrooms carefully selected and prepared to highlight their natural earthy flavors and unique textures in our seasonal dishes.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ABOUT PAGE -->
+    <div id="about" class="page">
+        <div class="container">
+            <div class="page-header">
+                <h1>About Chef Elodie</h1>
+                <p>Discover the passion and expertise behind every dish</p>
+            </div>
+
+            <div class="about-content">
+                <div class="about-photo">
+                    <img src="../photos/photoM2.png" alt="Chef Elodie - Professional Portrait">
+                </div>
+                <div class="about-text">
+                    <h2>Culinary Journey</h2>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                    
+                    <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                    
+                    <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+                    
+                    <h3>Culinary Philosophy</h3>
+                    <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit.</p>
+                    
+                    <h3>Experience & Training</h3>
+                    <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi.</p>
+                    
+                    <h3>Specialties & Approach</h3>
+                    <p>Similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio nam libero tempore cum soluta nobis est eligendi optio cumque nihil impedit quo minus.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CONTACT PAGE -->
+    <div id="contact" class="page">
+        <div class="container">
+            <div class="page-header">
+                <h1>Get In Touch</h1>
+                <p>Ready to create something extraordinary together? Let's discuss your culinary needs</p>
+            </div>
+
+            <div class="contact-content">
+                <div class="contact-form">
+                    <h3>Send a Message</h3>
+                    <form onsubmit="handleSubmit(event)">
+                        <div class="form-group">
+                            <label for="name">Full Name</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" name="phone">
+                        </div>
+                        <div class="form-group">
+                            <label for="event-type">Event Type</label>
+                            <input type="text" id="event-type" name="event-type" placeholder="e.g., Dinner party, Wedding, Corporate event">
+                        </div>
+                        <div class="form-group">
+                            <label for="guests">Number of Guests</label>
+                            <input type="number" id="guests" name="guests" placeholder="How many people?">
+                        </div>
+                        <div class="form-group">
+                            <label for="date">Preferred Date</label>
+                            <input type="date" id="date" name="date">
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" rows="5" placeholder="Tell me about your event, dietary preferences, special requirements, and any specific dishes you'd like..."></textarea>
+                        </div>
+                        <button type="submit" class="btn">Send Message</button>
+                    </form>
+                </div>
+
+                <div class="contact-info">
+                    <h3>Contact Information</h3>
+                    <p><strong>Email:</strong><br>chef.elodie@example.com</p>
+                    <p><strong>Phone:</strong><br>+33 (0) 1 23 45 67 89</p>
+                    <p><strong>Response Time:</strong><br>I typically respond within 24 hours to all inquiries</p>
+                    
+                    <h3>Service Areas</h3>
+                    <p>Île-de-France region and surrounding areas. Travel arrangements can be made for special events outside the region.</p>
+                    
+                    <h3>Booking Information</h3>
+                    <p>Please contact me at least 2 weeks in advance for optimal menu planning and preparation, though I'll accommodate shorter notice when possible.</p>
+                    
+                    <h3>Services Offered</h3>
+                    <p>• Private dinner parties<br>
+                    • Corporate events<br>
+                    • Wedding catering<br>
+                    • Cooking classes<br>
+                    • Menu consultation<br>
+                    • Special dietary accommodations</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- LEGAL PAGE -->
+    <div id="legal" class="page">
+        <div class="container">
+            <div class="page-header">
+                <h1>Legal Mentions</h1>
+                <p>Terms of service and legal information</p>
+            </div>
+
+            <div class="legal-content">
+                <h2>Legal Information</h2>
+                
+                <h3>Website Owner</h3>
+                <p>Chef Elodie<br>
+                [Business Address to be added]<br>
+                [City, Postal Code]<br>
+                Email: chef.elodie@example.com<br>
+                Phone: +33 (0) 1 23 45 67 89<br>
+                Business Registration: [SIRET number to be added]</p>
+                
+                <h3>Privacy Policy</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+                
+                <h3>Data Collection</h3>
+                <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
+                
+                <h3>Terms of Service</h3>
+                <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
+                
+                <h3>Cookie Policy</h3>
+                <p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.</p>
+                
+                <h3>Copyright & Intellectual Property</h3>
+                <p>Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur. Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur.</p>
+                
+                <h3>Liability & Disclaimer</h3>
+                <p>Vel illum qui dolorem eum fugiat quo voluptas nulla pariatur. At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint.</p>
+                
+                <h3>Governing Law</h3>
+                <p>Occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Chef Elodie. All rights reserved. | Website created with passion for culinary excellence.</p>
+        </div>
+    </footer>
+
+    <script>
+        function showPage(pageId) {
+            // Hide all pages
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => page.classList.remove('active'));
+            
+            // Show selected page
+            document.getElementById(pageId).classList.add('active');
+            
+            // Update navigation
+            const navLinks = document.querySelectorAll('.nav-links a');
+            navLinks.forEach(link => link.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+
+        function handleSubmit(event) {
+            event.preventDefault();
+            alert('Thank you for your message! I will get back to you within 24 hours to discuss your culinary needs.');
+            event.target.reset();
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            showPage('home');
+        });
+    </script>
+</body>
+</html>
