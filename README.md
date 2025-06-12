@@ -6,5 +6,3 @@ Photos unused:
 -legume2
 -plante
 -poulet
-
-<!-- t -->
