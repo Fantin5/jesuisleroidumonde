@@ -1,0 +1,1533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Chef Elodie</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css">
+    <style>
+        :root {
+            --navy-dark: #1a2332;
+            --navy-primary: #2c3e50;
+            --white: #ffffff;
+            --black: #1c1c1c;
+            --gray-light: #f8f9fa;
+            --gray-medium: #6c757d;
+            --gray-dark: #495057;
+            --accent-gold: #d4af37;
+            --error-color: #dc3545;
+            --success-color: #28a745;
+            --warning-color: #ffc107;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--black);
+            background: var(--gray-light);
+        }
+
+        .header {
+            background: var(--navy-dark);
+            color: var(--white);
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(26, 35, 50, 0.1);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .btn-primary {
+            background: var(--accent-gold);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background: #b8972e;
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: var(--gray-medium);
+            color: var(--white);
+        }
+
+        .btn-secondary:hover {
+            background: var(--gray-dark);
+        }
+
+        .btn-danger {
+            background: var(--error-color);
+            color: var(--white);
+        }
+
+        .btn-danger:hover {
+            background: #c82333;
+        }
+
+        .btn-success {
+            background: var(--success-color);
+            color: var(--white);
+        }
+
+        .btn-success:hover {
+            background: #218838;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .page-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--navy-dark);
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .dashboard-section {
+            background: var(--white);
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 15px rgba(26, 35, 50, 0.1);
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: var(--navy-dark);
+            margin-bottom: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            margin-bottom: 0.5rem;
+            color: var(--primary-dark);
+            font-weight: 500;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            padding: 0.75rem;
+            border: 2px solid var(--gray-light);
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-main);
+            box-shadow: 0 0 0 3px rgba(139, 69, 19, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .file-upload {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .file-upload input[type="file"] {
+            position: absolute;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+
+        .file-upload-label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 2rem;
+            border: 2px dashed var(--gray-medium);
+            border-radius: 5px;
+            background: var(--gray-light);
+            color: var(--gray-dark);
+            transition: all 0.3s ease;
+        }
+
+        .file-upload:hover .file-upload-label {
+            border-color: var(--navy-primary);
+            background: #f0f0f0;
+        }
+
+        .image-preview {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .image-preview-item {
+            position: relative;
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .image-preview-item img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+
+        .image-preview-item .remove-image {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: var(--error-color);
+            color: var(--white);
+            border: none;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+        }
+
+        .meals-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .meal-card {
+            background: var(--white);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(45, 24, 16, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .meal-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .meal-card-image {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .meal-card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .meal-card-content {
+            padding: 1.5rem;
+        }
+
+        .meal-card-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            color: var(--primary-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .meal-card-description {
+            color: var(--gray-dark);
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .meal-card-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .message {
+            padding: 1rem;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        .message.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+
+        .modal-content {
+            background-color: var(--white);
+            margin: 5% auto;
+            padding: 2rem;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-header h3 {
+            font-family: 'Playfair Display', serif;
+            color: var(--navy-dark);
+            margin: 0;
+        }
+
+        .close {
+            color: var(--gray-medium);
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            color: var(--black);
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .spinner {
+            border: 4px solid var(--gray-light);
+            border-top: 4px solid var(--navy-primary);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Crop Modal Styles */
+        .crop-modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.9);
+        }
+
+        .crop-modal-content {
+            background-color: var(--white);
+            margin: 2% auto;
+            padding: 2rem;
+            border-radius: 10px;
+            width: 95%;
+            max-width: 900px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .crop-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .crop-header h3 {
+            font-family: 'Playfair Display', serif;
+            color: var(--navy-dark);
+            margin: 0;
+            font-size: 1.5rem;
+        }
+
+        .crop-format-selector {
+            margin-bottom: 1.5rem;
+        }
+
+        .crop-format-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .crop-format-btn {
+            padding: 1rem;
+            border: 2px solid var(--gray-light);
+            background: var(--white);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .crop-format-btn.active {
+            border-color: var(--accent-gold);
+            background: #fff9e6;
+            color: var(--navy-dark);
+        }
+
+        .crop-format-btn:hover {
+            border-color: var(--navy-primary);
+            transform: translateY(-2px);
+        }
+
+        .format-name {
+            font-weight: 600;
+            font-size: 1rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .format-ratio {
+            color: var(--gray-medium);
+            font-size: 0.85rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .format-use {
+            color: var(--gray-dark);
+            font-size: 0.75rem;
+            font-style: italic;
+        }
+
+        .crop-container {
+            max-width: 100%;
+            height: 400px;
+            margin: 1rem 0;
+            border: 1px solid var(--gray-light);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .crop-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 1.5rem;
+        }
+
+        .crop-queue-info {
+            text-align: center;
+            margin-bottom: 1rem;
+            padding: 0.75rem;
+            background: var(--gray-light);
+            border-radius: 5px;
+            color: var(--gray-dark);
+        }
+
+        .enhanced-file-upload {
+            position: relative;
+        }
+
+        .enhanced-file-upload .file-upload-label {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            padding: 3rem 2rem;
+            border: 3px dashed var(--navy-primary);
+            border-radius: 10px;
+            background: var(--gray-light);
+            color: var(--navy-dark);
+            transition: all 0.3s ease;
+            min-height: 150px;
+        }
+
+        .enhanced-file-upload:hover .file-upload-label,
+        .enhanced-file-upload .file-upload-label.dragover {
+            border-color: var(--accent-gold);
+            background: #fff9e6;
+            transform: scale(1.02);
+        }
+
+        .upload-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .upload-text {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+
+        .upload-hint {
+            font-size: 0.85rem;
+            color: var(--gray-medium);
+        }
+
+        .cropped-images-preview {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .cropped-image-item {
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            background: var(--white);
+        }
+
+        .cropped-image-item img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+
+        .cropped-image-info {
+            padding: 0.75rem;
+            text-align: center;
+            background: var(--white);
+        }
+
+        .cropped-image-format {
+            font-weight: 600;
+            color: var(--navy-dark);
+            font-size: 0.9rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .cropped-image-size {
+            color: var(--gray-medium);
+            font-size: 0.8rem;
+        }
+
+        .cropped-image-remove {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: var(--error-color);
+            color: var(--white);
+            border: none;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .cropped-image-remove:hover {
+            background: #c82333;
+            transform: scale(1.1);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .header-content {
+                padding: 0 1rem;
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .meals-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .modal-content {
+                margin: 10% auto;
+                width: 95%;
+            }
+            
+            .crop-modal-content {
+                margin: 5% auto;
+                width: 98%;
+                padding: 1rem;
+            }
+            
+            .crop-format-buttons {
+                grid-template-columns: 1fr;
+            }
+            
+            .cropped-images-preview {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+        }
+
+        /* Language Toggle Styles for Admin */
+        .language-toggle {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 0.3rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .language-toggle:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .language-option {
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            color: rgba(255,255,255,0.7);
+        }
+
+        .language-option.active {
+            background: var(--accent-gold);
+            color: var(--white);
+        }
+
+        .language-option:not(.active):hover {
+            color: var(--white);
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo" data-en="Chef Elodie - Admin" data-fr="Chef Élodie - Admin">Chef Elodie - Admin</div>
+            <div class="header-actions">
+                <div class="language-toggle" onclick="toggleLanguage()">
+                    <div class="language-option active" id="lang-en">EN</div>
+                    <div class="language-option" id="lang-fr">FR</div>
+                </div>
+                <a href="index.html" class="btn btn-secondary" target="_blank" data-en="View Site" data-fr="Voir le Site">View Site</a>
+                <button onclick="logout()" class="btn btn-danger" data-en="Logout" data-fr="Déconnexion">Logout</button>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <h1 class="page-title" data-en="Meal Management Dashboard" data-fr="Tableau de Bord de Gestion des Plats">Meal Management Dashboard</h1>
+        
+        <div id="message" class="message"></div>
+        
+        <!-- Add/Edit Meal Section -->
+        <div class="dashboard-section">
+            <div class="section-title">
+                <span id="formTitle" data-en="Add New Meal" data-fr="Ajouter un Nouveau Plat">Add New Meal</span>
+                <button id="cancelEdit" class="btn btn-secondary" onclick="cancelEdit()" style="display: none;" data-en="Cancel Edit" data-fr="Annuler la Modification">Cancel Edit</button>
+            </div>
+            
+            <form id="mealForm" enctype="multipart/form-data">
+                <input type="hidden" id="mealId" name="mealId">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="title" data-en="Meal Title" data-fr="Titre du Plat">Meal Title</label>
+                        <input type="text" id="title" name="title" required placeholder="" data-placeholder-en="Enter meal title" data-placeholder-fr="Entrez le titre du plat">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="description" data-en="Description" data-fr="Description">Description</label>
+                        <textarea id="description" name="description" required placeholder="" data-placeholder-en="Describe the meal, ingredients, and what makes it special..." data-placeholder-fr="Décrivez le plat, les ingrédients et ce qui le rend spécial..."></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="images" data-en="Images" data-fr="Images">Images</label>
+                        <div class="enhanced-file-upload file-upload">
+                            <input type="file" id="images" name="images[]" multiple accept="image/*" style="position: absolute; opacity: 0; width: 100%; height: 100%; cursor: pointer; z-index: 2;">
+                            <div class="file-upload-label">
+                                <div class="upload-icon">📸</div>
+                                <div class="upload-text" data-en="Click to select images or drag and drop" data-fr="Cliquez pour sélectionner des images ou glissez-déposez">Click to select images or drag and drop</div>
+                                <div class="upload-hint" data-en="Multiple selection • JPG, PNG, GIF, WebP • Images will be cropped for gallery" data-fr="Sélection multiple • JPG, PNG, GIF, WebP • Les images seront recadrées pour la galerie">Multiple selection • JPG, PNG, GIF, WebP • Images will be cropped for gallery</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Cropped Images Preview -->
+                        <div id="croppedImagesPreview" class="cropped-images-preview"></div>
+                        
+                        <!-- Original Image Preview (for existing images when editing) -->
+                        <div id="imagePreview" class="image-preview"></div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-success" id="submitBtn">
+                        <span id="submitText" data-en="Add Meal" data-fr="Ajouter le Plat">Add Meal</span>
+                        <div id="submitLoading" class="loading" style="display: none;">
+                            <div class="spinner"></div>
+                        </div>
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Existing Meals Section -->
+        <div class="dashboard-section">
+            <div class="section-title">
+                <span data-en="Existing Meals" data-fr="Plats Existants">Existing Meals</span>
+                <button onclick="loadMeals()" class="btn btn-primary" data-en="Refresh" data-fr="Actualiser">Refresh</button>
+            </div>
+            
+            <div id="loadingMeals" class="loading">
+                <div class="spinner"></div>
+                <p data-en="Loading meals..." data-fr="Chargement des plats...">Loading meals...</p>
+            </div>
+            
+            <div id="mealsContainer" class="meals-grid">
+                <!-- Meals will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Crop Modal -->
+    <div id="cropModal" class="crop-modal">
+        <div class="crop-modal-content">
+            <div class="crop-header">
+                <h3 id="cropTitle" data-en="Crop Photo for Gallery" data-fr="Recadrer la Photo pour la Galerie">Crop Photo for Gallery</h3>
+                <span class="close" onclick="closeCropModal()">&times;</span>
+            </div>
+            
+            <div id="cropQueueInfo" class="crop-queue-info">
+                Processing image 1 of 1
+            </div>
+            
+            <div class="crop-format-selector">
+                <h4 style="margin-bottom: 1rem; color: var(--navy-dark);" data-en="Choose Crop Format" data-fr="Choisir le Format de Recadrage">Choose Crop Format</h4>
+                <div class="crop-format-buttons">
+                    <div class="crop-format-btn active" data-ratio="1.333" data-name="Gallery" data-width="800" data-height="600">
+                        <div class="format-name" data-en="📷 Gallery Standard" data-fr="📷 Galerie Standard">📷 Gallery Standard</div>
+                        <div class="format-ratio" data-en="4:3 Aspect Ratio" data-fr="Ratio 4:3">4:3 Aspect Ratio</div>
+                        <div class="format-use" data-en="Optimized for main gallery display" data-fr="Optimisé pour l'affichage principal de la galerie">Optimized for main gallery display</div>
+                    </div>
+                    <div class="crop-format-btn" data-ratio="1.777" data-name="Widescreen" data-width="1200" data-height="675">
+                        <div class="format-name">🖥️ Widescreen</div>
+                        <div class="format-ratio">16:9 Aspect Ratio</div>
+                        <div class="format-use">Perfect for hero images</div>
+                    </div>
+                    <div class="crop-format-btn" data-ratio="1" data-name="Square" data-width="800" data-height="800">
+                        <div class="format-name">⬜ Square</div>
+                        <div class="format-ratio">1:1 Aspect Ratio</div>
+                        <div class="format-use">Great for thumbnails</div>
+                    </div>
+                    <div class="crop-format-btn" data-ratio="0" data-name="Free" data-width="800" data-height="600">
+                        <div class="format-name">🆓 Free Crop</div>
+                        <div class="format-ratio">Any Aspect Ratio</div>
+                        <div class="format-use">Custom proportions</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="crop-container">
+                <img id="cropImage" style="max-width: 100%; display: block;">
+            </div>
+            
+            <div class="crop-actions">
+                <button type="button" class="btn btn-secondary" onclick="skipCurrentImage()" data-en="⏭️ Skip This Image" data-fr="⏭️ Ignorer Cette Image">⏭️ Skip This Image</button>
+                <button type="button" class="btn btn-secondary" onclick="closeCropModal()" data-en="❌ Cancel All" data-fr="❌ Tout Annuler">❌ Cancel All</button>
+                <button type="button" class="btn btn-primary" onclick="applyCrop()" data-en="✅ Apply Crop & Continue" data-fr="✅ Appliquer le Recadrage et Continuer">✅ Apply Crop & Continue</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div id="deleteModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 data-en="Confirm Delete" data-fr="Confirmer la Suppression">Confirm Delete</h3>
+                <span class="close" onclick="closeDeleteModal()">&times;</span>
+            </div>
+            <p data-en="Are you sure you want to delete this meal? This action cannot be undone." data-fr="Êtes-vous sûr de vouloir supprimer ce plat ? Cette action ne peut pas être annulée.">Are you sure you want to delete this meal? This action cannot be undone.</p>
+            <div style="margin-top: 1.5rem; display: flex; gap: 1rem; justify-content: flex-end;">
+                <button onclick="closeDeleteModal()" class="btn btn-secondary" data-en="Cancel" data-fr="Annuler">Cancel</button>
+                <button id="confirmDelete" class="btn btn-danger" data-en="Delete" data-fr="Supprimer">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
+    <script>
+        let selectedImages = [];
+        let editingMealId = null;
+        let existingImages = [];
+        let cropper = null;
+        let cropQueue = [];
+        let currentCropIndex = 0;
+        let currentCropFormat = null;
+        let croppedImages = [];
+        let currentLanguage = 'en';
+
+        // Check authentication on page load
+        window.addEventListener('load', function() {
+            checkAuth();
+            loadMeals();
+            setupDragDrop();
+            setDefaultCropFormat();
+            
+            // Load saved language preference
+            const savedLanguage = localStorage.getItem('preferred-language') || 'en';
+            if (savedLanguage !== 'en') {
+                currentLanguage = savedLanguage;
+                updateLanguageToggle();
+                translatePage();
+            }
+        });
+
+        async function checkAuth() {
+            try {
+                const response = await fetch('api.php?action=check_auth');
+                const result = await response.json();
+                if (!result.authenticated) {
+                    window.location.href = 'admin.html';
+                }
+            } catch (error) {
+                console.error('Auth check failed:', error);
+                window.location.href = 'admin.html';
+            }
+        }
+
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                fetch('api.php', {
+                    method: 'POST',
+                    body: new FormData().append('action', 'logout')
+                }).finally(() => {
+                    window.location.href = 'admin.html';
+                });
+            }
+        }
+
+        // Enhanced file handling with click and drag support
+        function triggerFileInput() {
+            document.getElementById('images').click();
+        }
+
+        // Handle file selection
+        document.getElementById('images').addEventListener('change', function(e) {
+            const files = Array.from(e.target.files);
+            const imageFiles = files.filter(file => file.type.startsWith('image/'));
+            
+            if (imageFiles.length === 0) {
+                showMessage('Please select valid image files.', 'error');
+                return;
+            }
+
+            // Start crop workflow
+            startCropWorkflow(imageFiles);
+        });
+
+        // Drag and drop enhancement
+        function setupDragDrop() {
+            const fileUpload = document.querySelector('.enhanced-file-upload');
+            const fileUploadLabel = document.querySelector('.file-upload-label');
+            const fileInput = document.getElementById('images');
+
+            // Prevent default drag behaviors
+            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                fileUpload.addEventListener(eventName, preventDefaults, false);
+                document.body.addEventListener(eventName, preventDefaults, false);
+            });
+
+            // Highlight drop area when item is dragged over it
+            ['dragenter', 'dragover'].forEach(eventName => {
+                fileUpload.addEventListener(eventName, highlight, false);
+            });
+
+            ['dragleave', 'drop'].forEach(eventName => {
+                fileUpload.addEventListener(eventName, unhighlight, false);
+            });
+
+            // Handle dropped files
+            fileUpload.addEventListener('drop', handleDrop, false);
+
+            // Remove the conflicting click handler - let the file input handle clicks naturally
+        }
+
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+
+        function highlight(e) {
+            document.querySelector('.file-upload-label').classList.add('dragover');
+        }
+
+        function unhighlight(e) {
+            document.querySelector('.file-upload-label').classList.remove('dragover');
+        }
+
+        function handleDrop(e) {
+            const dt = e.dataTransfer;
+            const files = Array.from(dt.files);
+            const imageFiles = files.filter(file => file.type.startsWith('image/'));
+            
+            if (imageFiles.length > 0) {
+                // Update the file input with dropped files
+                const fileInput = document.getElementById('images');
+                const dataTransfer = new DataTransfer();
+                imageFiles.forEach(file => dataTransfer.items.add(file));
+                fileInput.files = dataTransfer.files;
+                
+                startCropWorkflow(imageFiles);
+            } else {
+                showMessage('Please drop valid image files.', 'error');
+            }
+        }
+
+        function startCropWorkflow(files) {
+            cropQueue = files;
+            currentCropIndex = 0;
+            setDefaultCropFormat();
+            
+            if (cropQueue.length > 0) {
+                openCropModal(cropQueue[currentCropIndex]);
+            }
+        }
+
+        function setDefaultCropFormat() {
+            currentCropFormat = {
+                ratio: 1.333,
+                name: 'Gallery',
+                width: 800,
+                height: 600
+            };
+        }
+
+        function openCropModal(file) {
+            const modal = document.getElementById('cropModal');
+            const cropImage = document.getElementById('cropImage');
+            const cropTitle = document.getElementById('cropTitle');
+            const queueInfo = document.getElementById('cropQueueInfo');
+            
+            // Update UI
+            cropTitle.textContent = `Crop Photo for Gallery Display`;
+            queueInfo.textContent = `Processing image ${currentCropIndex + 1} of ${cropQueue.length}`;
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                cropImage.src = e.target.result;
+                modal.style.display = 'block';
+                
+                cropImage.onload = function() {
+                    initializeCropper();
+                };
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function initializeCropper() {
+            if (cropper) {
+                cropper.destroy();
+            }
+            
+            const cropImage = document.getElementById('cropImage');
+            const cropperOptions = {
+                viewMode: 1,
+                responsive: true,
+                restore: false,
+                guides: true,
+                center: true,
+                highlight: false,
+                cropBoxMovable: true,
+                cropBoxResizable: true,
+                toggleDragModeOnDblclick: false,
+                minCropBoxWidth: 100,
+                minCropBoxHeight: 75
+            };
+
+            // Set aspect ratio if not free crop
+            if (currentCropFormat.ratio > 0) {
+                cropperOptions.aspectRatio = currentCropFormat.ratio;
+            }
+
+            cropper = new Cropper(cropImage, cropperOptions);
+        }
+
+        // Format selection for cropping
+        document.addEventListener('click', function(e) {
+            if (e.target.closest('.crop-format-btn')) {
+                const btn = e.target.closest('.crop-format-btn');
+                
+                // Remove active class from all buttons
+                document.querySelectorAll('.crop-format-btn').forEach(b => {
+                    b.classList.remove('active');
+                });
+                
+                // Add active class to clicked button
+                btn.classList.add('active');
+                
+                // Update current format
+                currentCropFormat = {
+                    ratio: parseFloat(btn.dataset.ratio),
+                    name: btn.dataset.name,
+                    width: parseInt(btn.dataset.width),
+                    height: parseInt(btn.dataset.height)
+                };
+                
+                // Update cropper if it exists
+                if (cropper && currentCropFormat.ratio > 0) {
+                    cropper.setAspectRatio(currentCropFormat.ratio);
+                }
+            }
+        });
+
+        function applyCrop() {
+            if (!cropper) {
+                showMessage('Cropper not initialized', 'error');
+                return;
+            }
+
+            const canvas = cropper.getCroppedCanvas({
+                width: currentCropFormat.width,
+                height: currentCropFormat.height,
+                imageSmoothingEnabled: true,
+                imageSmoothingQuality: 'high'
+            });
+
+            canvas.toBlob(function(blob) {
+                // Create cropped image object
+                const croppedImage = {
+                    blob: blob,
+                    url: URL.createObjectURL(blob),
+                    name: cropQueue[currentCropIndex].name,
+                    format: currentCropFormat.name,
+                    size: `${currentCropFormat.width}x${currentCropFormat.height}`,
+                    originalFile: cropQueue[currentCropIndex]
+                };
+
+                croppedImages.push(croppedImage);
+                
+                // Move to next image or finish
+                currentCropIndex++;
+                
+                if (currentCropIndex < cropQueue.length) {
+                    // Crop next image
+                    setTimeout(() => {
+                        openCropModal(cropQueue[currentCropIndex]);
+                    }, 100);
+                } else {
+                    // Finished all images
+                    finishCropping();
+                }
+            }, cropQueue[currentCropIndex].type, 0.9);
+        }
+
+        function skipCurrentImage() {
+            // Add original image to cropped images
+            const originalImage = {
+                blob: cropQueue[currentCropIndex],
+                url: URL.createObjectURL(cropQueue[currentCropIndex]),
+                name: cropQueue[currentCropIndex].name,
+                format: 'Original',
+                size: 'Original size',
+                originalFile: cropQueue[currentCropIndex]
+            };
+
+            croppedImages.push(originalImage);
+            
+            // Move to next image or finish
+            currentCropIndex++;
+            
+            if (currentCropIndex < cropQueue.length) {
+                openCropModal(cropQueue[currentCropIndex]);
+            } else {
+                finishCropping();
+            }
+        }
+
+        function finishCropping() {
+            closeCropModal();
+            updateCroppedImagesPreview();
+            showMessage(`✅ ${croppedImages.length} image(s) processed and ready!`, 'success');
+            
+            // Reset file input
+            document.getElementById('images').value = '';
+        }
+
+        function closeCropModal() {
+            const modal = document.getElementById('cropModal');
+            modal.style.display = 'none';
+            
+            if (cropper) {
+                cropper.destroy();
+                cropper = null;
+            }
+        }
+
+        function updateCroppedImagesPreview() {
+            const preview = document.getElementById('croppedImagesPreview');
+            preview.innerHTML = '';
+
+            // Show existing images (when editing)
+            existingImages.forEach((image, index) => {
+                const item = document.createElement('div');
+                item.className = 'cropped-image-item';
+                item.innerHTML = `
+                    <img src="${image}" alt="Existing image">
+                    <div class="cropped-image-info">
+                        <div class="cropped-image-format">Existing Image</div>
+                        <div class="cropped-image-size">Already uploaded</div>
+                    </div>
+                    <button type="button" class="cropped-image-remove" onclick="removeExistingImage(${index})">×</button>
+                `;
+                preview.appendChild(item);
+            });
+
+            // Show cropped images
+            croppedImages.forEach((image, index) => {
+                const item = document.createElement('div');
+                item.className = 'cropped-image-item';
+                item.innerHTML = `
+                    <img src="${image.url}" alt="${image.name}">
+                    <div class="cropped-image-info">
+                        <div class="cropped-image-format">${image.format}</div>
+                        <div class="cropped-image-size">${image.size}</div>
+                    </div>
+                    <button type="button" class="cropped-image-remove" onclick="removeCroppedImage(${index})">×</button>
+                `;
+                preview.appendChild(item);
+            });
+        }
+
+        function removeExistingImage(index) {
+            // Remove from existing images array
+            existingImages.splice(index, 1);
+            
+            // Update preview
+            updateCroppedImagesPreview();
+            
+            showMessage('🗑️ Existing image removed', 'success');
+        }
+
+        function removeCroppedImage(index) {
+            // Revoke object URL to free memory
+            URL.revokeObjectURL(croppedImages[index].url);
+            
+            // Remove from array
+            croppedImages.splice(index, 1);
+            
+            // Update preview
+            updateCroppedImagesPreview();
+            
+            showMessage('🗑️ Image removed', 'success');
+        }
+
+        // Add missing updateImagePreview function
+        function updateImagePreview() {
+            const preview = document.getElementById('imagePreview');
+            preview.innerHTML = '';
+
+            existingImages.forEach((image, index) => {
+                const item = document.createElement('div');
+                item.className = 'image-preview-item';
+                item.innerHTML = `
+                    <img src="${image}" alt="Existing image">
+                    <button type="button" class="remove-image" onclick="removeExistingImage(${index})">×</button>
+                `;
+                preview.appendChild(item);
+            });
+        }
+
+        // Update form submission to use cropped images
+        document.getElementById('mealForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const submitBtn = document.getElementById('submitBtn');
+            const submitText = document.getElementById('submitText');
+            const submitLoading = document.getElementById('submitLoading');
+            
+            // Show loading state
+            submitBtn.disabled = true;
+            submitText.style.display = 'none';
+            submitLoading.style.display = 'block';
+            
+            try {
+                const formData = new FormData();
+                formData.append('action', editingMealId ? 'update_meal' : 'add_meal');
+                if (editingMealId) {
+                    formData.append('id', editingMealId);
+                }
+                formData.append('title', document.getElementById('title').value);
+                formData.append('description', document.getElementById('description').value);
+                
+                // Add existing images (when editing)
+                formData.append('existing_images', JSON.stringify(existingImages));
+                
+                // Add cropped images
+                croppedImages.forEach(image => {
+                    formData.append('images[]', image.blob, image.name);
+                });
+                
+                const response = await fetch('api.php', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    showMessage(editingMealId ? 'Meal updated successfully!' : 'Meal added successfully!', 'success');
+                    resetForm();
+                    loadMeals();
+                } else {
+                    showMessage(result.message || 'Error saving meal', 'error');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                showMessage('Error saving meal. Please try again.', 'error');
+            } finally {
+                // Reset button state
+                submitBtn.disabled = false;
+                submitText.style.display = 'inline';
+                submitLoading.style.display = 'none';
+            }
+        });
+
+        function resetForm() {
+            document.getElementById('mealForm').reset();
+            selectedImages = [];
+            croppedImages = [];
+            existingImages = [];
+            editingMealId = null;
+            
+            updateDynamicTranslations();
+            document.getElementById('cancelEdit').style.display = 'none';
+            updateImagePreview();
+            updateCroppedImagesPreview();
+            
+            // Clean up object URLs
+            croppedImages.forEach(image => {
+                if (image.url) URL.revokeObjectURL(image.url);
+            });
+        }
+
+        function cancelEdit() {
+            resetForm();
+        }
+
+        async function loadMeals() {
+            const loading = document.getElementById('loadingMeals');
+            const container = document.getElementById('mealsContainer');
+            
+            loading.style.display = 'block';
+            container.innerHTML = '';
+            
+            try {
+                const response = await fetch('api.php?action=meals');
+                const meals = await response.json();
+                
+                if (meals.length === 0) {
+                    const noMealsMessage = currentLanguage === 'en' 
+                        ? 'No meals found. Add your first meal above!'
+                        : 'Aucun plat trouvé. Ajoutez votre premier plat ci-dessus !';
+                    container.innerHTML = `<p style="text-align: center; color: #666; padding: 2rem;">${noMealsMessage}</p>`;
+                } else {
+                    meals.forEach(meal => {
+                        const mealCard = createMealCard(meal);
+                        container.appendChild(mealCard);
+                    });
+                }
+            } catch (error) {
+                console.error('Error loading meals:', error);
+                const errorMessage = currentLanguage === 'en' 
+                    ? 'Error loading meals. Please try again.'
+                    : 'Erreur lors du chargement des plats. Veuillez réessayer.';
+                container.innerHTML = `<p style="text-align: center; color: #dc3545; padding: 2rem;">${errorMessage}</p>`;
+            } finally {
+                loading.style.display = 'none';
+            }
+        }
+
+        function createMealCard(meal) {
+            const card = document.createElement('div');
+            card.className = 'meal-card';
+            
+            const firstImage = meal.images && meal.images.length > 0 ? meal.images[0] : 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjBmMGYwIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPk5vIEltYWdlPC90ZXh0Pjwvc3ZnPg==';
+            
+            const editText = currentLanguage === 'en' ? 'Edit' : 'Modifier';
+            const deleteText = currentLanguage === 'en' ? 'Delete' : 'Supprimer';
+            
+            card.innerHTML = `
+                <div class="meal-card-image">
+                    <img src="${firstImage}" alt="${meal.title}" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1zbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjBmMGYwIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPk5vIEltYWdlPC90ZXh0Pjwvc3ZnPg=='">
+                </div>
+                <div class="meal-card-content">
+                    <div class="meal-card-title">${meal.title}</div>
+                    <div class="meal-card-description">${meal.description}</div>
+                    <div class="meal-card-actions">
+                        <button onclick="editMeal(${meal.id})" class="btn btn-primary">${editText}</button>
+                        <button onclick="deleteMeal(${meal.id})" class="btn btn-danger">${deleteText}</button>
+                    </div>
+                </div>
+            `;
+            
+            return card;
+        }
+
+        async function editMeal(id) {
+            try {
+                const response = await fetch(`api.php?action=get_meal&id=${id}`);
+                const meal = await response.json();
+                
+                if (meal) {
+                    editingMealId = id;
+                    existingImages = meal.images || [];
+                    selectedImages = [];
+                    croppedImages = [];
+                    
+                    document.getElementById('title').value = meal.title;
+                    document.getElementById('description').value = meal.description;
+                    
+                    // Update form elements with translations
+                    updateDynamicTranslations();
+                    document.getElementById('cancelEdit').style.display = 'inline-block';
+                    
+                    updateImagePreview();
+                    updateCroppedImagesPreview();
+                    
+                    // Scroll to form
+                    document.querySelector('.dashboard-section').scrollIntoView({ behavior: 'smooth' });
+                }
+            } catch (error) {
+                console.error('Error loading meal:', error);
+                showLocalizedMessage('Error loading meal for editing', 'Erreur lors du chargement du plat pour modification', 'error');
+            }
+        }
+
+        function deleteMeal(id) {
+            document.getElementById('deleteModal').style.display = 'block';
+            document.getElementById('confirmDelete').onclick = () => confirmDelete(id);
+        }
+
+        function closeDeleteModal() {
+            document.getElementById('deleteModal').style.display = 'none';
+        }
+
+        async function confirmDelete(id) {
+            try {
+                const formData = new FormData();
+                formData.append('action', 'delete_meal');
+                formData.append('id', id);
+                
+                const response = await fetch('api.php', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    showLocalizedMessage('Meal deleted successfully!', 'Plat supprimé avec succès !', 'success');
+                    loadMeals();
+                    closeDeleteModal();
+                    
+                    // If we were editing this meal, reset the form
+                    if (editingMealId == id) {
+                        resetForm();
+                    }
+                } else {
+                    showMessage(result.message || 'Error deleting meal', 'error');
+                }
+            } catch (error) {
+                console.error('Error deleting meal:', error);
+                showLocalizedMessage('Error deleting meal. Please try again.', 'Erreur lors de la suppression du plat. Veuillez réessayer.', 'error');
+            }
+        }
+
+        function toggleLanguage() {
+            currentLanguage = currentLanguage === 'en' ? 'fr' : 'en';
+            localStorage.setItem('preferred-language', currentLanguage);
+            updateLanguageToggle();
+            translatePage();
+        }
+
+        function updateLanguageToggle() {
+            const enBtn = document.getElementById('lang-en');
+            const frBtn = document.getElementById('lang-fr');
+            
+            if (currentLanguage === 'en') {
+                enBtn.classList.add('active');
+                frBtn.classList.remove('active');
+            } else {
+                frBtn.classList.add('active');
+                enBtn.classList.remove('active');
+            }
+        }
+
+        function translatePage() {
+            const elements = document.querySelectorAll(`[data-${currentLanguage}]`);
+            elements.forEach(element => {
+                const translation = element.getAttribute(`data-${currentLanguage}`);
+                if (translation) {
+                    element.textContent = translation;
+                }
+            });
+
+            // Handle placeholders
+            const placeholderElements = document.querySelectorAll(`[data-placeholder-${currentLanguage}]`);
+            placeholderElements.forEach(element => {
+                const placeholder = element.getAttribute(`data-placeholder-${currentLanguage}`);
+                if (placeholder) {
+                    element.placeholder = placeholder;
+                }
+            });
+
+            // Update page language attribute
+            document.documentElement.lang = currentLanguage;
+            
+            // Update dynamic text
+            updateDynamicTranslations();
+        }
+
+        function updateDynamicTranslations() {
+            // Update form title based on editing state
+            const formTitle = document.getElementById('formTitle');
+            if (editingMealId) {
+                formTitle.textContent = currentLanguage === 'en' ? 'Edit Meal' : 'Modifier le Plat';
+            } else {
+                formTitle.textContent = currentLanguage === 'en' ? 'Add New Meal' : 'Ajouter un Nouveau Plat';
+            }
+
+            // Update submit button text based on editing state
+            const submitText = document.getElementById('submitText');
+            if (editingMealId) {
+                submitText.textContent = currentLanguage === 'en' ? 'Update Meal' : 'Mettre à Jour le Plat';
+            } else {
+                submitText.textContent = currentLanguage === 'en' ? 'Add Meal' : 'Ajouter le Plat';
+            }
+        }
+
+        function showMessage(text, type) {
+            const message = document.getElementById('message');
+            message.textContent = text;
+            message.className = `message ${type}`;
+            message.style.display = 'block';
+            
+            // Auto-hide after 5 seconds
+            setTimeout(() => {
+                message.style.display = 'none';
+            }, 5000);
+        }
+
+        // Update messages to be multilingual
+        function showLocalizedMessage(enText, frText, type) {
+            const text = currentLanguage === 'en' ? enText : frText;
+            showMessage(text, type);
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const cropModal = document.getElementById('cropModal');
+            const deleteModal = document.getElementById('deleteModal');
+            
+            if (event.target === cropModal) {
+                closeCropModal();
+            }
+            if (event.target === deleteModal) {
+                closeDeleteModal();
+            }
+        }
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                const cropModal = document.getElementById('cropModal');
+                const deleteModal = document.getElementById('deleteModal');
+                
+                if (cropModal.style.display === 'block') {
+                    closeCropModal();
+                }
+                if (deleteModal.style.display === 'block') {
+                    closeDeleteModal();
+                }
+            }
+        });
+    </script>
+</body>
+</html>

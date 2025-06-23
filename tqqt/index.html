@@ -1,0 +1,1220 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chef Elodie - Excellence Culinaire</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --navy-dark: #0a0e1a;
+            --navy-primary: #1a2332;
+            --navy-medium: #2c3e50;
+            --navy-light: #34495e;
+            --white: #ffffff;
+            --cream: #fafafa;
+            --black: #1c1c1c;
+            --gray-light: #f8f9fa;
+            --gray-medium: #6c757d;
+            --gray-dark: #495057;
+            --accent-gold: #c9aa71;
+            --accent-light: #e8dcc0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--black);
+            background: var(--white);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Header */
+        header {
+            background: var(--navy-dark);
+            color: var(--white);
+            padding: 1.5rem 0;
+            box-shadow: 0 4px 30px rgba(10, 14, 26, 0.15);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 2000;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        header.scrolled {
+            padding: 1rem 0;
+            background: rgba(10, 14, 26, 0.95);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 300;
+            color: var(--white);
+            letter-spacing: -0.5px;
+            position: relative;
+        }
+
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background: var(--accent-gold);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 3rem;
+        }
+
+        .nav-links a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 400;
+            font-size: 0.95rem;
+            padding: 0.75rem 0;
+            position: relative;
+            transition: all 0.3s ease;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 2px;
+            background: var(--accent-gold);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--accent-gold);
+        }
+
+        .language-switch {
+            display: flex;
+            gap: 0.5rem;
+            margin-left: 2rem;
+        }
+
+        .language-switch button {
+            background: transparent;
+            border: 1px solid var(--accent-gold);
+            color: var(--white);
+            padding: 0.5rem 1rem;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .language-switch button.active,
+        .language-switch button:hover {
+            background: var(--accent-gold);
+            color: var(--navy-dark);
+        }
+
+        /* Page Styles */
+        .page {
+            display: none;
+            min-height: 100vh;
+            padding-top: 100px;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy-primary) 50%, var(--navy-medium) 100%);
+            color: var(--white);
+            text-align: center;
+            padding: 12rem 0 8rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 30% 20%, rgba(201, 170, 113, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 80%, rgba(201, 170, 113, 0.08) 0%, transparent 50%);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 4.5rem;
+            font-weight: 300;
+            margin-bottom: 2rem;
+            letter-spacing: -2px;
+            line-height: 1.1;
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.5s forwards;
+        }
+
+        .hero .subtitle {
+            font-size: 1.5rem;
+            font-weight: 300;
+            margin-bottom: 3rem;
+            opacity: 0.9;
+            letter-spacing: 1px;
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.7s forwards;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto 3rem;
+            opacity: 0.8;
+            font-weight: 300;
+            line-height: 1.8;
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.9s forwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            opacity: 0;
+            animation: fadeInUp 1s ease 1.1s forwards;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: transparent;
+            color: var(--white);
+            padding: 1.2rem 3rem;
+            border: 2px solid var(--accent-gold);
+            border-radius: 0;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--accent-gold);
+            transition: left 0.4s ease;
+            z-index: -1;
+        }
+
+        .cta-button:hover::before {
+            left: 0;
+        }
+
+        .cta-button:hover {
+            color: var(--navy-dark);
+        }
+
+        .cta-button.secondary {
+            background: var(--accent-gold);
+            color: var(--navy-dark);
+            border-color: var(--accent-gold);
+        }
+
+        .cta-button.secondary::before {
+            background: var(--navy-dark);
+        }
+
+        .cta-button.secondary:hover {
+            color: var(--white);
+        }
+
+        /* Section Styles */
+        .section {
+            padding: 8rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 6rem;
+        }
+
+        .section-title h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            color: var(--navy-dark);
+            margin-bottom: 1.5rem;
+            font-weight: 300;
+            letter-spacing: -1px;
+        }
+
+        .section-title p {
+            font-size: 1.2rem;
+            color: var(--gray-medium);
+            max-width: 600px;
+            margin: 0 auto;
+            font-weight: 300;
+        }
+
+        /* About Chef Section */
+        .about-chef {
+            background: var(--white);
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8rem;
+            align-items: center;
+        }
+
+        .about-text h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            color: var(--navy-dark);
+            margin-bottom: 2.5rem;
+            font-weight: 300;
+            line-height: 1.2;
+            letter-spacing: -1px;
+        }
+
+        .about-text p {
+            font-size: 1.15rem;
+            color: var(--gray-dark);
+            margin-bottom: 2rem;
+            line-height: 1.8;
+            font-weight: 300;
+        }
+
+        .chef-photo {
+            position: relative;
+            height: 600px;
+            overflow: hidden;
+        }
+
+        .chef-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.6s ease;
+            filter: grayscale(20%);
+        }
+
+        .chef-photo::before {
+            content: '';
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            right: -30px;
+            bottom: -30px;
+            border: 1px solid var(--accent-gold);
+            z-index: -1;
+            transition: all 0.6s ease;
+        }
+
+        .chef-photo:hover::before {
+            top: 15px;
+            left: 15px;
+            right: -15px;
+            bottom: -15px;
+        }
+
+        .chef-photo:hover img {
+            transform: scale(1.05);
+            filter: grayscale(0%);
+        }
+
+        /* Services Section */
+        .services {
+            background: var(--cream);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 4rem;
+        }
+
+        .service-card {
+            background: var(--white);
+            padding: 4rem 3rem;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(10, 14, 26, 0.08);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 3px;
+            background: var(--accent-gold);
+            transition: left 0.4s ease;
+        }
+
+        .service-card:hover::before {
+            left: 0;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 80px rgba(10, 14, 26, 0.12);
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            margin-bottom: 2rem;
+            color: var(--navy-primary);
+        }
+
+        .service-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            color: var(--navy-dark);
+            margin-bottom: 1.5rem;
+            font-weight: 400;
+        }
+
+        .service-card p {
+            color: var(--gray-dark);
+            line-height: 1.8;
+            font-size: 1.05rem;
+            font-weight: 300;
+            margin-bottom: 2rem;
+        }
+
+        .service-price {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            color: var(--accent-gold);
+            font-weight: 500;
+        }
+
+        /* Gallery Section (now dynamic) */
+        .gallery {
+            background: var(--cream);
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 3rem;
+            margin-top: 4rem;
+        }
+
+        .gallery-item {
+            background: var(--white);
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(10, 14, 26, 0.1);
+            transition: all 0.5s ease;
+            position: relative;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 30px 80px rgba(10, 14, 26, 0.15);
+        }
+
+        /* Photo carousel for meals */
+        .meal-carousel {
+            position: relative;
+            height: 350px;
+            overflow: hidden;
+        }
+
+        .meal-carousel img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+            display: none;
+        }
+
+        .meal-carousel img.active {
+            display: block;
+        }
+
+        .meal-carousel:hover img {
+            transform: scale(1.1);
+        }
+
+        .carousel-controls {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+        }
+
+        .carousel-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .carousel-dot.active {
+            background: var(--accent-gold);
+        }
+
+        .carousel-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: all 0.3s ease;
+        }
+
+        .carousel-nav:hover {
+            background: rgba(0, 0, 0, 0.8);
+        }
+
+        .carousel-prev {
+            left: 10px;
+        }
+
+        .carousel-next {
+            right: 10px;
+        }
+
+        .gallery-item-content {
+            padding: 3rem;
+            position: relative;
+        }
+
+        .gallery-item-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: var(--accent-gold);
+        }
+
+        .gallery-item h3 {
+            font-family: 'Playfair Display', serif;
+            color: var(--navy-dark);
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+            font-weight: 400;
+        }
+
+        .gallery-item p {
+            color: var(--gray-dark);
+            line-height: 1.7;
+            font-weight: 300;
+        }
+
+        /* Loading state */
+        .loading {
+            text-align: center;
+            padding: 4rem;
+            color: var(--gray-medium);
+        }
+
+        .loading i {
+            font-size: 2rem;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Contact Section */
+        .contact {
+            background: var(--navy-dark);
+            color: var(--white);
+        }
+
+        .contact .section-title h2 {
+            color: var(--white);
+        }
+
+        .contact .section-title p {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6rem;
+        }
+
+        .contact-info h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            color: var(--accent-gold);
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .contact-item i {
+            font-size: 1.5rem;
+            color: var(--accent-gold);
+            margin-right: 1.5rem;
+            width: 30px;
+        }
+
+        .contact-item div h4 {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-item div p {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            background: var(--accent-gold);
+            color: var(--navy-dark);
+            border-radius: 50%;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            transform: translateY(-5px);
+            background: var(--white);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--black);
+            color: var(--white);
+            text-align: center;
+            padding: 4rem 0;
+        }
+
+        footer p {
+            opacity: 0.8;
+            font-size: 0.95rem;
+            font-weight: 300;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .container {
+                padding: 0 1.5rem;
+            }
+
+            .about-grid,
+            .contact-grid {
+                grid-template-columns: 1fr;
+                gap: 4rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                gap: 1.5rem;
+            }
+
+            .hero h1 {
+                font-size: 3rem;
+            }
+
+            .hero .subtitle {
+                font-size: 1.2rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .section-title h2 {
+                font-size: 2.2rem;
+            }
+
+            .section {
+                padding: 6rem 0;
+            }
+
+            .services-grid,
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav-links {
+                display: none;
+            }
+
+            .logo {
+                font-size: 2rem;
+            }
+
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .page {
+                padding-top: 120px;
+            }
+        }
+
+        /* Scroll animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Language content */
+        .lang-content {
+            display: none;
+        }
+
+        .lang-content.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <header id="header">
+        <nav class="container">
+            <div class="logo">Chef Elodie</div>
+            <div style="display: flex; align-items: center;">
+                <ul class="nav-links">
+                    <li><a href="#accueil" onclick="scrollToSection('accueil')" class="active" data-fr="Accueil" data-en="Home"></a></li>
+                    <li><a href="#chef" onclick="scrollToSection('chef')" data-fr="La Chef" data-en="The Chef"></a></li>
+                    <li><a href="#services" onclick="scrollToSection('services')" data-fr="Services" data-en="Services"></a></li>
+                    <li><a href="#galerie" onclick="scrollToSection('galerie')" data-fr="Galerie" data-en="Gallery"></a></li>
+                    <li><a href="#contact" onclick="scrollToSection('contact')" data-fr="Contact" data-en="Contact"></a></li>
+                </ul>
+                <div class="language-switch">
+                    <button onclick="setLanguage('fr')" id="btn-fr" class="active">FR</button>
+                    <button onclick="setLanguage('en')" id="btn-en">EN</button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section id="accueil" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="lang-content active" id="hero-title-fr">Chef Elodie</h1>
+                <h1 class="lang-content" id="hero-title-en">Chef Elodie</h1>
+                
+                <div class="subtitle lang-content active" id="hero-subtitle-fr">L'Art Culinaire Français</div>
+                <div class="subtitle lang-content" id="hero-subtitle-en">French Culinary Art</div>
+                
+                <p class="lang-content active" id="hero-text-fr">Découvrez l'excellence gastronomique à domicile avec une chef passionnée qui transforme chaque repas en une expérience inoubliable</p>
+                <p class="lang-content" id="hero-text-en">Discover gastronomic excellence at home with a passionate chef who transforms every meal into an unforgettable experience</p>
+                
+                <div class="cta-buttons">
+                    <a href="#contact" onclick="scrollToSection('contact')" class="cta-button" id="cta1-fr">Réserver une Consultation</a>
+                    <a href="#contact" onclick="scrollToSection('contact')" class="cta-button" id="cta1-en" style="display: none;">Book Consultation</a>
+                    
+                    <a href="#services" onclick="scrollToSection('services')" class="cta-button secondary" id="cta2-fr">Découvrir nos Services</a>
+                    <a href="#services" onclick="scrollToSection('services')" class="cta-button secondary" id="cta2-en" style="display: none;">Discover Services</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT CHEF SECTION -->
+    <section id="chef" class="section about-chef">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-text fade-in">
+                    <div class="lang-content active" id="about-fr">
+                        <h2>L'Excellence dans Chaque Assiette</h2>
+                        <p>Bonjour, je suis Elodie, chef cuisinière passionnée avec plus de 15 ans d'expérience dans la haute gastronomie. Formée dans les plus prestigieuses maisons françaises, j'ai développé ma propre approche culinaire qui allie tradition et modernité.</p>
+                        <p>Ma cuisine privilégie les produits de saison, travaillés avec respect et créativité. Chaque assiette raconte une histoire, celle d'un terroir, d'un producteur, d'une tradition revisitée avec élégance.</p>
+                        <p>Aujourd'hui, je mets mon expertise au service de votre table, créant des expériences culinaires sur mesure dans le confort de votre foyer.</p>
+                    </div>
+                    <div class="lang-content" id="about-en">
+                        <h2>Excellence in Every Dish</h2>
+                        <p>Hello, I'm Elodie, a passionate chef with over 15 years of experience in haute cuisine. Trained in France's most prestigious establishments, I've developed my own culinary approach that combines tradition with modernity.</p>
+                        <p>My cuisine focuses on seasonal products, worked with respect and creativity. Each dish tells a story - of terroir, of producers, of traditions elegantly revisited.</p>
+                        <p>Today, I bring my expertise to your table, creating bespoke culinary experiences in the comfort of your home.</p>
+                    </div>
+                </div>
+                <div class="chef-photo fade-in">
+                    <img src="photom.png" alt="Chef Elodie">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVICES SECTION -->
+    <section id="services" class="section services">
+        <div class="container">
+            <div class="section-title fade-in">
+                <h2 class="lang-content active" id="services-title-fr">Nos Services</h2>
+                <h2 class="lang-content" id="services-title-en">Our Services</h2>
+                <p class="lang-content active" id="services-subtitle-fr">Des expériences culinaires exceptionnelles adaptées à chaque occasion</p>
+                <p class="lang-content" id="services-subtitle-en">Exceptional culinary experiences tailored to every occasion</p>
+            </div>
+            <div class="services-grid" id="services-grid">
+                <!-- Services populated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- GALLERY SECTION (now dynamic) -->
+    <section id="galerie" class="section gallery">
+        <div class="container">
+            <div class="section-title fade-in">
+                <h2 class="lang-content active" id="gallery-title-fr">Portfolio Culinaire</h2>
+                <h2 class="lang-content" id="gallery-title-en">Culinary Portfolio</h2>
+                <p class="lang-content active" id="gallery-subtitle-fr">Découvrez mes créations culinaires</p>
+                <p class="lang-content" id="gallery-subtitle-en">Discover my culinary creations</p>
+            </div>
+            <div id="gallery-loading" class="loading">
+                <i class="fas fa-spinner"></i>
+                <p class="lang-content active">Chargement...</p>
+                <p class="lang-content">Loading...</p>
+            </div>
+            <div class="gallery-grid" id="gallery-grid">
+                <!-- Gallery items will be populated dynamically -->
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section id="contact" class="section contact">
+        <div class="container">
+            <div class="section-title fade-in">
+                <h2 class="lang-content active" id="contact-title-fr">Contactez-Nous</h2>
+                <h2 class="lang-content" id="contact-title-en">Contact Us</h2>
+                <p class="lang-content active" id="contact-subtitle-fr">Prêt à créer quelque chose d'extraordinaire ensemble ?</p>
+                <p class="lang-content" id="contact-subtitle-en">Ready to create something extraordinary together?</p>
+            </div>
+            <div class="contact-grid">
+                <div class="contact-info fade-in">
+                    <h3 class="lang-content active" id="contact-info-title-fr">Informations de Contact</h3>
+                    <h3 class="lang-content" id="contact-info-title-en">Contact Information</h3>
+                    
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <h4>Email</h4>
+                            <p>chef.elodie@example.com</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <div>
+                            <h4 class="lang-content active" id="phone-title-fr">Téléphone</h4>
+                            <h4 class="lang-content" id="phone-title-en">Phone</h4>
+                            <p>+33 (0) 1 23 45 67 89</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <h4 class="lang-content active" id="location-title-fr">Zone de Service</h4>
+                            <h4 class="lang-content" id="location-title-en">Service Area</h4>
+                            <p class="lang-content active" id="location-text-fr">Île-de-France et régions limitrophes</p>
+                            <p class="lang-content" id="location-text-en">Île-de-France and surrounding regions</p>
+                        </div>
+                    </div>
+                    
+                    <div class="social-links">
+                        <a href="https://instagram.com/chef_elodie" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="https://facebook.com/chef_elodie" target="_blank"><i class="fab fa-facebook"></i></a>
+                        <a href="#" target="_blank"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p class="lang-content active" id="footer-fr">&copy; 2024 Chef Elodie. Tous droits réservés. | Site web créé avec passion pour l'excellence culinaire.</p>
+            <p class="lang-content" id="footer-en">&copy; 2024 Chef Elodie. All rights reserved. | Website created with passion for culinary excellence.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Language system
+        let currentLanguage = 'fr';
+
+        function setLanguage(lang) {
+            currentLanguage = lang;
+            
+            // Update language buttons
+            document.getElementById('btn-fr').classList.toggle('active', lang === 'fr');
+            document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+            
+            // Update navigation links
+            const navLinks = document.querySelectorAll('.nav-links a');
+            navLinks.forEach(link => {
+                const text = link.dataset[lang];
+                if (text) link.textContent = text;
+            });
+            
+            // Update content
+            const langContents = document.querySelectorAll('.lang-content');
+            langContents.forEach(content => {
+                content.classList.remove('active');
+                if (content.id.includes(`-${lang}`) || content.classList.contains(`lang-${lang}`)) {
+                    content.classList.add('active');
+                }
+            });
+            
+            // Update specific elements
+            updateLanguageSpecificContent(lang);
+            populateContent();
+            loadGallery(); // Reload gallery with new language
+        }
+
+        function updateLanguageSpecificContent(lang) {
+            // Update CTA buttons
+            document.getElementById('cta1-fr').style.display = lang === 'fr' ? 'inline-block' : 'none';
+            document.getElementById('cta1-en').style.display = lang === 'en' ? 'inline-block' : 'none';
+            document.getElementById('cta2-fr').style.display = lang === 'fr' ? 'inline-block' : 'none';
+            document.getElementById('cta2-en').style.display = lang === 'en' ? 'inline-block' : 'none';
+        }
+
+        // Static services data
+        const servicesData = {
+            fr: [
+                {
+                    icon: "🍽️",
+                    title: "Dîners Privés",
+                    description: "Expériences gastronomiques intimes pour 2 à 12 personnes. Menu personnalisé, service à domicile complet.",
+                    price: "À partir de 120€/pers"
+                },
+                {
+                    icon: "👔",
+                    title: "Événements d'Entreprise",
+                    description: "Prestations culinaires pour vos événements professionnels. Cocktails, déjeuners d'affaires, séminaires.",
+                    price: "À partir de 80€/pers"
+                },
+                {
+                    icon: "💒",
+                    title: "Mariages & Célébrations",
+                    description: "Votre jour J sublimé par une cuisine d'exception. Service traiteur complet jusqu'à 100 invités.",
+                    price: "À partir de 95€/pers"
+                },
+                {
+                    icon: "👨‍🍳",
+                    title: "Cours de Cuisine",
+                    description: "Apprenez les techniques culinaires dans votre cuisine. Cours individuels ou en groupe.",
+                    price: "120€/h"
+                }
+            ],
+            en: [
+                {
+                    icon: "🍽️",
+                    title: "Private Dinners",
+                    description: "Intimate gastronomic experiences for 2 to 12 people. Personalized menu, complete home service.",
+                    price: "From €120/pers"
+                },
+                {
+                    icon: "👔",
+                    title: "Corporate Events",
+                    description: "Culinary services for your professional events. Cocktails, business lunches, seminars.",
+                    price: "From €80/pers"
+                },
+                {
+                    icon: "💒",
+                    title: "Weddings & Celebrations",
+                    description: "Your special day elevated by exceptional cuisine. Complete catering service for up to 100 guests.",
+                    price: "From €95/pers"
+                },
+                {
+                    icon: "👨‍🍳",
+                    title: "Cooking Classes",
+                    description: "Learn culinary techniques in your own kitchen. Individual or group lessons.",
+                    price: "€120/h"
+                }
+            ]
+        };
+
+        // Populate static content
+        function populateContent() {
+            populateServices();
+        }
+
+        function populateServices() {
+            const servicesGrid = document.getElementById('services-grid');
+            const services = servicesData[currentLanguage];
+            
+            servicesGrid.innerHTML = services.map(service => `
+                <div class="service-card fade-in">
+                    <div class="service-icon">${service.icon}</div>
+                    <h3>${service.title}</h3>
+                    <p>${service.description}</p>
+                    <div class="service-price">${service.price}</div>
+                </div>
+            `).join('');
+        }
+
+        // Load gallery from database
+        async function loadGallery() {
+            const galleryGrid = document.getElementById('gallery-grid');
+            const loadingDiv = document.getElementById('gallery-loading');
+            
+            try {
+                loadingDiv.style.display = 'block';
+                galleryGrid.style.display = 'none';
+                
+                const response = await fetch('api.php?action=get_meals');
+                if (!response.ok) throw new Error('Failed to fetch meals');
+                
+                const meals = await response.json();
+                
+                galleryGrid.innerHTML = meals.map(meal => {
+                    const title = currentLanguage === 'fr' ? meal.title_fr : meal.title_en;
+                    const description = currentLanguage === 'fr' ? meal.description_fr : meal.description_en;
+                    
+                    let carouselHtml = '';
+                    if (meal.photos && meal.photos.length > 0) {
+                        const photosHtml = meal.photos.map((photo, index) => 
+                            `<img src="${photo.path}" alt="${currentLanguage === 'fr' ? photo.alt_fr : photo.alt_en}" class="${index === 0 ? 'active' : ''}">`
+                        ).join('');
+                        
+                        const dotsHtml = meal.photos.length > 1 ? meal.photos.map((_, index) => 
+                            `<span class="carousel-dot ${index === 0 ? 'active' : ''}" onclick="showSlide(${meal.id}, ${index})"></span>`
+                        ).join('') : '';
+                        
+                        const navHtml = meal.photos.length > 1 ? `
+                            <button class="carousel-nav carousel-prev" onclick="prevSlide(${meal.id})">&lt;</button>
+                            <button class="carousel-nav carousel-next" onclick="nextSlide(${meal.id})">&gt;</button>
+                        ` : '';
+                        
+                        carouselHtml = `
+                            <div class="meal-carousel" data-meal-id="${meal.id}">
+                                ${photosHtml}
+                                ${navHtml}
+                                ${dotsHtml ? `<div class="carousel-controls">${dotsHtml}</div>` : ''}
+                            </div>
+                        `;
+                    } else {
+                        carouselHtml = `
+                            <div class="meal-carousel" data-meal-id="${meal.id}">
+                                <img src="placeholder.jpg" alt="No image" class="active">
+                            </div>
+                        `;
+                    }
+                    
+                    return `
+                        <div class="gallery-item fade-in">
+                            ${carouselHtml}
+                            <div class="gallery-item-content">
+                                <h3>${title}</h3>
+                                <p>${description}</p>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+                
+                loadingDiv.style.display = 'none';
+                galleryGrid.style.display = 'grid';
+                
+                // Reinitialize scroll animations for new elements
+                const fadeElements = galleryGrid.querySelectorAll('.fade-in');
+                fadeElements.forEach(el => observer.observe(el));
+                
+            } catch (error) {
+                console.error('Error loading gallery:', error);
+                loadingDiv.innerHTML = `
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <p class="lang-content active">Erreur lors du chargement de la galerie</p>
+                    <p class="lang-content">Error loading gallery</p>
+                `;
+            }
+        }
+
+        // Carousel functions
+        function showSlide(mealId, slideIndex) {
+            const carousel = document.querySelector(`[data-meal-id="${mealId}"]`);
+            const images = carousel.querySelectorAll('img');
+            const dots = carousel.querySelectorAll('.carousel-dot');
+            
+            images.forEach((img, index) => {
+                img.classList.toggle('active', index === slideIndex);
+            });
+            
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === slideIndex);
+            });
+        }
+
+        function nextSlide(mealId) {
+            const carousel = document.querySelector(`[data-meal-id="${mealId}"]`);
+            const images = carousel.querySelectorAll('img');
+            const currentIndex = Array.from(images).findIndex(img => img.classList.contains('active'));
+            const nextIndex = (currentIndex + 1) % images.length;
+            showSlide(mealId, nextIndex);
+        }
+
+        function prevSlide(mealId) {
+            const carousel = document.querySelector(`[data-meal-id="${mealId}"]`);
+            const images = carousel.querySelectorAll('img');
+            const currentIndex = Array.from(images).findIndex(img => img.classList.contains('active'));
+            const prevIndex = (currentIndex - 1 + images.length) % images.length;
+            showSlide(mealId, prevIndex);
+        }
+
+        // Scroll functions
+        function scrollToSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            const headerHeight = 100;
+            const targetPosition = section.offsetTop - headerHeight;
+            
+            window.scrollTo({
+                top: targetPosition,
+                behavior: 'smooth'
+            });
+
+            // Update active nav link
+            const navLinks = document.querySelectorAll('.nav-links a');
+            navLinks.forEach(link => link.classList.remove('active'));
+            document.querySelector(`[href="#${sectionId}"]`).classList.add('active');
+        }
+
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.getElementById('header');
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Intersection Observer for scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set initial language content
+            setLanguage('fr');
+            
+            // Load gallery
+            loadGallery();
+            
+            // Observe all fade-in elements
+            const fadeElements = document.querySelectorAll('.fade-in');
+            fadeElements.forEach(el => observer.observe(el));
+            
+            // Trigger initial animations for hero section
+            setTimeout(() => {
+                const heroContent = document.querySelector('.hero-content');
+                heroContent.style.opacity = '1';
+            }, 100);
+        });
+    </script>
+</body>
+</html>
