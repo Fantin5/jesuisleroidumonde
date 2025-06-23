@@ -263,210 +263,6 @@
             box-shadow: 0 20px 40px rgba(26, 35, 50, 0.15);
         }
 
-        /* Gallery Section */
-        .gallery-section {
-            padding: 8rem 0;
-            background: var(--white);
-        }
-
-        .section-title {
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-
-        .section-title h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.5rem;
-            color: var(--navy-dark);
-            margin-bottom: 1rem;
-            font-weight: 600;
-        }
-
-        .section-title p {
-            font-size: 1.1rem;
-            color: var(--gray-medium);
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        /* Category Filter Buttons */
-        .category-filters {
-            display: flex;
-            gap: 1rem;
-            margin: 3rem 0;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .category-filter-btn {
-            padding: 0.75rem 1.5rem;
-            border: 2px solid var(--gray-light);
-            background: var(--white);
-            border-radius: 25px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            font-size: 0.85rem;
-            color: var(--gray-dark);
-        }
-
-        .category-filter-btn.active,
-        .category-filter-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
-
-        .category-filter-btn.all.active,
-        .category-filter-btn.all:hover {
-            background: var(--navy-primary);
-            border-color: var(--navy-primary);
-            color: var(--white);
-        }
-
-        .category-filter-btn.cat1.active,
-        .category-filter-btn.cat1:hover {
-            background: var(--cat1-color);
-            border-color: var(--cat1-color);
-            color: var(--white);
-        }
-
-        .category-filter-btn.cat2.active,
-        .category-filter-btn.cat2:hover {
-            background: var(--cat2-color);
-            border-color: var(--cat2-color);
-            color: var(--white);
-        }
-
-        .category-filter-btn.cat3.active,
-        .category-filter-btn.cat3:hover {
-            background: var(--cat3-color);
-            border-color: var(--cat3-color);
-            color: var(--white);
-        }
-
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-            max-width: 100%;
-        }
-
-        /* Enhanced Gallery Item Styles with fixed sizing */
-        .gallery-item {
-            background: var(--white);
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 8px 25px rgba(26, 35, 50, 0.1);
-            transition: all 0.4s ease;
-            border: 1px solid rgba(26, 35, 50, 0.08);
-            position: relative;
-            /* Fixed width to prevent expansion */
-            width: 100%;
-            max-width: 450px;
-            margin: 0 auto;
-        }
-
-        .image-carousel {
-            position: relative;
-            height: 280px;
-            overflow: hidden;
-            border-bottom: 1px solid rgba(26, 35, 50, 0.08);
-            width: 100%;
-        }
-
-        .carousel-images {
-            display: flex;
-            height: 100%;
-            transition: transform 0.5s ease;
-            width: 100%;
-        }
-
-        .carousel-images img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            flex-shrink: 0;
-            display: block;
-        }
-
-        .carousel-nav {
-            position: absolute;
-            bottom: 1rem;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 0.5rem;
-            z-index: 2;
-        }
-
-        .carousel-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.5);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: 1px solid rgba(255,255,255,0.3);
-        }
-
-        .carousel-dot.active {
-            background: var(--accent-gold);
-            border-color: var(--accent-gold);
-            box-shadow: 0 2px 8px rgba(212, 175, 55, 0.4);
-        }
-
-        .carousel-dot:hover:not(.active) {
-            background: rgba(255,255,255,0.8);
-            transform: scale(1.2);
-        }
-
-        .gallery-item-content {
-            padding: 1.5rem;
-            position: relative;
-            z-index: 2;
-            background: var(--white);
-            min-height: 200px;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .category-badge {
-            display: inline-block;
-            padding: 0.25rem 0.75rem;
-            border-radius: 15px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 1rem;
-            color: white;
-            width: fit-content;
-        }
-
-        .gallery-item h3 {
-            font-family: 'Playfair Display', serif;
-            color: var(--navy-dark);
-            margin-bottom: 0.8rem;
-            font-size: 1.3rem;
-            font-weight: 600;
-            line-height: 1.3;
-            flex-shrink: 0;
-        }
-
-        .gallery-item p {
-            color: var(--gray-dark);
-            line-height: 1.6;
-            font-size: 0.95rem;
-            flex-grow: 1;
-            overflow: hidden;
-            display: -webkit-box;
-            -webkit-line-clamp: 4;
-            -webkit-box-orient: vertical;
-        }
-
         /* About Page */
         .page-header {
             text-align: center;
@@ -608,18 +404,6 @@
             font-size: 0.95rem;
         }
 
-        /* Gallery Filter Animation */
-        .gallery-item.filtered-out {
-            display: none;
-        }
-
-        .no-results {
-            text-align: center;
-            padding: 4rem 2rem;
-            color: var(--gray-medium);
-            font-style: italic;
-        }
-
         /* Responsive Design */
         @media (max-width: 768px) {
             .container {
@@ -639,11 +423,6 @@
             .contact-content {
                 grid-template-columns: 1fr;
                 gap: 3rem;
-            }
-
-            .gallery-grid {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
             }
 
             .page-header h1 {
@@ -705,11 +484,6 @@
                 gap: 0.25rem;
             }
 
-            .gallery-grid {
-                grid-template-columns: 1fr;
-                gap: 1rem;
-            }
-
             .image-carousel {
                 height: 220px;
             }
@@ -736,9 +510,9 @@
             <div class="logo" data-en="Chef Elodie" data-fr="Chef Élodie">Chef Elodie</div>
             <div class="nav-right">
                 <ul class="nav-links">
-                    <li><a href="#" onclick="showPage('home')" class="active" data-en="Home" data-fr="Accueil">Home</a></li>
-                    <li><a href="#" onclick="showPage('gallery')" data-en="Gallery" data-fr="Galerie">Gallery</a></li>
-                    <li><a href="#" onclick="showPage('about')" data-en="About" data-fr="À Propos">About</a></li>
+                    <li><a href="index.php" class="active" data-en="Home" data-fr="Accueil">Home</a></li>
+                    <li><a href="gallery.php" data-en="Gallery" data-fr="Galerie">Gallery</a></li>
+                    <li><a href="about.php" data-en="About" data-fr="À Propos">About</a></li>
                     <li><a href="contact.php" data-en="Contact" data-fr="Contact">Contact</a></li>
                 </ul>
                 <div class="language-toggle" onclick="toggleLanguage()">
@@ -750,83 +524,27 @@
     </header>
 
     <!-- HOME PAGE -->
-    <div id="home" class="page active">
-        <div class="hero">
-            <div class="container">
-                <div class="hero-content">
-                    <h1 data-en="Culinary Excellence" data-fr="Excellence Culinaire">Culinary Excellence</h1>
-                    <p data-en="Where passion meets precision in every carefully crafted dish" data-fr="Où la passion rencontre la précision dans chaque plat soigneusement préparé">Where passion meets precision in every carefully crafted dish</p>
-                    <a href="contact.php" class="cta-button" data-en="Get In Touch" data-fr="Contactez-Moi">Get In Touch</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="welcome-section">
-            <div class="container">
-                <div class="welcome-grid">
-                    <div class="welcome-text">
-                        <h2 data-en="Passion in Every Bite" data-fr="Passion dans Chaque Bouchée">Passion in Every Bite</h2>
-                        <p data-en="With years of culinary passion and expertise, I create memorable dining experiences that bring family and friends together around the table." data-fr="Avec des années de passion et d'expertise culinaires, je crée des expériences gastronomiques mémorables qui rassemblent famille et amis autour de la table.">With years of culinary passion and expertise, I create memorable dining experiences that bring family and friends together around the table.</p>
-                        <p data-en="Each recipe is a labor of love, combining time-honored techniques with fresh, quality ingredients to create dishes that warm the heart and soul." data-fr="Chaque recette est un travail d'amour, combinant des techniques éprouvées avec des ingrédients frais et de qualité pour créer des plats qui réchauffent le cœur et l'âme.">Each recipe is a labor of love, combining time-honored techniques with fresh, quality ingredients to create dishes that warm the heart and soul.</p>
-                        <p data-en="From family dinners to special celebrations, discover the joy of homemade cuisine crafted with care." data-fr="Des dîners familiaux aux célébrations spéciales, découvrez la joie de la cuisine maison préparée avec soin.">From family dinners to special celebrations, discover the joy of homemade cuisine crafted with care.</p>
-                    </div>
-                    <div class="chef-photo">
-                        <img src="chef-photo.jpg" alt="Chef Marie" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxOCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkNoZWYgTWFyaWU8L3RleHQ+PC9zdmc+'">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- GALLERY PAGE -->
-    <div id="gallery" class="page">
-        <div class="page-header">
-            <div class="container">
-                <h1 data-en="Culinary Creations" data-fr="Créations Culinaires">Culinary Creations</h1>
-                <p data-en="A collection of lovingly crafted dishes that tell the story of flavor and tradition" data-fr="Une collection de plats préparés avec amour qui racontent l'histoire de la saveur et de la tradition">A collection of lovingly crafted dishes that tell the story of flavor and tradition</p>
-            </div>
-        </div>
-
-        <div class="gallery-section">
-            <div class="container">
-                <!-- Category Filters -->
-                <div class="category-filters">
-                    <button class="category-filter-btn all active" onclick="filterGalleryByCategory('all')" data-en="All Dishes" data-fr="Tous les Plats">All Dishes</button>
-                    <button class="category-filter-btn cat1" onclick="filterGalleryByCategory('cat1')" data-en="🍽️ Appetizers" data-fr="🍽️ Entrées">🍽️ Appetizers</button>
-                    <button class="category-filter-btn cat2" onclick="filterGalleryByCategory('cat2')" data-en="🥘 Main Courses" data-fr="🥘 Plats Principaux">🥘 Main Courses</button>
-                    <button class="category-filter-btn cat3" onclick="filterGalleryByCategory('cat3')" data-en="🍰 Desserts" data-fr="🍰 Desserts">🍰 Desserts</button>
-                </div>
-
-                <div id="galleryGrid" class="gallery-grid">
-                    <!-- Meals will be loaded dynamically -->
-                </div>
-
-                <div id="noResults" class="no-results" style="display: none;">
-                    <p data-en="No dishes found in this category yet." data-fr="Aucun plat trouvé dans cette catégorie pour le moment.">No dishes found in this category yet.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- ABOUT PAGE -->
-    <div id="about" class="page">
+    <div class="hero">
         <div class="container">
-            <div class="page-header">
-                <h1 data-en="About Chef Elodie" data-fr="À Propos du Chef Élodie">About Chef Elodie</h1>
-                <p data-en="Discover the passion and expertise behind every dish" data-fr="Découvrez la passion et l'expertise derrière chaque plat">Discover the passion and expertise behind every dish</p>
+            <div class="hero-content">
+                <h1 data-en="Culinary Excellence" data-fr="Excellence Culinaire">Culinary Excellence</h1>
+                <p data-en="Where passion meets precision in every carefully crafted dish" data-fr="Où la passion rencontre la précision dans chaque plat soigneusement préparé">Where passion meets precision in every carefully crafted dish</p>
+                <a href="contact.php" class="cta-button" data-en="Get In Touch" data-fr="Contactez-Moi">Get In Touch</a>
             </div>
+        </div>
+    </div>
 
-            <div class="about-content">
-                <div class="about-photo">
-                    <img src="chef-about.jpg" alt="Chef Marie - About" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjUwMCIgeG1zbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZWVlIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxOCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkFib3V0IENoZWYgTWFyaWU8L3RleHQ+PC9zdmc+'>
+    <div class="welcome-section">
+        <div class="container">
+            <div class="welcome-grid">
+                <div class="welcome-text">
+                    <h2 data-en="Passion in Every Bite" data-fr="Passion dans Chaque Bouchée">Passion in Every Bite</h2>
+                    <p data-en="With years of culinary passion and expertise, I create memorable dining experiences that bring family and friends together around the table." data-fr="Avec des années de passion et d'expertise culinaires, je crée des expériences gastronomiques mémorables qui rassemblent famille et amis autour de la table.">With years of culinary passion and expertise, I create memorable dining experiences that bring family and friends together around the table.</p>
+                    <p data-en="Each recipe is a labor of love, combining time-honored techniques with fresh, quality ingredients to create dishes that warm the heart and soul." data-fr="Chaque recette est un travail d'amour, combinant des techniques éprouvées avec des ingrédients frais et de qualité pour créer des plats qui réchauffent le cœur et l'âme.">Each recipe is a labor of love, combining time-honored techniques with fresh, quality ingredients to create dishes that warm the heart and soul.</p>
+                    <p data-en="From family dinners to special celebrations, discover the joy of homemade cuisine crafted with care." data-fr="Des dîners familiaux aux célébrations spéciales, découvrez la joie de la cuisine maison préparée avec soin.">From family dinners to special celebrations, discover the joy of homemade cuisine crafted with care.</p>
                 </div>
-                <div class="about-text">
-                    <h2 data-en="A Culinary Journey" data-fr="Un Voyage Culinaire">A Culinary Journey</h2>
-                    <p data-en="Welcome to my kitchen, where every meal is prepared with love and attention to detail. My culinary journey began in my grandmother's kitchen, learning the secrets of traditional recipes passed down through generations." data-fr="Bienvenue dans ma cuisine, où chaque repas est préparé avec amour et attention aux détails. Mon voyage culinaire a commencé dans la cuisine de ma grand-mère, apprenant les secrets des recettes traditionnelles transmises de génération en génération.">Welcome to my kitchen, where every meal is prepared with love and attention to detail. My culinary journey began in my grandmother's kitchen, learning the secrets of traditional recipes passed down through generations.</p>
-                    
-                    <p data-en="Over the years, I have refined my skills and developed my own unique style that honors classic techniques while embracing fresh, seasonal ingredients. Cooking is not just about feeding the body – it's about nourishing the soul and creating moments of joy and connection." data-fr="Au fil des années, j'ai affiné mes compétences et développé mon propre style unique qui honore les techniques classiques tout en adoptant des ingrédients frais et de saison. Cuisiner ne consiste pas seulement à nourrir le corps – il s'agit de nourrir l'âme et de créer des moments de joie et de connexion.">Over the years, I have refined my skills and developed my own unique style that honors classic techniques while embracing fresh, seasonal ingredients. Cooking is not just about feeding the body – it's about nourishing the soul and creating moments of joy and connection.</p>
-                    
-                    <p data-en="Whether preparing an intimate family dinner or catering for special occasions, I believe that food has the power to bring people together and create lasting memories. Every dish I prepare is a reflection of my passion for culinary excellence and my commitment to using only the finest ingredients." data-fr="Que ce soit pour préparer un dîner familial intime ou pour des occasions spéciales, je crois que la nourriture a le pouvoir de rassembler les gens et de créer des souvenirs durables. Chaque plat que je prépare est le reflet de ma passion pour l'excellence culinaire et de mon engagement à utiliser uniquement les meilleurs ingrédients.">Whether preparing an intimate family dinner or catering for special occasions, I believe that food has the power to bring people together and create lasting memories. Every dish I prepare is a reflection of my passion for culinary excellence and my commitment to using only the finest ingredients.</p>
+                <div class="chef-photo">
+                    <img src="chef-photo.jpg" alt="Chef Marie" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxOCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkNoZWYgTWFyaWU8L3RleHQ+PC9zdmc+'">
                 </div>
             </div>
         </div>
@@ -839,11 +557,7 @@
     </footer>
 
     <script>
-        // Global variables
-        let currentCarousels = {};
         let currentLanguage = 'en';
-        let allMeals = [];
-        let currentGalleryFilter = 'all';
 
         // Load saved language preference
         document.addEventListener('DOMContentLoaded', function() {
@@ -853,7 +567,6 @@
                 updateLanguageToggle();
                 translatePage();
             }
-            showPage('home');
         });
 
         function toggleLanguage() {
@@ -861,11 +574,6 @@
             localStorage.setItem('preferred-language', currentLanguage);
             updateLanguageToggle();
             translatePage();
-            
-            // Reload meals if on gallery page to show in new language
-            if (document.getElementById('gallery').classList.contains('active')) {
-                loadMeals();
-            }
         }
 
         function updateLanguageToggle() {
@@ -902,234 +610,6 @@
             // Update page language attribute
             document.documentElement.lang = currentLanguage;
         }
-
-        function showPage(pageId) {
-            // Hide all pages
-            const pages = document.querySelectorAll('.page');
-            pages.forEach(page => page.classList.remove('active'));
-            
-            // Show selected page
-            document.getElementById(pageId).classList.add('active');
-            
-            // Update navigation only if event.target exists (clicked from nav)
-            if (typeof event !== 'undefined' && event.target) {
-                const navLinks = document.querySelectorAll('.nav-links a');
-                navLinks.forEach(link => link.classList.remove('active'));
-                event.target.classList.add('active');
-            } else {
-                // Handle direct page load - find the correct nav link
-                const navLinks = document.querySelectorAll('.nav-links a');
-                navLinks.forEach(link => {
-                    link.classList.remove('active');
-                    if (link.onclick && link.onclick.toString().includes(pageId)) {
-                        link.classList.add('active');
-                    }
-                });
-            }
-            
-            // Load gallery if gallery page is shown
-            if (pageId === 'gallery') {
-                loadMeals();
-            }
-            
-            // Scroll to top
-            window.scrollTo(0, 0);
-        }
-
-        function handleSubmit(event) {
-            event.preventDefault();
-            const message = currentLanguage === 'en' 
-                ? 'Thank you for your message! I will get back to you within 24 hours to discuss your culinary needs.'
-                : 'Merci pour votre message ! Je vous recontacterai dans les 24 heures pour discuter de vos besoins culinaires.';
-            alert(message);
-            event.target.reset();
-        }
-
-        function filterGalleryByCategory(category) {
-            currentGalleryFilter = category;
-            
-            // Update active filter button
-            document.querySelectorAll('.category-filter-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            document.querySelector(`.category-filter-btn.${category}`).classList.add('active');
-            
-            // Display filtered meals
-            displayMeals(allMeals);
-        }
-
-        function displayMeals(meals) {
-            const gallery = document.getElementById('galleryGrid');
-            const noResults = document.getElementById('noResults');
-            gallery.innerHTML = '';
-
-            if (!meals || meals.length === 0) {
-                const noMealsMessage = currentLanguage === 'en' 
-                    ? 'No meals available yet. Please check back later!'
-                    : 'Aucun plat disponible pour le moment. Revenez plus tard !';
-                gallery.innerHTML = `<p style="text-align: center; color: #666; padding: 2rem; grid-column: 1 / -1;">${noMealsMessage}</p>`;
-                noResults.style.display = 'none';
-                return;
-            }
-
-            // Filter meals based on current category filter
-            const filteredMeals = currentGalleryFilter === 'all' 
-                ? meals 
-                : meals.filter(meal => (meal.category || 'cat1') === currentGalleryFilter);
-
-            if (filteredMeals.length === 0) {
-                gallery.innerHTML = '';
-                noResults.style.display = 'block';
-                return;
-            }
-
-            noResults.style.display = 'none';
-
-            filteredMeals.forEach((meal, index) => {
-                const mealElement = document.createElement('div');
-                mealElement.className = `gallery-item ${meal.category || 'cat1'}`;
-                
-                // Get the appropriate language content with fallback
-                const title = currentLanguage === 'en' 
-                    ? (meal.title_en || meal.title || 'Untitled Dish')
-                    : (meal.title_fr || meal.title || 'Plat sans titre');
-                
-                const description = currentLanguage === 'en' 
-                    ? (meal.description_en || meal.description || 'No description available')
-                    : (meal.description_fr || meal.description || 'Aucune description disponible');
-                
-                // Category display
-                const categoryNames = {
-                    'cat1': currentLanguage === 'en' ? 'Appetizers' : 'Entrées',
-                    'cat2': currentLanguage === 'en' ? 'Main Courses' : 'Plats Principaux', 
-                    'cat3': currentLanguage === 'en' ? 'Desserts' : 'Desserts'
-                };
-                
-                const categoryName = categoryNames[meal.category || 'cat1'];
-                
-                // Create carousel for images - different structure for single vs multiple images
-                let carouselHTML = '';
-                const images = meal.images && meal.images.length > 0 ? meal.images : [];
-                
-                if (images.length > 1) {
-                    // Multiple images - use carousel with navigation
-                    carouselHTML = `
-                        <div class="image-carousel">
-                            <div class="carousel-images" id="carousel-${index}" style="transform: translateX(0%);">
-                                ${images.map(img => `<img src="${img}" alt="${title}" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjI4MCIgeG1zbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjBmMGYwIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNiIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPk5vIEltYWdlPC90ZXh0Pjwvc3ZnPg=='">`).join('')}
-                            </div>
-                            <div class="carousel-nav">
-                                ${images.map((_, i) => `<div class="carousel-dot ${i === 0 ? 'active' : ''}" onclick="showCarouselImage(${index}, ${i})"></div>`).join('')}
-                            </div>
-                        </div>
-                    `;
-                } else if (images.length === 1) {
-                    // Single image - static display without carousel functionality
-                    carouselHTML = `
-                        <div class="image-carousel">
-                            <img src="${images[0]}" alt="${title}" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjI4MCIgeG1zbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjBmMGYwIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNiIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPk5vIEltYWdlPC90ZXh0Pjwvc3ZnPg=='" style="width: 100%; height: 100%; object-fit: cover; display: block;">
-                        </div>
-                    `;
-                } else {
-                    // No images - placeholder
-                    carouselHTML = `
-                        <div class="image-carousel">
-                            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjI4MCIgeG1zbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjBmMGYwIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNiIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPk5vIEltYWdlPC90ZXh0Pjwvc3ZnPg==" alt="${title}" style="width: 100%; height: 100%; object-fit: cover; display: block;">
-                        </div>
-                    `;
-                }
-                
-                mealElement.innerHTML = `
-                    ${carouselHTML}
-                    <div class="gallery-item-content">
-                        <div class="category-badge ${meal.category || 'cat1'}">${categoryName}</div>
-                        <h3>${title}</h3>
-                        <p>${description}</p>
-                    </div>
-                `;
-                
-                gallery.appendChild(mealElement);
-                
-                // Only initialize carousel for meals with multiple images
-                if (images.length > 1) {
-                    currentCarousels[index] = 0;
-                    
-                    // Auto-rotate carousel every 5 seconds
-                    const carouselInterval = setInterval(() => {
-                        if (document.getElementById(`carousel-${index}`)) {
-                            const nextIndex = (currentCarousels[index] + 1) % images.length;
-                            showCarouselImage(index, nextIndex);
-                        } else {
-                            // Clear interval if element no longer exists
-                            clearInterval(carouselInterval);
-                        }
-                    }, 5000);
-                }
-            });
-        }
-
-        // Load meals from database
-        async function loadMeals() {
-            try {
-                const response = await fetch('api.php?action=meals');
-                
-                // Check if the response is ok
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                
-                const contentType = response.headers.get("content-type");
-                if (!contentType || !contentType.includes("application/json")) {
-                    throw new Error("Response is not JSON");
-                }
-                
-                const meals = await response.json();
-                
-                // Check if meals is an array
-                if (!Array.isArray(meals)) {
-                    throw new Error("Invalid response format");
-                }
-                
-                allMeals = meals; // Store all meals for filtering
-                displayMeals(meals);
-            } catch (error) {
-                console.error('Failed to load meals:', error);
-                const noMealsMessage = currentLanguage === 'en' 
-                    ? 'Unable to load meals. Please try again later.'
-                    : 'Impossible de charger les plats. Veuillez réessayer plus tard.';
-                document.getElementById('galleryGrid').innerHTML = `<p style="text-align: center; color: #666; padding: 2rem;">${noMealsMessage}</p>`;
-            }
-        }
-
-        function showCarouselImage(carouselIndex, imageIndex) {
-            const carousel = document.getElementById(`carousel-${carouselIndex}`);
-            if (!carousel) return;
-            
-            // Only proceed if this is actually a carousel (has carousel-images class)
-            if (!carousel.classList.contains('carousel-images')) return;
-            
-            const parentElement = carousel.closest('.image-carousel');
-            const dots = parentElement ? parentElement.querySelectorAll('.carousel-dot') : [];
-            
-            carousel.style.transform = `translateX(-${imageIndex * 100}%)`;
-            currentCarousels[carouselIndex] = imageIndex;
-            
-            // Update dots
-            dots.forEach((dot, i) => {
-                dot.classList.toggle('active', i === imageIndex);
-            });
-        }
-
-        // Initialize page
-        document.addEventListener('DOMContentLoaded', function() {
-            const savedLanguage = localStorage.getItem('preferred-language') || 'en';
-            if (savedLanguage !== 'en') {
-                currentLanguage = savedLanguage;
-                updateLanguageToggle();
-                translatePage();
-            }
-            showPage('home');
-        });
     </script>
 </body>
 </html>
