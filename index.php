@@ -739,7 +739,7 @@
                     <li><a href="#" onclick="showPage('home')" class="active" data-en="Home" data-fr="Accueil">Home</a></li>
                     <li><a href="#" onclick="showPage('gallery')" data-en="Gallery" data-fr="Galerie">Gallery</a></li>
                     <li><a href="#" onclick="showPage('about')" data-en="About" data-fr="À Propos">About</a></li>
-                    <li><a href="#" onclick="showPage('contact')" data-en="Contact" data-fr="Contact">Contact</a></li>
+                    <li><a href="contact.php" data-en="Contact" data-fr="Contact">Contact</a></li>
                 </ul>
                 <div class="language-toggle" onclick="toggleLanguage()">
                     <div class="language-option active" id="lang-en">EN</div>
@@ -756,7 +756,7 @@
                 <div class="hero-content">
                     <h1 data-en="Culinary Excellence" data-fr="Excellence Culinaire">Culinary Excellence</h1>
                     <p data-en="Where passion meets precision in every carefully crafted dish" data-fr="Où la passion rencontre la précision dans chaque plat soigneusement préparé">Where passion meets precision in every carefully crafted dish</p>
-                    <a href="#" onclick="showPage('contact')" class="cta-button" data-en="Get In Touch" data-fr="Contactez-Moi">Get In Touch</a>
+                    <a href="contact.php" class="cta-button" data-en="Get In Touch" data-fr="Contactez-Moi">Get In Touch</a>
                 </div>
             </div>
         </div>
@@ -827,66 +827,6 @@
                     <p data-en="Over the years, I have refined my skills and developed my own unique style that honors classic techniques while embracing fresh, seasonal ingredients. Cooking is not just about feeding the body – it's about nourishing the soul and creating moments of joy and connection." data-fr="Au fil des années, j'ai affiné mes compétences et développé mon propre style unique qui honore les techniques classiques tout en adoptant des ingrédients frais et de saison. Cuisiner ne consiste pas seulement à nourrir le corps – il s'agit de nourrir l'âme et de créer des moments de joie et de connexion.">Over the years, I have refined my skills and developed my own unique style that honors classic techniques while embracing fresh, seasonal ingredients. Cooking is not just about feeding the body – it's about nourishing the soul and creating moments of joy and connection.</p>
                     
                     <p data-en="Whether preparing an intimate family dinner or catering for special occasions, I believe that food has the power to bring people together and create lasting memories. Every dish I prepare is a reflection of my passion for culinary excellence and my commitment to using only the finest ingredients." data-fr="Que ce soit pour préparer un dîner familial intime ou pour des occasions spéciales, je crois que la nourriture a le pouvoir de rassembler les gens et de créer des souvenirs durables. Chaque plat que je prépare est le reflet de ma passion pour l'excellence culinaire et de mon engagement à utiliser uniquement les meilleurs ingrédients.">Whether preparing an intimate family dinner or catering for special occasions, I believe that food has the power to bring people together and create lasting memories. Every dish I prepare is a reflection of my passion for culinary excellence and my commitment to using only the finest ingredients.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- CONTACT PAGE -->
-    <div id="contact" class="page">
-        <div class="container">
-            <div class="page-header">
-                <h1 data-en="Get In Touch" data-fr="Contactez-Moi">Get In Touch</h1>
-                <p data-en="Ready to create something extraordinary together? Let's discuss your culinary needs" data-fr="Prêt à créer quelque chose d'extraordinaire ensemble ? Discutons de vos besoins culinaires">Ready to create something extraordinary together? Let's discuss your culinary needs</p>
-            </div>
-
-            <div class="contact-content">
-                <div class="contact-form">
-                    <h3 data-en="Send a Message" data-fr="Envoyer un Message">Send a Message</h3>
-                    <form onsubmit="handleSubmit(event)">
-                        <div class="form-group">
-                            <label for="name" data-en="Full Name" data-fr="Nom Complet">Full Name</label>
-                            <input type="text" id="name" name="name" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="email" data-en="Email Address" data-fr="Adresse Email">Email Address</label>
-                            <input type="email" id="email" name="email" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="phone" data-en="Phone Number" data-fr="Numéro de Téléphone">Phone Number</label>
-                            <input type="tel" id="phone" name="phone">
-                        </div>
-                        <div class="form-group">
-                            <label for="event-type" data-en="Occasion" data-fr="Occasion">Occasion</label>
-                            <input type="text" id="event-type" name="event-type" placeholder="" data-placeholder-en="e.g., Dinner party, Wedding, Corporate event" data-placeholder-fr="ex. Dîner, Mariage, Événement d'entreprise">
-                        </div>
-                        <div class="form-group">
-                            <label for="guests" data-en="Number of Guests" data-fr="Nombre d'Invités">Number of Guests</label>
-                            <input type="number" id="guests" name="guests" placeholder="" data-placeholder-en="How many people?" data-placeholder-fr="Combien de personnes ?">
-                        </div>
-                        <div class="form-group">
-                            <label for="date" data-en="Preferred Date" data-fr="Date Préférée">Preferred Date</label>
-                            <input type="date" id="date" name="date">
-                        </div>
-                        <div class="form-group">
-                            <label for="message" data-en="Message" data-fr="Message">Message</label>
-                            <textarea id="message" name="message" rows="5" placeholder="" data-placeholder-en="Tell me about your event, dietary preferences, favorite dishes, and any special requests..." data-placeholder-fr="Parlez-moi de votre événement, de vos préférences alimentaires, de vos plats préférés et de toute demande spéciale..."></textarea>
-                        </div>
-                        <button type="submit" class="btn" data-en="Send Message" data-fr="Envoyer le Message">Send Message</button>
-                    </form>
-                </div>
-
-                <div class="contact-info">
-                    <h3 data-en="Contact Information" data-fr="Informations de Contact">Contact Information</h3>
-                    <p><strong data-en="Email:" data-fr="Email :">Email:</strong><br>chef.elodie@example.com</p>
-                    <p><strong data-en="Phone:" data-fr="Téléphone :">Phone:</strong><br>+33 (0) 1 23 45 67 89</p>
-                    <p><strong data-en="Response Time:" data-fr="Temps de Réponse :">Response Time:</strong><br><span data-en="I typically respond within 24 hours to all inquiries" data-fr="Je réponds généralement dans les 24 heures à toutes les demandes">I typically respond within 24 hours to all inquiries</span></p>
-                    
-                    <h3 data-en="Service Areas" data-fr="Zones de Service">Service Areas</h3>
-                    <p data-en="Île-de-France region and surrounding areas. Travel arrangements can be made for special events outside the region." data-fr="Région Île-de-France et zones environnantes. Des arrangements de voyage peuvent être pris pour des événements spéciaux en dehors de la région.">Île-de-France region and surrounding areas. Travel arrangements can be made for special events outside the region.</p>
-                    
-                    <h3 data-en="Services Offered" data-fr="Services Offerts">Services Offered</h3>
-                    <p data-en="• Private dinner parties<br>• Corporate events<br>• Wedding catering<br>• Cooking classes<br>• Menu consultation<br>• Special dietary accommodations" data-fr="• Dîners privés<br>• Événements d'entreprise<br>• Traiteur pour mariages<br>• Cours de cuisine<br>• Consultation de menu<br>• Accommodations alimentaires spéciales">• Private dinner parties<br>• Corporate events<br>• Wedding catering<br>• Cooking classes<br>• Menu consultation<br>• Special dietary accommodations</p>
                 </div>
             </div>
         </div>
