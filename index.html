@@ -15,6 +15,9 @@
             --gray-medium: #6c757d;
             --gray-dark: #495057;
             --accent-gold: #d4af37;
+            --cat1-color: #e74c3c;
+            --cat2-color: #f39c12;
+            --cat3-color: #27ae60;
         }
 
         * {
@@ -268,7 +271,7 @@
 
         .section-title {
             text-align: center;
-            margin-bottom: 5rem;
+            margin-bottom: 3rem;
         }
 
         .section-title h2 {
@@ -286,14 +289,72 @@
             margin: 0 auto;
         }
 
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
+        /* Category Filter Buttons */
+        .category-filters {
+            display: flex;
+            gap: 1rem;
+            margin: 3rem 0;
+            justify-content: center;
+            flex-wrap: wrap;
         }
 
-        /* Enhanced Gallery Item Styles */
+        .category-filter-btn {
+            padding: 0.75rem 1.5rem;
+            border: 2px solid var(--gray-light);
+            background: var(--white);
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 0.85rem;
+            color: var(--gray-dark);
+        }
+
+        .category-filter-btn.active,
+        .category-filter-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .category-filter-btn.all.active,
+        .category-filter-btn.all:hover {
+            background: var(--navy-primary);
+            border-color: var(--navy-primary);
+            color: var(--white);
+        }
+
+        .category-filter-btn.cat1.active,
+        .category-filter-btn.cat1:hover {
+            background: var(--cat1-color);
+            border-color: var(--cat1-color);
+            color: var(--white);
+        }
+
+        .category-filter-btn.cat2.active,
+        .category-filter-btn.cat2:hover {
+            background: var(--cat2-color);
+            border-color: var(--cat2-color);
+            color: var(--white);
+        }
+
+        .category-filter-btn.cat3.active,
+        .category-filter-btn.cat3:hover {
+            background: var(--cat3-color);
+            border-color: var(--cat3-color);
+            color: var(--white);
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+            max-width: 100%;
+        }
+
+        /* Enhanced Gallery Item Styles with fixed sizing */
         .gallery-item {
             background: var(--white);
             border-radius: 12px;
@@ -302,44 +363,25 @@
             transition: all 0.4s ease;
             border: 1px solid rgba(26, 35, 50, 0.08);
             position: relative;
+            /* Fixed width to prevent expansion */
+            width: 100%;
+            max-width: 450px;
+            margin: 0 auto;
         }
 
-        .gallery-item::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(212, 175, 55, 0.05) 0%, rgba(26, 35, 50, 0.05) 100%);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            z-index: 1;
-            pointer-events: none;
-        }
-
-        .gallery-item:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 45px rgba(26, 35, 50, 0.15);
-            border-color: rgba(212, 175, 55, 0.2);
-        }
-
-        .gallery-item:hover::before {
-            opacity: 1;
-        }
-
-        /* Image Carousel */
         .image-carousel {
             position: relative;
-            height: 300px;
+            height: 280px;
             overflow: hidden;
             border-bottom: 1px solid rgba(26, 35, 50, 0.08);
+            width: 100%;
         }
 
         .carousel-images {
             display: flex;
             height: 100%;
             transition: transform 0.5s ease;
+            width: 100%;
         }
 
         .carousel-images img {
@@ -347,6 +389,7 @@
             height: 100%;
             object-fit: cover;
             flex-shrink: 0;
+            display: block;
         }
 
         .carousel-nav {
@@ -381,25 +424,47 @@
         }
 
         .gallery-item-content {
-            padding: 2rem;
+            padding: 1.5rem;
             position: relative;
             z-index: 2;
             background: var(--white);
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .category-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 1rem;
+            color: white;
+            width: fit-content;
         }
 
         .gallery-item h3 {
             font-family: 'Playfair Display', serif;
             color: var(--navy-dark);
             margin-bottom: 0.8rem;
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             font-weight: 600;
             line-height: 1.3;
+            flex-shrink: 0;
         }
 
         .gallery-item p {
             color: var(--gray-dark);
-            line-height: 1.7;
-            font-size: 1rem;
+            line-height: 1.6;
+            font-size: 0.95rem;
+            flex-grow: 1;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 4;
+            -webkit-box-orient: vertical;
         }
 
         /* About Page */
@@ -543,6 +608,18 @@
             font-size: 0.95rem;
         }
 
+        /* Gallery Filter Animation */
+        .gallery-item.filtered-out {
+            display: none;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--gray-medium);
+            font-style: italic;
+        }
+
         /* Responsive Design */
         @media (max-width: 768px) {
             .container {
@@ -566,6 +643,7 @@
 
             .gallery-grid {
                 grid-template-columns: 1fr;
+                gap: 1.5rem;
             }
 
             .page-header h1 {
@@ -592,6 +670,17 @@
             .language-toggle {
                 order: -1;
             }
+
+            .category-filters {
+                flex-direction: column;
+                align-items: center;
+                gap: 0.5rem;
+            }
+
+            .category-filter-btn {
+                padding: 0.5rem 1rem;
+                font-size: 0.8rem;
+            }
         }
 
         @media (max-width: 480px) {
@@ -610,6 +699,33 @@
             .language-toggle {
                 order: 1;
                 align-self: flex-end;
+            }
+
+            .category-filters {
+                gap: 0.25rem;
+            }
+
+            .gallery-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .image-carousel {
+                height: 220px;
+            }
+
+            .gallery-item-content {
+                padding: 1rem;
+                min-height: 160px;
+            }
+
+            .gallery-item h3 {
+                font-size: 1.2rem;
+            }
+
+            .gallery-item p {
+                font-size: 0.9rem;
+                -webkit-line-clamp: 3;
             }
         }
     </style>
@@ -673,8 +789,20 @@
 
         <div class="gallery-section">
             <div class="container">
+                <!-- Category Filters -->
+                <div class="category-filters">
+                    <button class="category-filter-btn all active" onclick="filterGalleryByCategory('all')" data-en="All Dishes" data-fr="Tous les Plats">All Dishes</button>
+                    <button class="category-filter-btn cat1" onclick="filterGalleryByCategory('cat1')" data-en="🍽️ Appetizers" data-fr="🍽️ Entrées">🍽️ Appetizers</button>
+                    <button class="category-filter-btn cat2" onclick="filterGalleryByCategory('cat2')" data-en="🥘 Main Courses" data-fr="🥘 Plats Principaux">🥘 Main Courses</button>
+                    <button class="category-filter-btn cat3" onclick="filterGalleryByCategory('cat3')" data-en="🍰 Desserts" data-fr="🍰 Desserts">🍰 Desserts</button>
+                </div>
+
                 <div id="galleryGrid" class="gallery-grid">
                     <!-- Meals will be loaded dynamically -->
+                </div>
+
+                <div id="noResults" class="no-results" style="display: none;">
+                    <p data-en="No dishes found in this category yet." data-fr="Aucun plat trouvé dans cette catégorie pour le moment.">No dishes found in this category yet.</p>
                 </div>
             </div>
         </div>
@@ -690,7 +818,7 @@
 
             <div class="about-content">
                 <div class="about-photo">
-                    <img src="chef-about.jpg" alt="Chef Marie - About" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjUwMCIgeG1zbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZWVlIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxOCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkFib3V0IENoZWYgTWFyaWU8L3RleHQ+PC9zdmc+'">
+                    <img src="chef-about.jpg" alt="Chef Marie - About" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjUwMCIgeG1zbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZWVlIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxOCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkFib3V0IENoZWYgTWFyaWU8L3RleHQ+PC9zdmc+'>
                 </div>
                 <div class="about-text">
                     <h2 data-en="A Culinary Journey" data-fr="Un Voyage Culinaire">A Culinary Journey</h2>
@@ -774,6 +902,8 @@
         // Global variables
         let currentCarousels = {};
         let currentLanguage = 'en';
+        let allMeals = [];
+        let currentGalleryFilter = 'all';
 
         // Load saved language preference
         document.addEventListener('DOMContentLoaded', function() {
@@ -875,21 +1005,49 @@
             event.target.reset();
         }
 
+        function filterGalleryByCategory(category) {
+            currentGalleryFilter = category;
+            
+            // Update active filter button
+            document.querySelectorAll('.category-filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`.category-filter-btn.${category}`).classList.add('active');
+            
+            // Display filtered meals
+            displayMeals(allMeals);
+        }
+
         function displayMeals(meals) {
             const gallery = document.getElementById('galleryGrid');
+            const noResults = document.getElementById('noResults');
             gallery.innerHTML = '';
 
             if (!meals || meals.length === 0) {
                 const noMealsMessage = currentLanguage === 'en' 
                     ? 'No meals available yet. Please check back later!'
                     : 'Aucun plat disponible pour le moment. Revenez plus tard !';
-                gallery.innerHTML = `<p style="text-align: center; color: #666; padding: 2rem;">${noMealsMessage}</p>`;
+                gallery.innerHTML = `<p style="text-align: center; color: #666; padding: 2rem; grid-column: 1 / -1;">${noMealsMessage}</p>`;
+                noResults.style.display = 'none';
                 return;
             }
 
-            meals.forEach((meal, index) => {
+            // Filter meals based on current category filter
+            const filteredMeals = currentGalleryFilter === 'all' 
+                ? meals 
+                : meals.filter(meal => (meal.category || 'cat1') === currentGalleryFilter);
+
+            if (filteredMeals.length === 0) {
+                gallery.innerHTML = '';
+                noResults.style.display = 'block';
+                return;
+            }
+
+            noResults.style.display = 'none';
+
+            filteredMeals.forEach((meal, index) => {
                 const mealElement = document.createElement('div');
-                mealElement.className = 'gallery-item';
+                mealElement.className = `gallery-item ${meal.category || 'cat1'}`;
                 
                 // Get the appropriate language content with fallback
                 const title = currentLanguage === 'en' 
@@ -900,28 +1058,51 @@
                     ? (meal.description_en || meal.description || 'No description available')
                     : (meal.description_fr || meal.description || 'Aucune description disponible');
                 
-                // Create carousel for multiple images
+                // Category display
+                const categoryNames = {
+                    'cat1': currentLanguage === 'en' ? 'Appetizers' : 'Entrées',
+                    'cat2': currentLanguage === 'en' ? 'Main Courses' : 'Plats Principaux', 
+                    'cat3': currentLanguage === 'en' ? 'Desserts' : 'Desserts'
+                };
+                
+                const categoryName = categoryNames[meal.category || 'cat1'];
+                
+                // Create carousel for images - different structure for single vs multiple images
                 let carouselHTML = '';
-                if (meal.images && meal.images.length > 0) {
+                const images = meal.images && meal.images.length > 0 ? meal.images : [];
+                
+                if (images.length > 1) {
+                    // Multiple images - use carousel with navigation
                     carouselHTML = `
                         <div class="image-carousel">
-                            <div class="carousel-images" id="carousel-${index}">
-                                ${meal.images.map(img => `<img src="${img}" alt="${title}" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1zbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjBmMGYwIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNiIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPk5vIEltYWdlPC90ZXh0Pjwvc3ZnPg=='">`).join('')}
+                            <div class="carousel-images" id="carousel-${index}" style="transform: translateX(0%);">
+                                ${images.map(img => `<img src="${img}" alt="${title}" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjI4MCIgeG1zbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjBmMGYwIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNiIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPk5vIEltYWdlPC90ZXh0Pjwvc3ZnPg=='">`).join('')}
                             </div>
-                            ${meal.images.length > 1 ? `
-                                <div class="carousel-nav">
-                                    ${meal.images.map((_, i) => `<div class="carousel-dot ${i === 0 ? 'active' : ''}" onclick="showCarouselImage(${index}, ${i})"></div>`).join('')}
-                                </div>
-                            ` : ''}
+                            <div class="carousel-nav">
+                                ${images.map((_, i) => `<div class="carousel-dot ${i === 0 ? 'active' : ''}" onclick="showCarouselImage(${index}, ${i})"></div>`).join('')}
+                            </div>
+                        </div>
+                    `;
+                } else if (images.length === 1) {
+                    // Single image - static display without carousel functionality
+                    carouselHTML = `
+                        <div class="image-carousel">
+                            <img src="${images[0]}" alt="${title}" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjI4MCIgeG1zbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjBmMGYwIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNiIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPk5vIEltYWdlPC90ZXh0Pjwvc3ZnPg=='" style="width: 100%; height: 100%; object-fit: cover; display: block;">
                         </div>
                     `;
                 } else {
-                    carouselHTML = `<div class="image-carousel"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1zbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjBmMGYwIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNiIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPk5vIEltYWdlPC90ZXh0Pjwvc3ZnPg==" alt="${title}"></div>`;
+                    // No images - placeholder
+                    carouselHTML = `
+                        <div class="image-carousel">
+                            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjI4MCIgeG1zbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjBmMGYwIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNiIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPk5vIEltYWdlPC90ZXh0Pjwvc3ZnPg==" alt="${title}" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+                        </div>
+                    `;
                 }
                 
                 mealElement.innerHTML = `
                     ${carouselHTML}
                     <div class="gallery-item-content">
+                        <div class="category-badge ${meal.category || 'cat1'}">${categoryName}</div>
                         <h3>${title}</h3>
                         <p>${description}</p>
                     </div>
@@ -929,14 +1110,19 @@
                 
                 gallery.appendChild(mealElement);
                 
-                // Initialize carousel for this meal
-                if (meal.images && meal.images.length > 1) {
+                // Only initialize carousel for meals with multiple images
+                if (images.length > 1) {
                     currentCarousels[index] = 0;
                     
                     // Auto-rotate carousel every 5 seconds
-                    setInterval(() => {
-                        const nextIndex = (currentCarousels[index] + 1) % meal.images.length;
-                        showCarouselImage(index, nextIndex);
+                    const carouselInterval = setInterval(() => {
+                        if (document.getElementById(`carousel-${index}`)) {
+                            const nextIndex = (currentCarousels[index] + 1) % images.length;
+                            showCarouselImage(index, nextIndex);
+                        } else {
+                            // Clear interval if element no longer exists
+                            clearInterval(carouselInterval);
+                        }
                     }, 5000);
                 }
             });
@@ -964,6 +1150,7 @@
                     throw new Error("Invalid response format");
                 }
                 
+                allMeals = meals; // Store all meals for filtering
                 displayMeals(meals);
             } catch (error) {
                 console.error('Failed to load meals:', error);
@@ -976,17 +1163,21 @@
 
         function showCarouselImage(carouselIndex, imageIndex) {
             const carousel = document.getElementById(`carousel-${carouselIndex}`);
-            const dots = carousel.parentElement.querySelectorAll('.carousel-dot');
+            if (!carousel) return;
             
-            if (carousel) {
-                carousel.style.transform = `translateX(-${imageIndex * 100}%)`;
-                currentCarousels[carouselIndex] = imageIndex;
-                
-                // Update dots
-                dots.forEach((dot, i) => {
-                    dot.classList.toggle('active', i === imageIndex);
-                });
-            }
+            // Only proceed if this is actually a carousel (has carousel-images class)
+            if (!carousel.classList.contains('carousel-images')) return;
+            
+            const parentElement = carousel.closest('.image-carousel');
+            const dots = parentElement ? parentElement.querySelectorAll('.carousel-dot') : [];
+            
+            carousel.style.transform = `translateX(-${imageIndex * 100}%)`;
+            currentCarousels[carouselIndex] = imageIndex;
+            
+            // Update dots
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === imageIndex);
+            });
         }
 
         // Initialize page
