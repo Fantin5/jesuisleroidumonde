@@ -1,3 +1,144 @@
+<?php
+// Include PHPMailer classes
+require_once 'mail/PHPMailer/Exception.php';
+require_once 'mail/PHPMailer/PHPMailer.php';
+require_once 'mail/PHPMailer/SMTP.php';
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+
+$message = '';
+$messageType = '';
+
+// Check if form was submitted
+if ($_POST) {
+    // Get form data
+    $name = strip_tags(trim($_POST["name"]));
+    $email = filter_var(trim($_POST["email"]), FILTER_SANITIZE_EMAIL);
+    $phone = strip_tags(trim($_POST["phone"]));
+    $eventType = strip_tags(trim($_POST["event-type"]));
+    $guests = strip_tags(trim($_POST["guests"]));
+    $date = strip_tags(trim($_POST["date"]));
+    $userMessage = strip_tags(trim($_POST["message"]));
+
+    // Validate form data
+    if (empty($name) || empty($userMessage) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $message = "Please fill in all required fields with valid information.";
+        $messageType = 'error';
+    } else {
+        // Create a new PHPMailer instance
+        $mail = new PHPMailer(true);
+
+        try {
+            // Server settings
+            $mail->isSMTP();
+            $mail->Host       = 'smtp.gmail.com';
+            $mail->SMTPAuth   = true;
+            $mail->Username   = 'deschaumeselodie@gmail.com';
+            $mail->Password   = 'qghypbtuftgqqzuw';
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+            $mail->Port       = 587;
+
+            // Recipients
+            $mail->setFrom('deschaumeselodie@gmail.com', 'Chef Elodie Contact Form');
+            $mail->addAddress('deschaumeselodie@gmail.com', 'Chef Elodie');
+            $mail->addReplyTo($email, $name);
+
+            // Content
+            $mail->isHTML(true);
+            $mail->Subject = 'New Contact Form Submission - Chef Elodie';
+            
+            // Create HTML email body
+            $emailBody = "
+            <html>
+            <head>
+                <title>New Contact Form Submission</title>
+                <style>
+                    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+                    .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+                    .header { background: #1a2332; color: white; padding: 20px; text-align: center; }
+                    .content { padding: 20px; background: #f8f9fa; }
+                    .field { margin-bottom: 15px; }
+                    .label { font-weight: bold; color: #1a2332; }
+                    .value { margin-top: 5px; }
+                    .message-box { background: white; padding: 15px; border-left: 4px solid #d4af37; margin-top: 15px; }
+                </style>
+            </head>
+            <body>
+                <div class='container'>
+                    <div class='header'>
+                        <h2>New Contact Form Submission</h2>
+                        <p>Chef Elodie Website</p>
+                    </div>
+                    <div class='content'>
+                        <div class='field'>
+                            <div class='label'>Name:</div>
+                            <div class='value'>{$name}</div>
+                        </div>
+                        <div class='field'>
+                            <div class='label'>Email:</div>
+                            <div class='value'>{$email}</div>
+                        </div>";
+            
+            if (!empty($phone)) {
+                $emailBody .= "
+                        <div class='field'>
+                            <div class='label'>Phone:</div>
+                            <div class='value'>{$phone}</div>
+                        </div>";
+            }
+            
+            if (!empty($eventType)) {
+                $emailBody .= "
+                        <div class='field'>
+                            <div class='label'>Occasion:</div>
+                            <div class='value'>{$eventType}</div>
+                        </div>";
+            }
+            
+            if (!empty($guests)) {
+                $emailBody .= "
+                        <div class='field'>
+                            <div class='label'>Number of Guests:</div>
+                            <div class='value'>{$guests}</div>
+                        </div>";
+            }
+            
+            if (!empty($date)) {
+                $emailBody .= "
+                        <div class='field'>
+                            <div class='label'>Preferred Date:</div>
+                            <div class='value'>{$date}</div>
+                        </div>";
+            }
+            
+            $emailBody .= "
+                        <div class='message-box'>
+                            <div class='label'>Message:</div>
+                            <div class='value'>" . nl2br($userMessage) . "</div>
+                        </div>
+                    </div>
+                </div>
+            </body>
+            </html>
+            ";
+            
+            $mail->Body = $emailBody;
+            $mail->AltBody = "New Contact Form Submission\n\nName: {$name}\nEmail: {$email}\nPhone: {$phone}\nOccasion: {$eventType}\nGuests: {$guests}\nDate: {$date}\nMessage: {$userMessage}";
+
+            // Send the email
+            $mail->send();
+            $message = "Thank you for your message! I will get back to you within 24 hours.";
+            $messageType = 'success';
+        } catch (Exception $e) {
+            error_log("Mailer Error: {$mail->ErrorInfo}");
+            $message = "Sorry, there was an error sending your message. Please try again.";
+            $messageType = 'error';
+        }
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -254,6 +395,27 @@
             line-height: 1.7;
         }
 
+        /* Message Styles */
+        .message {
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border-radius: 8px;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .message.success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .message.error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
         /* Footer */
         footer {
             background: var(--navy-dark);
@@ -349,34 +511,41 @@
         <div class="contact-content">
             <div class="contact-form">
                 <h3 data-en="Send a Message" data-fr="Envoyer un Message">Send a Message</h3>
-                <form onsubmit="handleSubmit(event)">
+                
+                <?php if ($message): ?>
+                    <div class="message <?php echo $messageType; ?>">
+                        <?php echo htmlspecialchars($message); ?>
+                    </div>
+                <?php endif; ?>
+                
+                <form method="POST" action="">
                     <div class="form-group">
                         <label for="name" data-en="Full Name" data-fr="Nom Complet">Full Name</label>
-                        <input type="text" id="name" name="name" required>
+                        <input type="text" id="name" name="name" required value="<?php echo isset($_POST['name']) ? htmlspecialchars($_POST['name']) : ''; ?>">
                     </div>
                     <div class="form-group">
                         <label for="email" data-en="Email Address" data-fr="Adresse Email">Email Address</label>
-                        <input type="email" id="email" name="email" required>
+                        <input type="email" id="email" name="email" required value="<?php echo isset($_POST['email']) ? htmlspecialchars($_POST['email']) : ''; ?>">
                     </div>
                     <div class="form-group">
                         <label for="phone" data-en="Phone Number" data-fr="Numéro de Téléphone">Phone Number</label>
-                        <input type="tel" id="phone" name="phone">
+                        <input type="tel" id="phone" name="phone" value="<?php echo isset($_POST['phone']) ? htmlspecialchars($_POST['phone']) : ''; ?>">
                     </div>
                     <div class="form-group">
                         <label for="event-type" data-en="Occasion" data-fr="Occasion">Occasion</label>
-                        <input type="text" id="event-type" name="event-type" placeholder="" data-placeholder-en="e.g., Dinner party, Wedding, Corporate event" data-placeholder-fr="ex. Dîner, Mariage, Événement d'entreprise">
+                        <input type="text" id="event-type" name="event-type" placeholder="" data-placeholder-en="e.g., Dinner party, Wedding, Corporate event" data-placeholder-fr="ex. Dîner, Mariage, Événement d'entreprise" value="<?php echo isset($_POST['event-type']) ? htmlspecialchars($_POST['event-type']) : ''; ?>">
                     </div>
                     <div class="form-group">
                         <label for="guests" data-en="Number of Guests" data-fr="Nombre d'Invités">Number of Guests</label>
-                        <input type="number" id="guests" name="guests" placeholder="" data-placeholder-en="How many people?" data-placeholder-fr="Combien de personnes ?">
+                        <input type="number" id="guests" name="guests" placeholder="" data-placeholder-en="How many people?" data-placeholder-fr="Combien de personnes ?" value="<?php echo isset($_POST['guests']) ? htmlspecialchars($_POST['guests']) : ''; ?>">
                     </div>
                     <div class="form-group">
                         <label for="date" data-en="Preferred Date" data-fr="Date Préférée">Preferred Date</label>
-                        <input type="date" id="date" name="date">
+                        <input type="date" id="date" name="date" value="<?php echo isset($_POST['date']) ? htmlspecialchars($_POST['date']) : ''; ?>">
                     </div>
                     <div class="form-group">
                         <label for="message" data-en="Message" data-fr="Message">Message</label>
-                        <textarea id="message" name="message" rows="5" placeholder="" data-placeholder-en="Tell me about your event, dietary preferences, favorite dishes, and any special requests..." data-placeholder-fr="Parlez-moi de votre événement, de vos préférences alimentaires, de vos plats préférés et de toute demande spéciale..."></textarea>
+                        <textarea id="message" name="message" rows="5" placeholder="" data-placeholder-en="Tell me about your event, dietary preferences, favorite dishes, and any special requests..." data-placeholder-fr="Parlez-moi de votre événement, de vos préférences alimentaires, de vos plats préférés et de toute demande spéciale..." required><?php echo isset($_POST['message']) ? htmlspecialchars($_POST['message']) : ''; ?></textarea>
                     </div>
                     <button type="submit" class="btn" data-en="Send Message" data-fr="Envoyer le Message">Send Message</button>
                 </form>
@@ -458,19 +627,9 @@
             document.documentElement.lang = currentLanguage;
         }
 
-        function handleSubmit(event) {
-            event.preventDefault();
-            const message = currentLanguage === 'en' 
-                ? 'Thank you for your message! I will get back to you within 24 hours to discuss your culinary needs.'
-                : 'Merci pour votre message ! Je vous recontacterai dans les 24 heures pour discuter de vos besoins culinaires.';
-            alert(message);
-            event.target.reset();
-        }
-
         function navigateToSection(section) {
             window.location.href = `index.php#${section}`;
         }
     </script>
 </body>
-</html>
 </html>
