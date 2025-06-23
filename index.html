@@ -791,6 +791,11 @@
             localStorage.setItem('preferred-language', currentLanguage);
             updateLanguageToggle();
             translatePage();
+            
+            // Reload meals if on gallery page to show in new language
+            if (document.getElementById('gallery').classList.contains('active')) {
+                loadMeals();
+            }
         }
 
         function updateLanguageToggle() {
@@ -836,10 +841,21 @@
             // Show selected page
             document.getElementById(pageId).classList.add('active');
             
-            // Update navigation
-            const navLinks = document.querySelectorAll('.nav-links a');
-            navLinks.forEach(link => link.classList.remove('active'));
-            event.target.classList.add('active');
+            // Update navigation only if event.target exists (clicked from nav)
+            if (typeof event !== 'undefined' && event.target) {
+                const navLinks = document.querySelectorAll('.nav-links a');
+                navLinks.forEach(link => link.classList.remove('active'));
+                event.target.classList.add('active');
+            } else {
+                // Handle direct page load - find the correct nav link
+                const navLinks = document.querySelectorAll('.nav-links a');
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.onclick && link.onclick.toString().includes(pageId)) {
+                        link.classList.add('active');
+                    }
+                });
+            }
             
             // Load gallery if gallery page is shown
             if (pageId === 'gallery') {
@@ -859,21 +875,6 @@
             event.target.reset();
         }
 
-        // Load meals from database
-        async function loadMeals() {
-            try {
-                const response = await fetch('api.php?action=meals');
-                const meals = await response.json();
-                displayMeals(meals);
-            } catch (error) {
-                console.error('Failed to load meals:', error);
-                const noMealsMessage = currentLanguage === 'en' 
-                    ? 'No meals available yet. Please check back later!'
-                    : 'Aucun plat disponible pour le moment. Revenez plus tard !';
-                document.getElementById('galleryGrid').innerHTML = `<p style="text-align: center; color: #666; padding: 2rem;">${noMealsMessage}</p>`;
-            }
-        }
-
         function displayMeals(meals) {
             const gallery = document.getElementById('galleryGrid');
             gallery.innerHTML = '';
@@ -890,13 +891,22 @@
                 const mealElement = document.createElement('div');
                 mealElement.className = 'gallery-item';
                 
+                // Get the appropriate language content with fallback
+                const title = currentLanguage === 'en' 
+                    ? (meal.title_en || meal.title || 'Untitled Dish')
+                    : (meal.title_fr || meal.title || 'Plat sans titre');
+                
+                const description = currentLanguage === 'en' 
+                    ? (meal.description_en || meal.description || 'No description available')
+                    : (meal.description_fr || meal.description || 'Aucune description disponible');
+                
                 // Create carousel for multiple images
                 let carouselHTML = '';
                 if (meal.images && meal.images.length > 0) {
                     carouselHTML = `
                         <div class="image-carousel">
                             <div class="carousel-images" id="carousel-${index}">
-                                ${meal.images.map(img => `<img src="${img}" alt="${meal.title}" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1zbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjBmMGYwIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNiIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPk5vIEltYWdlPC90ZXh0Pjwvc3ZnPg=='">`).join('')}
+                                ${meal.images.map(img => `<img src="${img}" alt="${title}" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1zbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjBmMGYwIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNiIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPk5vIEltYWdlPC90ZXh0Pjwvc3ZnPg=='">`).join('')}
                             </div>
                             ${meal.images.length > 1 ? `
                                 <div class="carousel-nav">
@@ -906,14 +916,14 @@
                         </div>
                     `;
                 } else {
-                    carouselHTML = `<div class="image-carousel"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1zbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjBmMGYwIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNiIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPk5vIEltYWdlPC90ZXh0Pjwvc3ZnPg==" alt="${meal.title}"></div>`;
+                    carouselHTML = `<div class="image-carousel"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1zbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjBmMGYwIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNiIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPk5vIEltYWdlPC90ZXh0Pjwvc3ZnPg==" alt="${title}"></div>`;
                 }
                 
                 mealElement.innerHTML = `
                     ${carouselHTML}
                     <div class="gallery-item-content">
-                        <h3>${meal.title}</h3>
-                        <p>${meal.description}</p>
+                        <h3>${title}</h3>
+                        <p>${description}</p>
                     </div>
                 `;
                 
@@ -930,6 +940,38 @@
                     }, 5000);
                 }
             });
+        }
+
+        // Load meals from database
+        async function loadMeals() {
+            try {
+                const response = await fetch('api.php?action=meals');
+                
+                // Check if the response is ok
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const contentType = response.headers.get("content-type");
+                if (!contentType || !contentType.includes("application/json")) {
+                    throw new Error("Response is not JSON");
+                }
+                
+                const meals = await response.json();
+                
+                // Check if meals is an array
+                if (!Array.isArray(meals)) {
+                    throw new Error("Invalid response format");
+                }
+                
+                displayMeals(meals);
+            } catch (error) {
+                console.error('Failed to load meals:', error);
+                const noMealsMessage = currentLanguage === 'en' 
+                    ? 'Unable to load meals. Please try again later.'
+                    : 'Impossible de charger les plats. Veuillez réessayer plus tard.';
+                document.getElementById('galleryGrid').innerHTML = `<p style="text-align: center; color: #666; padding: 2rem;">${noMealsMessage}</p>`;
+            }
         }
 
         function showCarouselImage(carouselIndex, imageIndex) {
@@ -949,6 +991,12 @@
 
         // Initialize page
         document.addEventListener('DOMContentLoaded', function() {
+            const savedLanguage = localStorage.getItem('preferred-language') || 'en';
+            if (savedLanguage !== 'en') {
+                currentLanguage = savedLanguage;
+                updateLanguageToggle();
+                translatePage();
+            }
             showPage('home');
         });
     </script>

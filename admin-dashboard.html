@@ -158,11 +158,14 @@
 
         .form-group label {
             margin-bottom: 0.5rem;
-            color: var(--primary-dark);
-            font-weight: 500;
-            text-transform: uppercase;
-            font-size: 0.85rem;
-            letter-spacing: 0.5px;
+            color: var(--navy-dark);
+            font-weight: 600;
+            text-transform: none;
+            font-size: 0.95rem;
+            letter-spacing: 0.3px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
         .form-group input,
@@ -184,6 +187,43 @@
         .form-group textarea {
             resize: vertical;
             min-height: 120px;
+        }
+
+        /* Enhanced styling for bilingual inputs */
+        .form-group input[id*="_en"],
+        .form-group textarea[id*="_en"] {
+            border-left: 4px solid #1f77b4;
+            background: linear-gradient(90deg, rgba(31, 119, 180, 0.02) 0%, rgba(255, 255, 255, 1) 10%);
+        }
+
+        .form-group input[id*="_fr"],
+        .form-group textarea[id*="_fr"] {
+            border-left: 4px solid #e74c3c;
+            background: linear-gradient(90deg, rgba(231, 76, 60, 0.02) 0%, rgba(255, 255, 255, 1) 10%);
+            margin-bottom: 2rem;
+        }
+
+        .form-group input[id*="_fr"]:last-of-type,
+        .form-group textarea[id*="_fr"]:last-of-type {
+            margin-bottom: 1.5rem;
+        }
+
+        /* Add separator after French fields */
+        .form-group:has(input[id*="_fr"]),
+        .form-group:has(textarea[id*="_fr"]) {
+            position: relative;
+            padding-bottom: 1rem;
+        }
+
+        .form-group:has(input[id*="_fr"])::after,
+        .form-group:has(textarea[id*="_fr"])::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent 0%, var(--gray-light) 20%, var(--gray-light) 80%, transparent 100%);
         }
 
         .file-upload {
@@ -288,6 +328,9 @@
 
         .meal-card-content {
             padding: 1.5rem;
+            position: relative;
+            z-index: 2;
+            background: var(--white);
         }
 
         .meal-card-title {
@@ -301,6 +344,34 @@
             color: var(--gray-dark);
             margin-bottom: 1rem;
             line-height: 1.5;
+        }
+
+        .language-preview {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #eee;
+            font-size: 0.85rem;
+            color: #666;
+            background: rgba(248, 249, 250, 0.5);
+            padding: 0.8rem;
+            border-radius: 5px;
+            margin: 1rem 0;
+        }
+
+        .language-preview div {
+            margin-bottom: 0.4rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+        }
+
+        .language-preview div:last-child {
+            margin-bottom: 0;
+        }
+
+        .language-preview strong {
+            min-width: 30px;
+            font-weight: 600;
         }
 
         .meal-card-actions {
@@ -643,6 +714,15 @@
             .cropped-images-preview {
                 grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
             }
+
+            .form-group label {
+                font-size: 0.9rem;
+            }
+            
+            .language-preview {
+                font-size: 0.8rem;
+                padding: 0.6rem;
+            }
         }
 
         /* Language Toggle Styles for Admin */
@@ -710,14 +790,28 @@
             <form id="mealForm" enctype="multipart/form-data">
                 <input type="hidden" id="mealId" name="mealId">
                 <div class="form-grid">
+                    <!-- English Title -->
                     <div class="form-group">
-                        <label for="title" data-en="Meal Title" data-fr="Titre du Plat">Meal Title</label>
-                        <input type="text" id="title" name="title" required placeholder="" data-placeholder-en="Enter meal title" data-placeholder-fr="Entrez le titre du plat">
+                        <label for="title_en" data-en="🇺🇸 English Title" data-fr="🇺🇸 Titre Anglais">🇺🇸 English Title</label>
+                        <input type="text" id="title_en" name="title_en" required placeholder="" data-placeholder-en="Enter English meal title" data-placeholder-fr="Entrez le titre anglais du plat">
                     </div>
                     
+                    <!-- French Title -->
                     <div class="form-group">
-                        <label for="description" data-en="Description" data-fr="Description">Description</label>
-                        <textarea id="description" name="description" required placeholder="" data-placeholder-en="Describe the meal, ingredients, and what makes it special..." data-placeholder-fr="Décrivez le plat, les ingrédients et ce qui le rend spécial..."></textarea>
+                        <label for="title_fr" data-en="🇫🇷 French Title" data-fr="🇫🇷 Titre Français">🇫🇷 French Title</label>
+                        <input type="text" id="title_fr" name="title_fr" required placeholder="" data-placeholder-en="Enter French meal title" data-placeholder-fr="Entrez le titre français du plat">
+                    </div>
+                    
+                    <!-- English Description -->
+                    <div class="form-group">
+                        <label for="description_en" data-en="🇺🇸 English Description" data-fr="🇺🇸 Description Anglaise">🇺🇸 English Description</label>
+                        <textarea id="description_en" name="description_en" required placeholder="" data-placeholder-en="Describe the meal in English, ingredients, and what makes it special..." data-placeholder-fr="Décrivez le plat en anglais, les ingrédients et ce qui le rend spécial..."></textarea>
+                    </div>
+                    
+                    <!-- French Description -->
+                    <div class="form-group">
+                        <label for="description_fr" data-en="🇫🇷 French Description" data-fr="🇫🇷 Description Française">🇫🇷 French Description</label>
+                        <textarea id="description_fr" name="description_fr" required placeholder="" data-placeholder-en="Describe the meal in French, ingredients, and what makes it special..." data-placeholder-fr="Décrivez le plat en français, les ingrédients et ce qui le rend spécial..."></textarea>
                     </div>
                     
                     <div class="form-group">
@@ -925,8 +1019,6 @@
 
             // Handle dropped files
             fileUpload.addEventListener('drop', handleDrop, false);
-
-            // Remove the conflicting click handler - let the file input handle clicks naturally
         }
 
         function preventDefaults(e) {
@@ -1214,7 +1306,7 @@
             });
         }
 
-        // Update form submission to use cropped images
+        // Update form submission to use bilingual fields
         document.getElementById('mealForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             
@@ -1233,8 +1325,12 @@
                 if (editingMealId) {
                     formData.append('id', editingMealId);
                 }
-                formData.append('title', document.getElementById('title').value);
-                formData.append('description', document.getElementById('description').value);
+                
+                // Add bilingual fields
+                formData.append('title_en', document.getElementById('title_en').value);
+                formData.append('title_fr', document.getElementById('title_fr').value);
+                formData.append('description_en', document.getElementById('description_en').value);
+                formData.append('description_fr', document.getElementById('description_fr').value);
                 
                 // Add existing images (when editing)
                 formData.append('existing_images', JSON.stringify(existingImages));
@@ -1252,7 +1348,10 @@
                 const result = await response.json();
                 
                 if (result.success) {
-                    showMessage(editingMealId ? 'Meal updated successfully!' : 'Meal added successfully!', 'success');
+                    const successMessage = editingMealId 
+                        ? (currentLanguage === 'en' ? 'Meal updated successfully!' : 'Plat mis à jour avec succès !')
+                        : (currentLanguage === 'en' ? 'Meal added successfully!' : 'Plat ajouté avec succès !');
+                    showMessage(successMessage, 'success');
                     resetForm();
                     loadMeals();
                 } else {
@@ -1260,7 +1359,10 @@
                 }
             } catch (error) {
                 console.error('Error:', error);
-                showMessage('Error saving meal. Please try again.', 'error');
+                const errorMessage = currentLanguage === 'en' 
+                    ? 'Error saving meal. Please try again.'
+                    : 'Erreur lors de la sauvegarde du plat. Veuillez réessayer.';
+                showMessage(errorMessage, 'error');
             } finally {
                 // Reset button state
                 submitBtn.disabled = false;
@@ -1275,6 +1377,12 @@
             croppedImages = [];
             existingImages = [];
             editingMealId = null;
+            
+            // Clear bilingual fields
+            document.getElementById('title_en').value = '';
+            document.getElementById('title_fr').value = '';
+            document.getElementById('description_en').value = '';
+            document.getElementById('description_fr').value = '';
             
             updateDynamicTranslations();
             document.getElementById('cancelEdit').style.display = 'none';
@@ -1330,16 +1438,29 @@
             
             const firstImage = meal.images && meal.images.length > 0 ? meal.images[0] : 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjBmMGYwIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPk5vIEltYWdlPC90ZXh0Pjwvc3ZnPg==';
             
+            // Get the appropriate language content
+            const title = currentLanguage === 'en' 
+                ? (meal.title_en || meal.title || 'Untitled Dish')
+                : (meal.title_fr || meal.title || 'Plat sans titre');
+            
+            const description = currentLanguage === 'en' 
+                ? (meal.description_en || meal.description || 'No description available')
+                : (meal.description_fr || meal.description || 'Aucune description disponible');
+            
             const editText = currentLanguage === 'en' ? 'Edit' : 'Modifier';
             const deleteText = currentLanguage === 'en' ? 'Delete' : 'Supprimer';
             
             card.innerHTML = `
                 <div class="meal-card-image">
-                    <img src="${firstImage}" alt="${meal.title}" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1zbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjBmMGYwIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPk5vIEltYWdlPC90ZXh0Pjwvc3ZnPg=='">
+                    <img src="${firstImage}" alt="${title}" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjBmMGYwIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPk5vIEltYWdlPC90ZXh0Pjwvc3ZnPg=='">
                 </div>
                 <div class="meal-card-content">
-                    <div class="meal-card-title">${meal.title}</div>
-                    <div class="meal-card-description">${meal.description}</div>
+                    <div class="meal-card-title">${title}</div>
+                    <div class="meal-card-description">${description}</div>
+                    <div class="language-preview">
+                        <div><strong>🇺🇸:</strong> ${meal.title_en || 'Not set'}</div>
+                        <div><strong>🇫🇷:</strong> ${meal.title_fr || 'Not set'}</div>
+                    </div>
                     <div class="meal-card-actions">
                         <button onclick="editMeal(${meal.id})" class="btn btn-primary">${editText}</button>
                         <button onclick="deleteMeal(${meal.id})" class="btn btn-danger">${deleteText}</button>
@@ -1361,8 +1482,11 @@
                     selectedImages = [];
                     croppedImages = [];
                     
-                    document.getElementById('title').value = meal.title;
-                    document.getElementById('description').value = meal.description;
+                    // Populate bilingual fields
+                    document.getElementById('title_en').value = meal.title_en || meal.title || '';
+                    document.getElementById('title_fr').value = meal.title_fr || meal.title || '';
+                    document.getElementById('description_en').value = meal.description_en || meal.description || '';
+                    document.getElementById('description_fr').value = meal.description_fr || meal.description || '';
                     
                     // Update form elements with translations
                     updateDynamicTranslations();

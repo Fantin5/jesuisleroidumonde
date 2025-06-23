@@ -145,11 +145,14 @@ switch ($action) {
             break;
         }
         
-        $title = $_POST['title'] ?? '';
-        $description = $_POST['description'] ?? '';
+        // Get bilingual fields
+        $title_en = $_POST['title_en'] ?? '';
+        $title_fr = $_POST['title_fr'] ?? '';
+        $description_en = $_POST['description_en'] ?? '';
+        $description_fr = $_POST['description_fr'] ?? '';
         
-        if (empty($title) || empty($description)) {
-            echo json_encode(['success' => false, 'message' => 'Title and description are required']);
+        if (empty($title_en) || empty($title_fr) || empty($description_en) || empty($description_fr)) {
+            echo json_encode(['success' => false, 'message' => 'All language fields are required']);
             break;
         }
         
@@ -159,8 +162,16 @@ switch ($action) {
                 $images = uploadImages($_FILES['images']);
             }
             
-            $stmt = $pdo->prepare("INSERT INTO meals (title, description, images) VALUES (?, ?, ?)");
-            $stmt->execute([$title, $description, json_encode($images)]);
+            $stmt = $pdo->prepare("INSERT INTO meals (title_en, title_fr, description_en, description_fr, title, description, images) VALUES (?, ?, ?, ?, ?, ?, ?)");
+            $stmt->execute([
+                $title_en, 
+                $title_fr, 
+                $description_en, 
+                $description_fr,
+                $title_en, // Fallback for old code compatibility
+                $description_en, // Fallback for old code compatibility
+                json_encode($images)
+            ]);
             
             echo json_encode(['success' => true, 'message' => 'Meal added successfully']);
         } catch(PDOException $e) {
@@ -176,12 +187,14 @@ switch ($action) {
         }
         
         $id = $_POST['id'] ?? '';
-        $title = $_POST['title'] ?? '';
-        $description = $_POST['description'] ?? '';
+        $title_en = $_POST['title_en'] ?? '';
+        $title_fr = $_POST['title_fr'] ?? '';
+        $description_en = $_POST['description_en'] ?? '';
+        $description_fr = $_POST['description_fr'] ?? '';
         $existingImages = json_decode($_POST['existing_images'] ?? '[]', true);
         
-        if (!is_numeric($id) || empty($title) || empty($description)) {
-            echo json_encode(['success' => false, 'message' => 'Invalid data']);
+        if (!is_numeric($id) || empty($title_en) || empty($title_fr) || empty($description_en) || empty($description_fr)) {
+            echo json_encode(['success' => false, 'message' => 'Invalid data - all language fields are required']);
             break;
         }
         
@@ -193,8 +206,17 @@ switch ($action) {
                 $allImages = array_merge($allImages, $newImages);
             }
             
-            $stmt = $pdo->prepare("UPDATE meals SET title = ?, description = ?, images = ? WHERE id = ?");
-            $stmt->execute([$title, $description, json_encode($allImages), $id]);
+            $stmt = $pdo->prepare("UPDATE meals SET title_en = ?, title_fr = ?, description_en = ?, description_fr = ?, title = ?, description = ?, images = ? WHERE id = ?");
+            $stmt->execute([
+                $title_en, 
+                $title_fr, 
+                $description_en, 
+                $description_fr,
+                $title_en, // Fallback for old code compatibility
+                $description_en, // Fallback for old code compatibility
+                json_encode($allImages), 
+                $id
+            ]);
             
             echo json_encode(['success' => true, 'message' => 'Meal updated successfully']);
         } catch(PDOException $e) {
