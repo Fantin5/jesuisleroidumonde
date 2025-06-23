@@ -481,6 +481,18 @@ if ($_POST) {
                 align-self: flex-end;
             }
         }
+
+        /* Contact Info Styles */
+        .services-list ul {
+            list-style-type: disc;
+            margin-left: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .services-list li {
+            margin-bottom: 0.5rem;
+            color: var(--gray-dark);
+        }
     </style>
 </head>
 <body>
@@ -565,7 +577,24 @@ if ($_POST) {
                 <p data-en="Île-de-France region and surrounding areas. Travel arrangements can be made for special events outside the region." data-fr="Région Île-de-France et zones environnantes. Des arrangements de voyage peuvent être pris pour des événements spéciaux en dehors de la région.">Île-de-France region and surrounding areas. Travel arrangements can be made for special events outside the region.</p>
                 
                 <h3 data-en="Services Offered" data-fr="Services Offerts">Services Offered</h3>
-                <p data-en="• Private dinner parties<br>• Corporate events<br>• Wedding catering<br>• Cooking classes<br>• Menu consultation<br>• Special dietary accommodations" data-fr="• Dîners privés<br>• Événements d'entreprise<br>• Traiteur pour mariages<br>• Cours de cuisine<br>• Consultation de menu<br>• Accommodations alimentaires spéciales">• Private dinner parties<br>• Corporate events<br>• Wedding catering<br>• Cooking classes<br>• Menu consultation<br>• Special dietary accommodations</p>
+                <div class="services-list">
+                    <ul data-en-list="true" style="display: block;">
+                        <li>Private dinner parties</li>
+                        <li>Corporate events</li>
+                        <li>Wedding catering</li>
+                        <li>Cooking classes</li>
+                        <li>Menu consultation</li>
+                        <li>Special dietary accommodations</li>
+                    </ul>
+                    <ul data-fr-list="true" style="display: none;">
+                        <li>Dîners privés</li>
+                        <li>Événements d'entreprise</li>
+                        <li>Traiteur pour mariages</li>
+                        <li>Cours de cuisine</li>
+                        <li>Consultation de menu</li>
+                        <li>Accommodations alimentaires spéciales</li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
@@ -626,6 +655,18 @@ if ($_POST) {
                     element.placeholder = placeholder;
                 }
             });
+
+            // Handle services lists
+            const enList = document.querySelector('[data-en-list]');
+            const frList = document.querySelector('[data-fr-list]');
+            
+            if (currentLanguage === 'en') {
+                if (enList) enList.style.display = 'block';
+                if (frList) frList.style.display = 'none';
+            } else {
+                if (enList) enList.style.display = 'none';
+                if (frList) frList.style.display = 'block';
+            }
 
             // Update page language attribute
             document.documentElement.lang = currentLanguage;
