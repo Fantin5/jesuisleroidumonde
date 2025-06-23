@@ -24,7 +24,7 @@ if ($_POST) {
 
     // Validate form data
     if (empty($name) || empty($userMessage) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $message = "Please fill in all required fields with valid information.";
+        $message = "validation_error";
         $messageType = 'error';
     } else {
         // Create a new PHPMailer instance
@@ -129,11 +129,11 @@ if ($_POST) {
 
             // Send the email
             $mail->send();
-            $message = "Thank you for your message! I will get back to you within 24 hours.";
+            $message = "email_success";
             $messageType = 'success';
         } catch (Exception $e) {
             error_log("Mailer Error: {$mail->ErrorInfo}");
-            $message = "Sorry, there was an error sending your message. Please try again.";
+            $message = "email_error";
             $messageType = 'error';
         }
     }
@@ -514,7 +514,11 @@ if ($_POST) {
                 
                 <?php if ($message): ?>
                     <div class="message <?php echo $messageType; ?>">
-                        <?php echo htmlspecialchars($message); ?>
+                        <span id="messageText" 
+                              data-en="<?php echo getEnglishMessage($message); ?>" 
+                              data-fr="<?php echo getFrenchMessage($message); ?>">
+                            <?php echo getEnglishMessage($message); ?>
+                        </span>
                     </div>
                 <?php endif; ?>
                 
@@ -633,3 +637,24 @@ if ($_POST) {
     </script>
 </body>
 </html>
+
+<?php
+// Helper functions for message translation
+function getEnglishMessage($messageKey) {
+    $messages = [
+        'email_success' => 'Thank you for your message! I will get back to you within 24 hours.',
+        'email_error' => 'Sorry, there was an error sending your message. Please try again.',
+        'validation_error' => 'Please fill in all required fields with valid information.'
+    ];
+    return isset($messages[$messageKey]) ? $messages[$messageKey] : $messageKey;
+}
+
+function getFrenchMessage($messageKey) {
+    $messages = [
+        'email_success' => 'Merci pour votre message ! Je vous recontacterai dans les 24 heures.',
+        'email_error' => 'Désolé, il y a eu une erreur lors de l\'envoi de votre message. Veuillez réessayer.',
+        'validation_error' => 'Veuillez remplir tous les champs obligatoires avec des informations valides.'
+    ];
+    return isset($messages[$messageKey]) ? $messages[$messageKey] : $messageKey;
+}
+?>
