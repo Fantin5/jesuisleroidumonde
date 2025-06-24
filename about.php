@@ -521,6 +521,7 @@
                     <li><a href="gallery.php" data-en="Gallery" data-fr="Galerie">Gallery</a></li>
                     <li><a href="about.php" class="active" data-en="About" data-fr="À Propos">About</a></li>
                     <li><a href="contact.php" data-en="Contact" data-fr="Contact">Contact</a></li>
+                    <li><a href="comments.php" data-en="Comments" data-fr="Commentaires">Comments</a></li>
                 </ul>
                 <div class="language-toggle" onclick="toggleLanguage()">
                     <div class="language-option active" id="lang-en">EN</div>
@@ -541,7 +542,7 @@
         <div class="container">
             <div class="about-content">
                 <div class="about-photo">
-                    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDUwIiBoZWlnaHQ9IjYwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImciIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPjxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiNmOGY5ZmEiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNlOWVjZWYiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2cpIi8+PGNpcmNsZSBjeD0iMjI1IiBjeT0iMjAwIiByPSI4MCIgZmlsbD0iIzFhMjMzMiIgb3BhY2l0eT0iMC4xIi8+PHRleHQgeD0iNTAlIiB5PSIzNSUiIGZvbnQtZmFtaWx5PSJQbGF5ZmFpciBEaXNwbGF5LCBzZXJpZiIgZm9udC1zaXplPSIyNCIgZmlsbD0iIzFhMjMzMiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iIGZvbnQtd2VpZ2h0PSI2MDAiPkNoZWYgw4lsb2RpZTwvdGV4dD48dGV4dCB4PSI1MCUiIHk9IjY1JSIgZm9udC1mYW1pbHk9IkludGVyLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjE2IiBmaWxsPSIjNmM3NTdkIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iLjNlbSI+UGhvdG8gQ29taW5nIFNvb248L3RleHQ+PC9zdmc+" alt="Chef Élodie - About">
+                    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDUwIiBoZWlnaHQ9IjYwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImciIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPjxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiNmOGY5ZmEiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNlOWVjZWYiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2cpIi8+PGNpcmNsZSBjeD0iMjI1IiBjeT0iMjAwIiByPSI4MCIgZmlsbD0iIzFhMjMzMiIgb3BhY2l0eT0iMC4xIi8+PHRleHQgeD0iNTAlIiB5PSIzNSUiIGZvcnQtZmFtaWx5PSJQbGF5ZmFpciBEaXNwbGF5LCBzZXJpZiIgZm9udC1zaXplPSIyNCIgZmlsbD0iIzFhMjMzMiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iIGZvcnQtd2VpZ2h0PSI2MDAiPkNoZWYgw4lsb2RpZTwvdGV4dD48dGV4dCB4PSI1MCUiIHk9IjY1JSIgZm9udC1mYW1pbHk9IkludGVyLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjE2IiBmaWxsPSIjNmM3NTdkIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iLjNlbSI+UGhvdG8gQ29taW5nIFNvb248L3RleHQ+PC9zdmc+" alt="Chef Élodie - About">
                 </div>
                 <div class="about-text">
                     <h2 data-en="A Culinary Journey" data-fr="Un Voyage Culinaire">A Culinary Journey</h2>

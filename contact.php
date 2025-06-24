@@ -502,8 +502,8 @@ if ($_POST) {
             <div class="nav-right">
                 <ul class="nav-links">
                     <li><a href="index.php" data-en="Home" data-fr="Accueil">Home</a></li>
-                    <li><a href="gallery.php" onclick="navigateToSection('gallery')" data-en="Gallery" data-fr="Galerie">Gallery</a></li>
-                    <li><a href="about.php" onclick="navigateToSection('about')" data-en="About" data-fr="À Propos">About</a></li>
+                    <li><a href="gallery.php" data-en="Gallery" data-fr="Galerie">Gallery</a></li>
+                    <li><a href="about.php" data-en="About" data-fr="À Propos">About</a></li>
                     <li><a href="contact.php" class="active" data-en="Contact" data-fr="Contact">Contact</a></li>
                     <li><a href="comments.php" data-en="Comments" data-fr="Commentaires">Comments</a></li>
                 </ul>

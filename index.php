@@ -514,6 +514,7 @@
                     <li><a href="gallery.php" data-en="Gallery" data-fr="Galerie">Gallery</a></li>
                     <li><a href="about.php" data-en="About" data-fr="À Propos">About</a></li>
                     <li><a href="contact.php" data-en="Contact" data-fr="Contact">Contact</a></li>
+                    <li><a href="comments.php" data-en="Comments" data-fr="Commentaires">Comments</a></li>
                 </ul>
                 <div class="language-toggle" onclick="toggleLanguage()">
                     <div class="language-option active" id="lang-en">EN</div>

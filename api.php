@@ -377,6 +377,7 @@ switch ($action) {
         $name_fr = $_POST['name_fr'] ?? '';
         $comment_en = $_POST['comment_en'] ?? '';
         $comment_fr = $_POST['comment_fr'] ?? '';
+        $comment_date = $_POST['comment_date'] ?? '';
         
         if (empty($name_fr) || empty($comment_en) || empty($comment_fr)) {
             echo json_encode(['success' => false, 'message' => 'All fields are required']);
@@ -384,8 +385,15 @@ switch ($action) {
         }
         
         try {
-            $stmt = $pdo->prepare("INSERT INTO comments (name_fr, comment_en, comment_fr) VALUES (?, ?, ?)");
-            $stmt->execute([$name_fr, $comment_en, $comment_fr]);
+            // If no date provided, use current timestamp
+            if (empty($comment_date)) {
+                $stmt = $pdo->prepare("INSERT INTO comments (name_fr, comment_en, comment_fr) VALUES (?, ?, ?)");
+                $stmt->execute([$name_fr, $comment_en, $comment_fr]);
+            } else {
+                // Use provided date
+                $stmt = $pdo->prepare("INSERT INTO comments (name_fr, comment_en, comment_fr, created_at) VALUES (?, ?, ?, ?)");
+                $stmt->execute([$name_fr, $comment_en, $comment_fr, $comment_date]);
+            }
             
             echo json_encode(['success' => true, 'message' => 'Comment submitted successfully']);
         } catch(PDOException $e) {
@@ -427,6 +435,7 @@ switch ($action) {
         $name_fr = $_POST['name_fr'] ?? '';
         $comment_en = $_POST['comment_en'] ?? '';
         $comment_fr = $_POST['comment_fr'] ?? '';
+        $comment_date = $_POST['comment_date'] ?? '';
         
         if (!is_numeric($id) || empty($name_fr) || empty($comment_en) || empty($comment_fr)) {
             echo json_encode(['success' => false, 'message' => 'Invalid data - all fields are required']);
@@ -434,8 +443,15 @@ switch ($action) {
         }
         
         try {
-            $stmt = $pdo->prepare("UPDATE comments SET name_fr = ?, comment_en = ?, comment_fr = ? WHERE id = ?");
-            $stmt->execute([$name_fr, $comment_en, $comment_fr, $id]);
+            if (empty($comment_date)) {
+                // Don't update the date if not provided
+                $stmt = $pdo->prepare("UPDATE comments SET name_fr = ?, comment_en = ?, comment_fr = ? WHERE id = ?");
+                $stmt->execute([$name_fr, $comment_en, $comment_fr, $id]);
+            } else {
+                // Update with provided date
+                $stmt = $pdo->prepare("UPDATE comments SET name_fr = ?, comment_en = ?, comment_fr = ?, created_at = ? WHERE id = ?");
+                $stmt->execute([$name_fr, $comment_en, $comment_fr, $comment_date, $id]);
+            }
             
             echo json_encode(['success' => true, 'message' => 'Comment updated successfully']);
         } catch(PDOException $e) {
