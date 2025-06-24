@@ -319,6 +319,132 @@ switch ($action) {
         }
         break;
         
+    case 'comments':
+        // Check authentication
+        if (!isset($_SESSION['admin_logged_in'])) {
+            echo json_encode(['error' => 'Not authenticated']);
+            break;
+        }
+        
+        try {
+            $stmt = $pdo->query("SELECT * FROM comments ORDER BY created_at DESC");
+            $comments = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            echo json_encode($comments);
+        } catch(PDOException $e) {
+            echo json_encode(['error' => 'Failed to fetch comments']);
+        }
+        break;
+        
+    case 'approved_comments':
+        try {
+            $stmt = $pdo->query("SELECT * FROM comments ORDER BY created_at DESC");
+            $comments = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            echo json_encode($comments);
+        } catch(PDOException $e) {
+            echo json_encode(['error' => 'Failed to fetch comments']);
+        }
+        break;
+        
+    case 'get_comment':
+        // Check authentication
+        if (!isset($_SESSION['admin_logged_in'])) {
+            echo json_encode(['error' => 'Not authenticated']);
+            break;
+        }
+        
+        $id = $_GET['id'] ?? '';
+        if (!is_numeric($id)) {
+            echo json_encode(['error' => 'Invalid ID']);
+            break;
+        }
+        
+        try {
+            $stmt = $pdo->prepare("SELECT * FROM comments WHERE id = ?");
+            $stmt->execute([$id]);
+            $comment = $stmt->fetch(PDO::FETCH_ASSOC);
+            
+            if ($comment) {
+                echo json_encode($comment);
+            } else {
+                echo json_encode(['error' => 'Comment not found']);
+            }
+        } catch(PDOException $e) {
+            echo json_encode(['error' => 'Database error']);
+        }
+        break;
+        
+    case 'add_comment':
+        $name_en = $_POST['name_en'] ?? '';
+        $name_fr = $_POST['name_fr'] ?? '';
+        $comment_en = $_POST['comment_en'] ?? '';
+        $comment_fr = $_POST['comment_fr'] ?? '';
+        
+        if (empty($name_en) || empty($name_fr) || empty($comment_en) || empty($comment_fr)) {
+            echo json_encode(['success' => false, 'message' => 'All fields are required']);
+            break;
+        }
+        
+        try {
+            $stmt = $pdo->prepare("INSERT INTO comments (name_en, name_fr, comment_en, comment_fr) VALUES (?, ?, ?, ?)");
+            $stmt->execute([$name_en, $name_fr, $comment_en, $comment_fr]);
+            
+            echo json_encode(['success' => true, 'message' => 'Comment submitted successfully']);
+        } catch(PDOException $e) {
+            echo json_encode(['success' => false, 'message' => 'Failed to submit comment']);
+        }
+        break;
+        
+    case 'delete_comment':
+        // Check authentication
+        if (!isset($_SESSION['admin_logged_in'])) {
+            echo json_encode(['success' => false, 'message' => 'Not authenticated']);
+            break;
+        }
+        
+        $id = $_POST['id'] ?? '';
+        if (!is_numeric($id)) {
+            echo json_encode(['success' => false, 'message' => 'Invalid ID']);
+            break;
+        }
+        
+        try {
+            $stmt = $pdo->prepare("DELETE FROM comments WHERE id = ?");
+            $stmt->execute([$id]);
+            
+            echo json_encode(['success' => true, 'message' => 'Comment deleted successfully']);
+        } catch(PDOException $e) {
+            echo json_encode(['success' => false, 'message' => 'Failed to delete comment']);
+        }
+        break;
+
+    case 'update_comment':
+        // Check authentication
+        if (!isset($_SESSION['admin_logged_in'])) {
+            echo json_encode(['success' => false, 'message' => 'Not authenticated']);
+            break;
+        }
+        
+        $id = $_POST['id'] ?? '';
+        $name_en = $_POST['name_en'] ?? '';
+        $name_fr = $_POST['name_fr'] ?? '';
+        $comment_en = $_POST['comment_en'] ?? '';
+        $comment_fr = $_POST['comment_fr'] ?? '';
+        
+        if (!is_numeric($id) || empty($name_en) || empty($name_fr) || empty($comment_en) || empty($comment_fr)) {
+            echo json_encode(['success' => false, 'message' => 'Invalid data - all fields are required']);
+            break;
+        }
+        
+        try {
+            $stmt = $pdo->prepare("UPDATE comments SET name_en = ?, name_fr = ?, comment_en = ?, comment_fr = ? WHERE id = ?");
+            $stmt->execute([$name_en, $name_fr, $comment_en, $comment_fr, $id]);
+            
+            echo json_encode(['success' => true, 'message' => 'Comment updated successfully']);
+        } catch(PDOException $e) {
+            echo json_encode(['success' => false, 'message' => 'Failed to update comment: ' . $e->getMessage()]);
+        }
+        break;
+    
     default:
         echo json_encode(['error' => 'Invalid action']);
         break;

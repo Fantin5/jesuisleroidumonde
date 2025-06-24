@@ -843,6 +843,47 @@
         .language-option:not(.active):hover {
             color: var(--white);
         }
+
+        /* Tab Styles */
+        .dashboard-tabs {
+            display: flex;
+            gap: 0;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid var(--gray-light);
+        }
+
+        .tab-btn {
+            padding: 1rem 2rem;
+            border: none;
+            background: var(--gray-light);
+            color: var(--gray-dark);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            font-size: 1rem;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+            border-bottom: 3px solid transparent;
+        }
+
+        .tab-btn:hover {
+            background: var(--white);
+            color: var(--navy-dark);
+        }
+
+        .tab-btn.active {
+            background: var(--white);
+            color: var(--navy-dark);
+            border-bottom-color: var(--accent-gold);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
     </style>
 </head>
 <body>
@@ -861,104 +902,166 @@
     </header>
 
     <div class="container">
-        <h1 class="page-title" data-en="Meal Management Dashboard" data-fr="Tableau de Bord de Gestion des Plats">Meal Management Dashboard</h1>
+        <h1 class="page-title" data-en="Admin Dashboard" data-fr="Tableau de Bord Admin">Admin Dashboard</h1>
         
         <div id="message" class="message"></div>
         
-        <!-- Add/Edit Meal Section -->
-        <div class="dashboard-section">
-            <div class="section-title">
-                <span id="formTitle" data-en="Add New Meal" data-fr="Ajouter un Nouveau Plat">Add New Meal</span>
-                <button id="cancelEdit" class="btn btn-secondary" onclick="cancelEdit()" style="display: none;" data-en="Cancel Edit" data-fr="Annuler la Modification">Cancel Edit</button>
-            </div>
-            
-            <form id="mealForm" enctype="multipart/form-data">
-                <input type="hidden" id="mealId" name="mealId">
-                <div class="form-grid">
-                    <!-- Category Selection -->
-                    <div class="form-group">
-                        <label for="category" data-en="📂 Category" data-fr="📂 Catégorie">📂 Category</label>
-                        <select id="category" name="category" required>
-                            <option value="cat1" data-en="🍽️ Cat 1 - Appetizers" data-fr="🍽️ Cat 1 - Entrées">🍽️ Cat 1 - Appetizers</option>
-                            <option value="cat2" data-en="🥘 Cat 2 - Main Courses" data-fr="🥘 Cat 2 - Plats Principaux">🥘 Cat 2 - Main Courses</option>
-                            <option value="cat3" data-en="🍰 Cat 3 - Desserts" data-fr="🍰 Cat 3 - Desserts">🍰 Cat 3 - Desserts</option>
-                        </select>
-                    </div>
-
-                    <!-- English Title -->
-                    <div class="form-group">
-                        <label for="title_en" data-en="🇺🇸 English Title" data-fr="🇺🇸 Titre Anglais">🇺🇸 English Title</label>
-                        <input type="text" id="title_en" name="title_en" required placeholder="" data-placeholder-en="Enter English meal title" data-placeholder-fr="Entrez le titre anglais du plat">
-                    </div>
-                    
-                    <!-- French Title -->
-                    <div class="form-group">
-                        <label for="title_fr" data-en="🇫🇷 French Title" data-fr="🇫🇷 Titre Français">🇫🇷 French Title</label>
-                        <input type="text" id="title_fr" name="title_fr" required placeholder="" data-placeholder-en="Enter French meal title" data-placeholder-fr="Entrez le titre français du plat">
-                    </div>
-                    
-                    <!-- English Description -->
-                    <div class="form-group">
-                        <label for="description_en" data-en="🇺🇸 English Description" data-fr="🇺🇸 Description Anglaise">🇺🇸 English Description</label>
-                        <textarea id="description_en" name="description_en" required placeholder="" data-placeholder-en="Describe the meal in English, ingredients, and what makes it special..." data-placeholder-fr="Décrivez le plat en anglais, les ingrédients et ce qui le rend spécial..."></textarea>
-                    </div>
-                    
-                    <!-- French Description -->
-                    <div class="form-group">
-                        <label for="description_fr" data-en="🇫🇷 French Description" data-fr="🇫🇷 Description Française">🇫🇷 French Description</label>
-                        <textarea id="description_fr" name="description_fr" required placeholder="" data-placeholder-en="Describe the meal in French, ingredients, and what makes it special..." data-placeholder-fr="Décrivez le plat en français, les ingrédients et ce qui le rend spécial..."></textarea>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="images" data-en="Images" data-fr="Images">Images</label>
-                        <div class="enhanced-file-upload file-upload">
-                            <input type="file" id="images" name="images[]" multiple accept="image/*" style="position: absolute; opacity: 0; width: 100%; height: 100%; cursor: pointer; z-index: 2;">
-                            <div class="file-upload-label">
-                                <div class="upload-icon">📸</div>
-                                <div class="upload-text" data-en="Click to select images or drag and drop" data-fr="Cliquez pour sélectionner des images ou glissez-déposez">Click to select images or drag and drop</div>
-                                <div class="upload-hint" data-en="Multiple selection • JPG, PNG, GIF, WebP • Images will be cropped for gallery" data-fr="Sélection multiple • JPG, PNG, GIF, WebP • Les images seront recadrées pour la galerie">Multiple selection • JPG, PNG, GIF, WebP • Images will be cropped for gallery</div>
-                            </div>
-                        </div>
-                        
-                        <!-- Cropped Images Preview -->
-                        <div id="croppedImagesPreview" class="cropped-images-preview"></div>
-                        
-                        <!-- Original Image Preview (for existing images when editing) -->
-                        <div id="imagePreview" class="image-preview"></div>
-                    </div>
-                    
-                    <button type="submit" class="btn btn-success" id="submitBtn">
-                        <span id="submitText" data-en="Add Meal" data-fr="Ajouter le Plat">Add Meal</span>
-                        <div id="submitLoading" class="loading" style="display: none;">
-                            <div class="spinner"></div>
-                        </div>
-                    </button>
-                </div>
-            </form>
+        <!-- Navigation Tabs -->
+        <div class="dashboard-tabs">
+            <button class="tab-btn active" onclick="showTab('meals')" data-en="Meals Management" data-fr="Gestion des Plats">Meals Management</button>
+            <button class="tab-btn" onclick="showTab('comments')" data-en="Comments Management" data-fr="Gestion des Commentaires">Comments Management</button>
         </div>
 
-        <!-- Existing Meals Section -->
-        <div class="dashboard-section">
-            <div class="section-title">
-                <span data-en="Existing Meals" data-fr="Plats Existants">Existing Meals</span>
-                <button onclick="loadMeals()" class="btn btn-primary" data-en="Refresh" data-fr="Actualiser">Refresh</button>
+        <!-- Meals Management Tab -->
+        <div id="mealsTab" class="tab-content active">
+            <!-- Add/Edit Meal Section -->
+            <div class="dashboard-section">
+                <div class="section-title">
+                    <span id="formTitle" data-en="Add New Meal" data-fr="Ajouter un Nouveau Plat">Add New Meal</span>
+                    <button id="cancelEdit" class="btn btn-secondary" onclick="cancelEdit()" style="display: none;" data-en="Cancel Edit" data-fr="Annuler la Modification">Cancel Edit</button>
+                </div>
+                
+                <form id="mealForm" enctype="multipart/form-data">
+                    <input type="hidden" id="mealId" name="mealId">
+                    <div class="form-grid">
+                        <!-- Category Selection -->
+                        <div class="form-group">
+                            <label for="category" data-en="📂 Category" data-fr="📂 Catégorie">📂 Category</label>
+                            <select id="category" name="category" required>
+                                <option value="cat1" data-en="🍽️ Cat 1 - Appetizers" data-fr="🍽️ Cat 1 - Entrées">🍽️ Cat 1 - Appetizers</option>
+                                <option value="cat2" data-en="🥘 Cat 2 - Main Courses" data-fr="🥘 Cat 2 - Plats Principaux">🥘 Cat 2 - Main Courses</option>
+                                <option value="cat3" data-en="🍰 Cat 3 - Desserts" data-fr="🍰 Cat 3 - Desserts">🍰 Cat 3 - Desserts</option>
+                            </select>
+                        </div>
+
+                        <!-- English Title -->
+                        <div class="form-group">
+                            <label for="title_en" data-en="🇺🇸 English Title" data-fr="🇺🇸 Titre Anglais">🇺🇸 English Title</label>
+                            <input type="text" id="title_en" name="title_en" required placeholder="" data-placeholder-en="Enter English meal title" data-placeholder-fr="Entrez le titre anglais du plat">
+                        </div>
+                        
+                        <!-- French Title -->
+                        <div class="form-group">
+                            <label for="title_fr" data-en="🇫🇷 French Title" data-fr="🇫🇷 Titre Français">🇫🇷 French Title</label>
+                            <input type="text" id="title_fr" name="title_fr" required placeholder="" data-placeholder-en="Enter French meal title" data-placeholder-fr="Entrez le titre français du plat">
+                        </div>
+                        
+                        <!-- English Description -->
+                        <div class="form-group">
+                            <label for="description_en" data-en="🇺🇸 English Description" data-fr="🇺🇸 Description Anglaise">🇺🇸 English Description</label>
+                            <textarea id="description_en" name="description_en" required placeholder="" data-placeholder-en="Describe the meal in English, ingredients, and what makes it special..." data-placeholder-fr="Décrivez le plat en anglais, les ingrédients et ce qui le rend spécial..."></textarea>
+                        </div>
+                        
+                        <!-- French Description -->
+                        <div class="form-group">
+                            <label for="description_fr" data-en="🇫🇷 French Description" data-fr="🇫🇷 Description Française">🇫🇷 French Description</label>
+                            <textarea id="description_fr" name="description_fr" required placeholder="" data-placeholder-en="Describe the meal in French, ingredients, and what makes it special..." data-placeholder-fr="Décrivez le plat en français, les ingrédients et ce qui le rend spécial..."></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="images" data-en="Images" data-fr="Images">Images</label>
+                            <div class="enhanced-file-upload file-upload">
+                                <input type="file" id="images" name="images[]" multiple accept="image/*" style="position: absolute; opacity: 0; width: 100%; height: 100%; cursor: pointer; z-index: 2;">
+                                <div class="file-upload-label">
+                                    <div class="upload-icon">📸</div>
+                                    <div class="upload-text" data-en="Click to select images or drag and drop" data-fr="Cliquez pour sélectionner des images ou glissez-déposez">Click to select images or drag and drop</div>
+                                    <div class="upload-hint" data-en="Multiple selection • JPG, PNG, GIF, WebP • Images will be cropped for gallery" data-fr="Sélection multiple • JPG, PNG, GIF, WebP • Les images seront recadrées pour la galerie">Multiple selection • JPG, PNG, GIF, WebP • Images will be cropped for gallery</div>
+                                </div>
+                            </div>
+                            
+                            <!-- Cropped Images Preview -->
+                            <div id="croppedImagesPreview" class="cropped-images-preview"></div>
+                            
+                            <!-- Original Image Preview (for existing images when editing) -->
+                            <div id="imagePreview" class="image-preview"></div>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-success" id="submitBtn">
+                            <span id="submitText" data-en="Add Meal" data-fr="Ajouter le Plat">Add Meal</span>
+                            <div id="submitLoading" class="loading" style="display: none;">
+                                <div class="spinner"></div>
+                            </div>
+                        </button>
+                    </div>
+                </form>
             </div>
-            
-            <!-- Category Filters -->
-            <div class="category-filters">
-                <button class="category-filter-btn all active" onclick="filterByCategory('all')" data-en="All Categories" data-fr="Toutes Catégories">All Categories</button>
-                <button class="category-filter-btn cat1" onclick="filterByCategory('cat1')" data-en="🍽️ Cat 1" data-fr="🍽️ Cat 1">🍽️ Cat 1</button>
-                <button class="category-filter-btn cat2" onclick="filterByCategory('cat2')" data-en="🥘 Cat 2" data-fr="🥘 Cat 2">🥘 Cat 2</button>
-                <button class="category-filter-btn cat3" onclick="filterByCategory('cat3')" data-en="🍰 Cat 3" data-fr="🍰 Cat 3">🍰 Cat 3</button>
+
+            <!-- Existing Meals Section -->
+            <div class="dashboard-section">
+                <div class="section-title">
+                    <span data-en="Existing Meals" data-fr="Plats Existants">Existing Meals</span>
+                    <button onclick="loadMeals()" class="btn btn-primary" data-en="Refresh" data-fr="Actualiser">Refresh</button>
+                </div>
+                
+                <!-- Category Filters -->
+                <div class="category-filters">
+                    <button class="category-filter-btn all active" onclick="filterByCategory('all')" data-en="All Categories" data-fr="Toutes Catégories">All Categories</button>
+                    <button class="category-filter-btn cat1" onclick="filterByCategory('cat1')" data-en="🍽️ Cat 1" data-fr="🍽️ Cat 1">🍽️ Cat 1</button>
+                    <button class="category-filter-btn cat2" onclick="filterByCategory('cat2')" data-en="🥘 Cat 2" data-fr="🥘 Cat 2">🥘 Cat 2</button>
+                    <button class="category-filter-btn cat3" onclick="filterByCategory('cat3')" data-en="🍰 Cat 3" data-fr="🍰 Cat 3">🍰 Cat 3</button>
+                </div>
+                
+                <div id="loadingMeals" class="loading">
+                    <div class="spinner"></div>
+                    <p data-en="Loading meals..." data-fr="Chargement des plats...">Loading meals...</p>
+                </div>
+                
+                <div id="mealsContainer" class="meals-grid">
+                    <!-- Meals will be loaded here -->
+                </div>
             </div>
-            
-            <div id="loadingMeals" class="loading">
-                <div class="spinner"></div>
-                <p data-en="Loading meals..." data-fr="Chargement des plats...">Loading meals...</p>
+        </div>
+
+        <!-- Comments Management Tab -->
+        <div id="commentsTab" class="tab-content">
+            <!-- Add Comment Section -->
+            <div class="dashboard-section">
+                <div class="section-title">
+                    <span data-en="Add New Comment" data-fr="Ajouter un Nouveau Commentaire">Add New Comment</span>
+                </div>
+                
+                <form id="newCommentForm">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="new_comment_name_en" data-en="🇺🇸 English Name" data-fr="🇺🇸 Nom Anglais">🇺🇸 English Name</label>
+                            <input type="text" id="new_comment_name_en" name="name_en" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="new_comment_name_fr" data-en="🇫🇷 French Name" data-fr="🇫🇷 Nom Français">🇫🇷 French Name</label>
+                            <input type="text" id="new_comment_name_fr" name="name_fr" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="new_comment_text_en" data-en="🇺🇸 English Comment" data-fr="🇺🇸 Commentaire Anglaise">🇺🇸 English Comment</label>
+                            <textarea id="new_comment_text_en" name="comment_en" required rows="4"></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="new_comment_text_fr" data-en="🇫🇷 French Comment" data-fr="🇫🇷 Commentaire Français">🇫🇷 French Comment</label>
+                            <textarea id="new_comment_text_fr" name="comment_fr" required rows="4"></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-success" data-en="Add Comment" data-fr="Ajouter le Commentaire">Add Comment</button>
+                    </div>
+                </form>
             </div>
-            
-            <div id="mealsContainer" class="meals-grid">
-                <!-- Meals will be loaded here -->
+
+            <!-- Existing Comments Section -->
+            <div class="dashboard-section">
+                <div class="section-title">
+                    <span data-en="Existing Comments" data-fr="Commentaires Existants">Existing Comments</span>
+                    <button onclick="loadComments()" class="btn btn-primary" data-en="Refresh" data-fr="Actualiser">Refresh</button>
+                </div>
+                
+                <div id="loadingComments" class="loading">
+                    <div class="spinner"></div>
+                    <p data-en="Loading comments..." data-fr="Chargement des commentaires...">Loading comments...</p>
+                </div>
+                
+                <div id="commentsContainer">
+                    <!-- Comments will be loaded here -->
+                </div>
             </div>
         </div>
     </div>
@@ -1013,6 +1116,45 @@
         </div>
     </div>
 
+    <!-- Comment Edit Modal -->
+    <div id="commentModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="commentModalTitle" data-en="Edit Comment" data-fr="Modifier le Commentaire">Edit Comment</h3>
+                <span class="close" onclick="closeCommentModal()">&times;</span>
+            </div>
+            <form id="commentForm">
+                <input type="hidden" id="commentId" name="commentId">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="comment_name_en" data-en="🇺🇸 English Name" data-fr="🇺🇸 Nom Anglais">🇺🇸 English Name</label>
+                        <input type="text" id="comment_name_en" name="name_en" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="comment_name_fr" data-en="🇫🇷 French Name" data-fr="🇫🇷 Nom Français">🇫🇷 French Name</label>
+                        <input type="text" id="comment_name_fr" name="name_fr" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="comment_text_en" data-en="🇺🇸 English Comment" data-fr="🇺🇸 Commentaire Anglaise">🇺🇸 English Comment</label>
+                        <textarea id="comment_text_en" name="comment_en" required rows="4"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="comment_text_fr" data-en="🇫🇷 French Comment" data-fr="🇫🇷 Commentaire Française">🇫🇷 French Comment</label>
+                        <textarea id="comment_text_fr" name="comment_fr" required rows="4"></textarea>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 1.5rem; display: flex; gap: 1rem; justify-content: flex-end;">
+                    <button type="button" onclick="closeCommentModal()" class="btn btn-secondary" data-en="Cancel" data-fr="Annuler">Cancel</button>
+                    <button type="submit" class="btn btn-success" data-en="Save Comment" data-fr="Sauvegarder le Commentaire">Save Comment</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <!-- Delete Confirmation Modal -->
     <div id="deleteModal" class="modal">
         <div class="modal-content">
@@ -1046,6 +1188,7 @@
         window.addEventListener('load', function() {
             checkAuth();
             loadMeals();
+            loadComments();
             setupDragDrop();
             setDefaultCropFormat();
             setupCategorySelector();
@@ -1605,7 +1748,7 @@
             
             card.innerHTML = `
                 <div class="meal-card-image">
-                    <img src="${firstImage}" alt="${title}" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjBmMGYwIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPk5vIEltYWdlPC90ZXh0Pjwvc3ZnPg=='">
+                    <img src="${firstImage}" alt="${title}" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1zbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjBmMGYwIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPk5vIEltYWdlPC90ZXh0Pjwvc3ZnPg=='">
                 </div>
                 <div class="meal-card-content">
                     <div class="category-badge ${meal.category || 'cat1'}">${categoryName}</div>
@@ -1700,6 +1843,178 @@
             }
         }
 
+        // Add comments management functions
+        async function loadComments() {
+            const loading = document.getElementById('loadingComments');
+            const container = document.getElementById('commentsContainer');
+            
+            loading.style.display = 'block';
+            container.innerHTML = '';
+            
+            try {
+                const response = await fetch('api.php?action=comments');
+                const comments = await response.json();
+                
+                if (comments.length === 0) {
+                    const noCommentsMessage = currentLanguage === 'en' 
+                        ? 'No comments found.'
+                        : 'Aucun commentaire trouvé.';
+                    container.innerHTML = `<p style="text-align: center; color: #666; padding: 2rem;">${noCommentsMessage}</p>`;
+                } else {
+                    displayComments(comments);
+                }
+            } catch (error) {
+                console.error('Error loading comments:', error);
+                const errorMessage = currentLanguage === 'en' 
+                    ? 'Error loading comments. Please try again.'
+                    : 'Erreur lors du chargement des commentaires. Veuillez réessayer.';
+                container.innerHTML = `<p style="text-align: center; color: #dc3545; padding: 2rem;">${errorMessage}</p>`;
+            } finally {
+                loading.style.display = 'none';
+            }
+        }
+
+        function displayComments(comments) {
+            const container = document.getElementById('commentsContainer');
+            container.innerHTML = '';
+            
+            comments.forEach(comment => {
+                const commentCard = createCommentCard(comment);
+                container.appendChild(commentCard);
+            });
+        }
+
+        function createCommentCard(comment) {
+            const card = document.createElement('div');
+            card.className = 'meal-card';
+            card.style.marginBottom = '1rem';
+            
+            // Handle missing name_en field safely
+            const name = currentLanguage === 'en' 
+                ? (comment.name_en || comment.name_fr || 'Anonymous')
+                : (comment.name_fr || comment.name_en || 'Anonyme');
+            
+            const commentText = currentLanguage === 'en' 
+                ? (comment.comment_en || comment.comment_fr || 'No comment')
+                : (comment.comment_fr || comment.comment_en || 'Aucun commentaire');
+            
+            const editText = currentLanguage === 'en' ? 'Edit' : 'Modifier';
+            const deleteText = currentLanguage === 'en' ? 'Delete' : 'Supprimer';
+            
+            card.innerHTML = `
+                <div class="meal-card-content">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
+                        <div>
+                            <div class="meal-card-title">${name}</div>
+                            <div style="font-size: 0.85rem; color: #666; margin-bottom: 0.5rem;">
+                                ${new Date(comment.created_at).toLocaleDateString()}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="meal-card-description">${commentText}</div>
+                    <div class="language-preview">
+                        <div><strong>🇺🇸:</strong> ${comment.name_en || 'Not set'}</div>
+                        <div><strong>🇫🇷:</strong> ${comment.name_fr || 'Not set'}</div>
+                    </div>
+                    <div class="meal-card-actions" style="margin-top: 1rem;">
+                        <button onclick="editComment(${comment.id})" class="btn btn-primary">${editText}</button>
+                        <button onclick="deleteComment(${comment.id})" class="btn btn-danger">${deleteText}</button>
+                    </div>
+                </div>
+            `;
+            
+            return card;
+        }
+
+        // Add comment form functions
+        function showAddCommentForm() {
+            document.getElementById('addCommentForm').style.display = 'block';
+            document.getElementById('new_comment_name_en').focus();
+        }
+
+        function hideAddCommentForm() {
+            document.getElementById('addCommentForm').style.display = 'none';
+            document.getElementById('newCommentForm').reset();
+        }
+
+        // Tab functionality
+        function showTab(tabName) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Remove active class from all tab buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Show selected tab
+            document.getElementById(tabName + 'Tab').classList.add('active');
+            
+            // Add active class to clicked button
+            event.target.classList.add('active');
+            
+            // Load data based on tab
+            if (tabName === 'meals') {
+                loadMeals();
+            } else if (tabName === 'comments') {
+                loadComments();
+            }
+        }
+
+        // Remove the old functions and update the form handlers
+        function showAddCommentForm() {
+            // Not needed anymore since form is always visible
+        }
+
+        function hideAddCommentForm() {
+            // Reset the form instead
+            document.getElementById('newCommentForm').reset();
+        }
+
+        // Add missing showMessage and showLocalizedMessage functions
+        function showMessage(message, type) {
+            const messageEl = document.getElementById('message');
+            messageEl.textContent = message;
+            messageEl.className = `message ${type}`;
+            messageEl.style.display = 'block';
+            
+            setTimeout(() => {
+                messageEl.style.display = 'none';
+            }, 5000);
+        }
+
+        function showLocalizedMessage(enMessage, frMessage, type) {
+            const message = currentLanguage === 'en' ? enMessage : frMessage;
+            showMessage(message, type);
+        }
+
+        // Add missing updateDynamicTranslations function
+        function updateDynamicTranslations() {
+            // Update form title
+           
+            const isEditing = editingMealId !== null;
+            const formTitle = document.getElementById('formTitle');
+            const submitText = document.getElementById('submitText');
+            
+            if (isEditing) {
+                formTitle.setAttribute('data-en', 'Edit Meal');
+                formTitle.setAttribute('data-fr', 'Modifier le Plat');
+                submitText.setAttribute('data-en', 'Update Meal');
+                submitText.setAttribute('data-fr', 'Mettre à Jour le Plat');
+            } else {
+                formTitle.setAttribute('data-en', 'Add New Meal');
+                formTitle.setAttribute('data-fr', 'Ajouter un Nouveau Plat');
+                submitText.setAttribute('data-en', 'Add Meal');
+                submitText.setAttribute('data-fr', 'Ajouter le Plat');
+            }
+            
+            // Re-translate the page
+            translatePage();
+        }
+
+        // Add missing toggleLanguage function
         function toggleLanguage() {
             currentLanguage = currentLanguage === 'en' ? 'fr' : 'en';
             localStorage.setItem('preferred-language', currentLanguage);
@@ -1740,57 +2055,142 @@
 
             // Update page language attribute
             document.documentElement.lang = currentLanguage;
-            
-            // Update dynamic text
-            updateDynamicTranslations();
         }
 
-        function updateDynamicTranslations() {
-            // Update form title based on editing state
-            const formTitle = document.getElementById('formTitle');
-            if (editingMealId) {
-                formTitle.textContent = currentLanguage === 'en' ? 'Edit Meal' : 'Modifier le Plat';
-            } else {
-                formTitle.textContent = currentLanguage === 'en' ? 'Add New Meal' : 'Ajouter un Nouveau Plat';
+        async function editComment(id) {
+            try {
+                const response = await fetch(`api.php?action=get_comment&id=${id}`);
+                const comment = await response.json();
+                
+                if (comment) {
+                    document.getElementById('commentId').value = comment.id;
+                    document.getElementById('comment_name_en').value = comment.name_en || '';
+                    document.getElementById('comment_name_fr').value = comment.name_fr || '';
+                    document.getElementById('comment_text_en').value = comment.comment_en || '';
+                    document.getElementById('comment_text_fr').value = comment.comment_fr || '';
+                    
+                    document.getElementById('commentModal').style.display = 'block';
+                }
+            } catch (error) {
+                console.error('Error loading comment:', error);
+                showLocalizedMessage('Error loading comment for editing', 'Erreur lors du chargement du commentaire pour modification', 'error');
             }
+        }
 
-            // Update submit button text based on editing state
-            const submitText = document.getElementById('submitText');
-            if (editingMealId) {
-                submitText.textContent = currentLanguage === 'en' ? 'Update Meal' : 'Mettre à Jour le Plat';
-            } else {
-                submitText.textContent = currentLanguage === 'en' ? 'Add Meal' : 'Ajouter le Plat';
+        function deleteComment(id) {
+            if (confirm(currentLanguage === 'en' ? 'Are you sure you want to delete this comment?' : 'Êtes-vous sûr de vouloir supprimer ce commentaire ?')) {
+                confirmDeleteComment(id);
             }
         }
 
-        function showMessage(text, type) {
-            const message = document.getElementById('message');
-            message.textContent = text;
-            message.className = `message ${type}`;
-            message.style.display = 'block';
-            
-            // Auto-hide after 5 seconds
-            setTimeout(() => {
-                message.style.display = 'none';
-            }, 5000);
+        async function confirmDeleteComment(id) {
+            try {
+                const formData = new FormData();
+                formData.append('action', 'delete_comment');
+                formData.append('id', id);
+                
+                const response = await fetch('api.php', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    showLocalizedMessage('Comment deleted successfully!', 'Commentaire supprimé avec succès !', 'success');
+                    loadComments();
+                } else {
+                    showMessage(result.message || 'Error deleting comment', 'error');
+                }
+            } catch (error) {
+                console.error('Error deleting comment:', error);
+                showLocalizedMessage('Error deleting comment. Please try again.', 'Erreur lors de la suppression du commentaire. Veuillez réessayer.', 'error');
+            }
         }
 
-        // Update messages to be multilingual
-        function showLocalizedMessage(enText, frText, type) {
-            const text = currentLanguage === 'en' ? enText : frText;
-            showMessage(text, type);
+        function closeCommentModal() {
+            document.getElementById('commentModal').style.display = 'none';
         }
+
+        // Comment form submission
+        document.getElementById('commentForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            try {
+                const formData = new FormData();
+                formData.append('action', 'update_comment');
+                formData.append('id', document.getElementById('commentId').value);
+                formData.append('name_en', document.getElementById('comment_name_en').value);
+                formData.append('name_fr', document.getElementById('comment_name_fr').value);
+                formData.append('comment_en', document.getElementById('comment_text_en').value);
+                formData.append('comment_fr', document.getElementById('comment_text_fr').value);
+                
+                const response = await fetch('api.php', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    showLocalizedMessage('Comment updated successfully!', 'Commentaire mis à jour avec succès !', 'success');
+                    closeCommentModal();
+                    loadComments();
+                } else {
+                    showMessage(result.message || 'Error updating comment', 'error');
+                }
+            } catch (error) {
+                console.error('Error updating comment:', error);
+                showLocalizedMessage('Error updating comment. Please try again.', 'Erreur lors de la mise à jour du commentaire. Veuillez réessayer.', 'error');
+            }
+        });
+
+        // New comment form submission
+        document.getElementById('newCommentForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            try {
+                const formData = new FormData();
+                formData.append('action', 'add_comment');
+                formData.append('name_en', document.getElementById('new_comment_name_en').value);
+                formData.append('name_fr', document.getElementById('new_comment_name_fr').value);
+                formData.append('comment_en', document.getElementById('new_comment_text_en').value);
+                formData.append('comment_fr', document.getElementById('new_comment_text_fr').value);
+                
+                const response = await fetch('api.php', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    showLocalizedMessage('Comment added successfully!', 'Commentaire ajouté avec succès !', 'success');
+                    document.getElementById('newCommentForm').reset();
+                    loadComments();
+                } else {
+                    showMessage(result.message || 'Error adding comment', 'error');
+                }
+            } catch (error) {
+                console.error('Error adding comment:', error);
+                showLocalizedMessage('Error adding comment. Please try again.', 'Erreur lors de l\'ajout du commentaire. Veuillez réessayer.', 'error');
+            }
+        });
 
         // Close modal when clicking outside
         window.onclick = function(event) {
             const cropModal = document.getElementById('cropModal');
             const deleteModal = document.getElementById('deleteModal');
+            const commentModal = document.getElementById('commentModal');
             
             if (event.target === cropModal) {
                 closeCropModal();
             }
             if (event.target === deleteModal) {
                 closeDeleteModal();
+            }
+            if (event.target === commentModal) {
+                closeCommentModal();
             }
         }
 
@@ -1799,12 +2199,16 @@
             if (e.key === 'Escape') {
                 const cropModal = document.getElementById('cropModal');
                 const deleteModal = document.getElementById('deleteModal');
+                const commentModal = document.getElementById('commentModal');
                 
                 if (cropModal.style.display === 'block') {
                     closeCropModal();
                 }
                 if (deleteModal.style.display === 'block') {
                     closeDeleteModal();
+                }
+                if (commentModal.style.display === 'block') {
+                    closeCommentModal();
                 }
             }
         });
