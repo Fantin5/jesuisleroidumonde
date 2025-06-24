@@ -374,19 +374,18 @@ switch ($action) {
         break;
         
     case 'add_comment':
-        $name_en = $_POST['name_en'] ?? '';
         $name_fr = $_POST['name_fr'] ?? '';
         $comment_en = $_POST['comment_en'] ?? '';
         $comment_fr = $_POST['comment_fr'] ?? '';
         
-        if (empty($name_en) || empty($name_fr) || empty($comment_en) || empty($comment_fr)) {
+        if (empty($name_fr) || empty($comment_en) || empty($comment_fr)) {
             echo json_encode(['success' => false, 'message' => 'All fields are required']);
             break;
         }
         
         try {
-            $stmt = $pdo->prepare("INSERT INTO comments (name_en, name_fr, comment_en, comment_fr) VALUES (?, ?, ?, ?)");
-            $stmt->execute([$name_en, $name_fr, $comment_en, $comment_fr]);
+            $stmt = $pdo->prepare("INSERT INTO comments (name_fr, comment_en, comment_fr) VALUES (?, ?, ?)");
+            $stmt->execute([$name_fr, $comment_en, $comment_fr]);
             
             echo json_encode(['success' => true, 'message' => 'Comment submitted successfully']);
         } catch(PDOException $e) {
@@ -425,19 +424,18 @@ switch ($action) {
         }
         
         $id = $_POST['id'] ?? '';
-        $name_en = $_POST['name_en'] ?? '';
         $name_fr = $_POST['name_fr'] ?? '';
         $comment_en = $_POST['comment_en'] ?? '';
         $comment_fr = $_POST['comment_fr'] ?? '';
         
-        if (!is_numeric($id) || empty($name_en) || empty($name_fr) || empty($comment_en) || empty($comment_fr)) {
+        if (!is_numeric($id) || empty($name_fr) || empty($comment_en) || empty($comment_fr)) {
             echo json_encode(['success' => false, 'message' => 'Invalid data - all fields are required']);
             break;
         }
         
         try {
-            $stmt = $pdo->prepare("UPDATE comments SET name_en = ?, name_fr = ?, comment_en = ?, comment_fr = ? WHERE id = ?");
-            $stmt->execute([$name_en, $name_fr, $comment_en, $comment_fr, $id]);
+            $stmt = $pdo->prepare("UPDATE comments SET name_fr = ?, comment_en = ?, comment_fr = ? WHERE id = ?");
+            $stmt->execute([$name_fr, $comment_en, $comment_fr, $id]);
             
             echo json_encode(['success' => true, 'message' => 'Comment updated successfully']);
         } catch(PDOException $e) {

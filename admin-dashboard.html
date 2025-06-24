@@ -1023,25 +1023,17 @@
                 <form id="newCommentForm">
                     <div class="form-grid">
                         <div class="form-group">
-                            <label for="new_comment_name_en" data-en="🇺🇸 English Name" data-fr="🇺🇸 Nom Anglais">🇺🇸 English Name</label>
-                            <input type="text" id="new_comment_name_en" name="name_en" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="new_comment_name_fr" data-en="🇫🇷 French Name" data-fr="🇫🇷 Nom Français">🇫🇷 French Name</label>
+                            <label for="new_comment_name_fr" data-en="👤 Name" data-fr="👤 Nom">👤 Name</label>
                             <input type="text" id="new_comment_name_fr" name="name_fr" required>
                         </div>
-                        
                         <div class="form-group">
-                            <label for="new_comment_text_en" data-en="🇺🇸 English Comment" data-fr="🇺🇸 Commentaire Anglaise">🇺🇸 English Comment</label>
+                            <label for="new_comment_text_en" data-en="🇺🇸 English Comment" data-fr="🇺🇸 Commentaire Anglais">🇺🇸 English Comment</label>
                             <textarea id="new_comment_text_en" name="comment_en" required rows="4"></textarea>
                         </div>
-                        
                         <div class="form-group">
                             <label for="new_comment_text_fr" data-en="🇫🇷 French Comment" data-fr="🇫🇷 Commentaire Français">🇫🇷 French Comment</label>
                             <textarea id="new_comment_text_fr" name="comment_fr" required rows="4"></textarea>
                         </div>
-                        
                         <button type="submit" class="btn btn-success" data-en="Add Comment" data-fr="Ajouter le Commentaire">Add Comment</button>
                     </div>
                 </form>
@@ -1127,20 +1119,13 @@
                 <input type="hidden" id="commentId" name="commentId">
                 <div class="form-grid">
                     <div class="form-group">
-                        <label for="comment_name_en" data-en="🇺🇸 English Name" data-fr="🇺🇸 Nom Anglais">🇺🇸 English Name</label>
-                        <input type="text" id="comment_name_en" name="name_en" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="comment_name_fr" data-en="🇫🇷 French Name" data-fr="🇫🇷 Nom Français">🇫🇷 French Name</label>
+                        <label for="comment_name_fr" data-en="👤 Name" data-fr="👤 Nom">👤 Name</label>
                         <input type="text" id="comment_name_fr" name="name_fr" required>
                     </div>
-                    
                     <div class="form-group">
-                        <label for="comment_text_en" data-en="🇺🇸 English Comment" data-fr="🇺🇸 Commentaire Anglaise">🇺🇸 English Comment</label>
+                        <label for="comment_text_en" data-en="🇺🇸 English Comment" data-fr="🇺🇸 Commentaire Anglais">🇺🇸 English Comment</label>
                         <textarea id="comment_text_en" name="comment_en" required rows="4"></textarea>
                     </div>
-                    
                     <div class="form-group">
                         <label for="comment_text_fr" data-en="🇫🇷 French Comment" data-fr="🇫🇷 Commentaire Française">🇫🇷 French Comment</label>
                         <textarea id="comment_text_fr" name="comment_fr" required rows="4"></textarea>
@@ -1888,19 +1873,12 @@
             const card = document.createElement('div');
             card.className = 'meal-card';
             card.style.marginBottom = '1rem';
-            
-            // Handle missing name_en field safely
-            const name = currentLanguage === 'en' 
-                ? (comment.name_en || comment.name_fr || 'Anonymous')
-                : (comment.name_fr || comment.name_en || 'Anonyme');
-            
-            const commentText = currentLanguage === 'en' 
+            const name = comment.name_fr || 'Anonymous';
+            const commentText = currentLanguage === 'en'
                 ? (comment.comment_en || comment.comment_fr || 'No comment')
                 : (comment.comment_fr || comment.comment_en || 'Aucun commentaire');
-            
             const editText = currentLanguage === 'en' ? 'Edit' : 'Modifier';
             const deleteText = currentLanguage === 'en' ? 'Delete' : 'Supprimer';
-            
             card.innerHTML = `
                 <div class="meal-card-content">
                     <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
@@ -1913,8 +1891,9 @@
                     </div>
                     <div class="meal-card-description">${commentText}</div>
                     <div class="language-preview">
-                        <div><strong>🇺🇸:</strong> ${comment.name_en || 'Not set'}</div>
-                        <div><strong>🇫🇷:</strong> ${comment.name_fr || 'Not set'}</div>
+                        <div><strong>👤:</strong> ${comment.name_fr || 'Not set'}</div>
+                        <div><strong>🇺🇸:</strong> ${comment.comment_en || 'Not set'}</div>
+                        <div><strong>🇫🇷:</strong> ${comment.comment_fr || 'Not set'}</div>
                     </div>
                     <div class="meal-card-actions" style="margin-top: 1rem;">
                         <button onclick="editComment(${comment.id})" class="btn btn-primary">${editText}</button>
@@ -1922,7 +1901,6 @@
                     </div>
                 </div>
             `;
-            
             return card;
         }
 
@@ -2064,11 +2042,9 @@
                 
                 if (comment) {
                     document.getElementById('commentId').value = comment.id;
-                    document.getElementById('comment_name_en').value = comment.name_en || '';
                     document.getElementById('comment_name_fr').value = comment.name_fr || '';
                     document.getElementById('comment_text_en').value = comment.comment_en || '';
                     document.getElementById('comment_text_fr').value = comment.comment_fr || '';
-                    
                     document.getElementById('commentModal').style.display = 'block';
                 }
             } catch (error) {
@@ -2120,7 +2096,6 @@
                 const formData = new FormData();
                 formData.append('action', 'update_comment');
                 formData.append('id', document.getElementById('commentId').value);
-                formData.append('name_en', document.getElementById('comment_name_en').value);
                 formData.append('name_fr', document.getElementById('comment_name_fr').value);
                 formData.append('comment_en', document.getElementById('comment_text_en').value);
                 formData.append('comment_fr', document.getElementById('comment_text_fr').value);
@@ -2152,7 +2127,6 @@
             try {
                 const formData = new FormData();
                 formData.append('action', 'add_comment');
-                formData.append('name_en', document.getElementById('new_comment_name_en').value);
                 formData.append('name_fr', document.getElementById('new_comment_name_fr').value);
                 formData.append('comment_en', document.getElementById('new_comment_text_en').value);
                 formData.append('comment_fr', document.getElementById('new_comment_text_fr').value);
