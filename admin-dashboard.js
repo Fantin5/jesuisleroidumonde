@@ -710,40 +710,59 @@ let selectedImages = [];
             });
         }
 
-        function createCommentCard(comment) {
-            const card = document.createElement('div');
-            card.className = 'meal-card';
-            card.style.marginBottom = '1rem';
-            const name = comment.name_fr || 'Anonymous';
-            const commentText = currentLanguage === 'en'
-                ? (comment.comment_en || comment.comment_fr || 'No comment')
-                : (comment.comment_fr || comment.comment_en || 'Aucun commentaire');
-            const editText = currentLanguage === 'en' ? 'Edit' : 'Modifier';
-            const deleteText = currentLanguage === 'en' ? 'Delete' : 'Supprimer';
-            card.innerHTML = `
-                <div class="meal-card-content">
-                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
-                        <div>
-                            <div class="meal-card-title">${name}</div>
-                            <div style="font-size: 0.85rem; color: #666; margin-bottom: 0.5rem;">
-                                ${new Date(comment.created_at).toLocaleDateString()}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="meal-card-description">${commentText}</div>
-                    <div class="language-preview">
-                        <div><strong>👤:</strong> ${comment.name_fr || 'Not set'}</div>
-                        <div><strong>🇺🇸:</strong> ${comment.comment_en || 'Not set'}</div>
-                        <div><strong>🇫🇷:</strong> ${comment.comment_fr || 'Not set'}</div>
-                    </div>
-                    <div class="meal-card-actions" style="margin-top: 1rem;">
-                        <button onclick="editComment(${comment.id})" class="btn btn-primary">${editText}</button>
-                        <button onclick="deleteComment(${comment.id})" class="btn btn-danger">${deleteText}</button>
+    // Find the createCommentCard function and replace it with this updated version:
+
+function createCommentCard(comment) {
+    const card = document.createElement('div');
+    card.className = 'meal-card';
+    card.style.marginBottom = '1rem';
+    const name = comment.name_fr || 'Anonymous';
+    const commentText = currentLanguage === 'en'
+        ? (comment.comment_en || comment.comment_fr || 'No comment')
+        : (comment.comment_fr || comment.comment_en || 'Aucun commentaire');
+    const editText = currentLanguage === 'en' ? 'Edit' : 'Modifier';
+    const deleteText = currentLanguage === 'en' ? 'Delete' : 'Supprimer';
+    
+    // Format date based on current language - MONTH AND YEAR ONLY
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        const options = { 
+            year: 'numeric', 
+            month: 'long'
+        };
+        
+        if (currentLanguage === 'en') {
+            return date.toLocaleDateString('en-US', options);
+        } else {
+            return date.toLocaleDateString('fr-FR', options);
+        }
+    };
+    
+    card.innerHTML = `
+        <div class="meal-card-content">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
+                <div>
+                    <div class="meal-card-title">${name}</div>
+                    <div style="font-size: 0.85rem; color: #666; margin-bottom: 0.5rem;">
+                        ${formatDate(comment.created_at)}
                     </div>
                 </div>
-            `;
-            return card;
-        }
+            </div>
+            <div class="meal-card-description">${commentText}</div>
+            <div class="language-preview">
+                <div><strong>👤:</strong> ${comment.name_fr || 'Not set'}</div>
+                <div><strong>🇺🇸:</strong> ${comment.comment_en || 'Not set'}</div>
+                <div><strong>🇫🇷:</strong> ${comment.comment_fr || 'Not set'}</div>
+            </div>
+            <div class="meal-card-actions" style="margin-top: 1rem;">
+                <button onclick="editComment(${comment.id})" class="btn btn-primary">${editText}</button>
+                <button onclick="deleteComment(${comment.id})" class="btn btn-danger">${deleteText}</button>
+            </div>
+        </div>
+    `;
+    return card;
+}
+
 
         // Add comment form functions
         function showAddCommentForm() {
@@ -854,27 +873,32 @@ let selectedImages = [];
             }
         }
 
-        function translatePage() {
-            const elements = document.querySelectorAll(`[data-${currentLanguage}]`);
-            elements.forEach(element => {
-                const translation = element.getAttribute(`data-${currentLanguage}`);
-                if (translation) {
-                    element.textContent = translation;
-                }
-            });
-
-            // Handle placeholders
-            const placeholderElements = document.querySelectorAll(`[data-placeholder-${currentLanguage}]`);
-            placeholderElements.forEach(element => {
-                const placeholder = element.getAttribute(`data-placeholder-${currentLanguage}`);
-                if (placeholder) {
-                    element.placeholder = placeholder;
-                }
-            });
-
-            // Update page language attribute
-            document.documentElement.lang = currentLanguage;
+function translatePage() {
+    const elements = document.querySelectorAll(`[data-${currentLanguage}]`);
+    elements.forEach(element => {
+        const translation = element.getAttribute(`data-${currentLanguage}`);
+        if (translation) {
+            element.textContent = translation;
         }
+    });
+
+    // Handle placeholders
+    const placeholderElements = document.querySelectorAll(`[data-placeholder-${currentLanguage}]`);
+    placeholderElements.forEach(element => {
+        const placeholder = element.getAttribute(`data-placeholder-${currentLanguage}`);
+        if (placeholder) {
+            element.placeholder = placeholder;
+        }
+    });
+
+    // Update page language attribute
+    document.documentElement.lang = currentLanguage;
+    
+    // Refresh comments display to update date formatting
+    if (document.getElementById('commentsTab').classList.contains('active')) {
+        loadComments();
+    }
+}
 
         // Updated editComment function
         async function editComment(id) {

@@ -613,8 +613,8 @@ try {
                                          data-fr="<?php echo htmlspecialchars($comment['name_fr'] ?? $comment['name_en'] ?? 'Anonyme'); ?>">
                                         <?php echo htmlspecialchars($comment['name_en'] ?? $comment['name_fr'] ?? 'Anonymous'); ?>
                                     </div>
-                                    <div class="comment-date">
-                                        <?php echo date('F  Y', strtotime($comment['created_at'])); ?>
+                                    <div class="comment-date" data-date="<?php echo $comment['created_at']; ?>">
+                                        <?php echo date('F Y', strtotime($comment['created_at'])); ?>
                                     </div>
                                 </div>
                             </div>
@@ -686,6 +686,26 @@ try {
                 if (translation) {
                     element.textContent = translation;
                 }
+            });
+
+            // Update comment dates based on language - MONTH AND YEAR ONLY
+            const commentDates = document.querySelectorAll('.comment-date[data-date]');
+            commentDates.forEach(dateElement => {
+                const dateString = dateElement.getAttribute('data-date');
+                const date = new Date(dateString);
+                const options = { 
+                    year: 'numeric', 
+                    month: 'long'
+                };
+                
+                let formattedDate;
+                if (currentLanguage === 'en') {
+                    formattedDate = date.toLocaleDateString('en-US', options);
+                } else {
+                    formattedDate = date.toLocaleDateString('fr-FR', options);
+                }
+                
+                dateElement.textContent = formattedDate;
             });
 
             // Update page language attribute
