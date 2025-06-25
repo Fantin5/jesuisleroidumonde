@@ -614,7 +614,7 @@ try {
                                         <?php echo htmlspecialchars($comment['name_en'] ?? $comment['name_fr'] ?? 'Anonymous'); ?>
                                     </div>
                                     <div class="comment-date">
-                                        <?php echo date('F j, Y', strtotime($comment['created_at'])); ?>
+                                        <?php echo date('F  Y', strtotime($comment['created_at'])); ?>
                                     </div>
                                 </div>
                             </div>

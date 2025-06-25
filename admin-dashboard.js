@@ -1,5 +1,4 @@
-
-        let selectedImages = [];
+let selectedImages = [];
         let editingMealId = null;
         let existingImages = [];
         let cropper = null;
@@ -877,6 +876,7 @@
             document.documentElement.lang = currentLanguage;
         }
 
+        // Updated editComment function
         async function editComment(id) {
             try {
                 const response = await fetch(`api.php?action=get_comment&id=${id}`);
@@ -887,6 +887,15 @@
                     document.getElementById('comment_name_fr').value = comment.name_fr || '';
                     document.getElementById('comment_text_en').value = comment.comment_en || '';
                     document.getElementById('comment_text_fr').value = comment.comment_fr || '';
+                    
+                    // Format date for month input (YYYY-MM)
+                    if (comment.created_at) {
+                        const date = new Date(comment.created_at);
+                        const year = date.getFullYear();
+                        const month = String(date.getMonth() + 1).padStart(2, '0');
+                        document.getElementById('comment_date').value = `${year}-${month}`;
+                    }
+                    
                     document.getElementById('commentModal').style.display = 'block';
                 }
             } catch (error) {
@@ -930,7 +939,7 @@
             document.getElementById('commentModal').style.display = 'none';
         }
 
-        // Comment form submission
+        // Updated comment form submission handler
         document.getElementById('commentForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             
@@ -941,6 +950,14 @@
                 formData.append('name_fr', document.getElementById('comment_name_fr').value);
                 formData.append('comment_en', document.getElementById('comment_text_en').value);
                 formData.append('comment_fr', document.getElementById('comment_text_fr').value);
+                
+                // Handle date - convert month input to full date
+                const monthValue = document.getElementById('comment_date').value;
+                if (monthValue) {
+                    // Convert YYYY-MM to YYYY-MM-01 for the first day of the month
+                    const fullDate = `${monthValue}-01`;
+                    formData.append('comment_date', fullDate);
+                }
                 
                 const response = await fetch('api.php', {
                     method: 'POST',
@@ -962,7 +979,7 @@
             }
         });
 
-        // New comment form submission
+        // Updated new comment form submission handler
         document.getElementById('newCommentForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             
@@ -972,6 +989,14 @@
                 formData.append('name_fr', document.getElementById('new_comment_name_fr').value);
                 formData.append('comment_en', document.getElementById('new_comment_text_en').value);
                 formData.append('comment_fr', document.getElementById('new_comment_text_fr').value);
+                
+                // Handle date - convert month input to full date
+                const monthValue = document.getElementById('new_comment_date').value;
+                if (monthValue) {
+                    // Convert YYYY-MM to YYYY-MM-01 for the first day of the month
+                    const fullDate = `${monthValue}-01`;
+                    formData.append('comment_date', fullDate);
+                }
                 
                 const response = await fetch('api.php', {
                     method: 'POST',
