@@ -7,8 +7,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --navy-dark: #1a2332;
-            --navy-primary: #2c3e50;
+            --navy-dark: #26294c;
+            --navy-primary: #363a66;
             --white: #ffffff;
             --black: #1c1c1c;
             --gray-light: #f8f9fa;
@@ -42,7 +42,7 @@
             background: var(--navy-dark);
             color: var(--white);
             padding: 1.5rem 0;
-            box-shadow: 0 2px 20px rgba(26, 35, 50, 0.1);
+            box-shadow: 0 2px 20px rgba(1, 51, 102, 0.1);
             position: sticky;
             top: 0;
             z-index: 1000;
@@ -149,7 +149,7 @@
             background: rgba(255,255,255,0.1);
         }
 
-        /* About Page - Enhanced Design */
+        /* Page Header */
         .page-header {
             text-align: center;
             padding: 8rem 0 6rem;
@@ -258,7 +258,7 @@
             padding: 2.5rem;
             margin-bottom: 2rem;
             border-radius: 15px;
-            box-shadow: 0 8px 30px rgba(26, 35, 50, 0.08);
+            box-shadow: 0 8px 30px rgba(38, 41, 76, 0.08);
             border-left: 5px solid var(--navy-primary);
             position: relative;
             transition: all 0.3s ease;
@@ -266,7 +266,7 @@
 
         .about-text .paragraph-block:hover {
             transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(26, 35, 50, 0.12);
+            box-shadow: 0 15px 40px rgba(38, 41, 76, 0.12);
             border-left-color: var(--accent-gold);
         }
 
@@ -319,18 +319,14 @@
             background: var(--white);
             border-radius: 25px;
             overflow: hidden;
-            box-shadow: 0 20px 60px rgba(26, 35, 50, 0.1);
+            box-shadow: 0 20px 60px rgba(38, 41, 76, 0.1);
             position: relative;
             transition: all 0.4s ease;
         }
 
         .about-section:hover {
             transform: translateY(-10px);
-            box-shadow: 0 30px 80px rgba(26, 35, 50, 0.15);
-        }
-
-        .about-section:last-child {
-            margin-bottom: 0;
+            box-shadow: 0 30px 80px rgba(38, 41, 76, 0.15);
         }
 
         .about-section::before {
@@ -376,7 +372,7 @@
         }
 
         .about-section .paragraph-item {
-            background: linear-gradient(135deg, rgba(44, 62, 80, 0.02) 0%, rgba(212, 175, 55, 0.05) 100%);
+            background: linear-gradient(135deg, rgba(38, 41, 76, 0.02) 0%, rgba(212, 175, 55, 0.05) 100%);
             padding: 2rem;
             border-radius: 15px;
             border-left: 4px solid var(--navy-primary);
@@ -385,7 +381,7 @@
         }
 
         .about-section .paragraph-item:hover {
-            background: linear-gradient(135deg, rgba(44, 62, 80, 0.05) 0%, rgba(212, 175, 55, 0.08) 100%);
+            background: linear-gradient(135deg, rgba(38, 41, 76, 0.05) 0%, rgba(212, 175, 55, 0.08) 100%);
             transform: translateX(10px);
             border-left-color: var(--accent-gold);
         }
@@ -427,7 +423,7 @@
             justify-content: center;
             font-size: 1.5rem;
             color: var(--white);
-            box-shadow: 0 8px 25px rgba(44, 62, 80, 0.3);
+            box-shadow: 0 8px 25px rgba(38, 41, 76, 0.3);
         }
 
         /* Footer */
@@ -611,6 +607,7 @@
             </div>
         </div>
     </div>
+    <img src="CAROTTE.jpg">
 
     <footer>
         <div class="container">
@@ -662,6 +659,10 @@
 
             // Update page language attribute
             document.documentElement.lang = currentLanguage;
+        }
+    </script>
+</body>
+</html>
         }
     </script>
 </body>

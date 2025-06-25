@@ -148,8 +148,8 @@ if ($_POST) {
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --navy-dark: #1a2332;
-            --navy-primary: #2c3e50;
+            --navy-dark: #26294c;
+            --navy-primary: #363a66;
             --white: #ffffff;
             --black: #1c1c1c;
             --gray-light: #f8f9fa;
@@ -183,7 +183,7 @@ if ($_POST) {
             background: var(--navy-dark);
             color: var(--white);
             padding: 1.5rem 0;
-            box-shadow: 0 2px 20px rgba(26, 35, 50, 0.1);
+            box-shadow: 0 2px 20px rgba(38, 41, 76, 0.1);
             position: sticky;
             top: 0;
             z-index: 1000;
@@ -367,7 +367,7 @@ if ($_POST) {
         .form-group textarea:focus {
             outline: none;
             border-color: var(--navy-primary);
-            box-shadow: 0 0 0 3px rgba(44, 62, 80, 0.1);
+            box-shadow: 0 0 0 3px rgba(54, 58, 102, 0.1);
         }
 
         .btn {

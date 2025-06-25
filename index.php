@@ -7,8 +7,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --navy-dark: #1a2332;
-            --navy-primary: #2c3e50;
+            --navy-dark: #26294c;
+            --navy-primary: #363a66;
             --white: #ffffff;
             --black: #1c1c1c;
             --gray-light: #f8f9fa;
@@ -263,6 +263,73 @@
             box-shadow: 0 20px 40px rgba(26, 35, 50, 0.15);
         }
 
+        /* Signature Dish Showcase */
+        .signature-showcase {
+            background: var(--gray-light);
+            padding: 6rem 0;
+        }
+
+        .showcase-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .showcase-content h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--navy-dark);
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .showcase-content p {
+            font-size: 1.1rem;
+            color: var(--gray-dark);
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .showcase-image {
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 20px 40px rgba(26, 35, 50, 0.15);
+            transition: transform 0.3s ease;
+        }
+
+        .showcase-image:hover {
+            transform: translateY(-5px);
+        }
+
+        .showcase-image img {
+            width: 100%;
+            height: auto;
+            max-height: 400px;
+            object-fit: contain;
+            transition: transform 0.3s ease;
+        }
+
+        .showcase-image:hover img {
+            transform: scale(1.05);
+        }
+
+        .dish-badge {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: var(--accent-gold);
+            color: var(--white);
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+        }
+
         /* About Page */
         .page-header {
             text-align: center;
@@ -361,8 +428,8 @@
         .form-group input:focus,
         .form-group textarea:focus {
             outline: none;
-            border-color: var(--navy-primary);
-            box-shadow: 0 0 0 3px rgba(44, 62, 80, 0.1);
+            border-color: var(--navy-dark);
+            box-shadow: 0 0 0 3px rgba(38, 41, 76, 0.1);
         }
 
         .btn {
@@ -420,9 +487,27 @@
 
             .welcome-grid,
             .about-content,
-            .contact-content {
+            .contact-content,
+            .showcase-container {
                 grid-template-columns: 1fr;
                 gap: 3rem;
+            }
+
+            .showcase-content {
+                order: 2;
+            }
+
+            .showcase-image {
+                order: 1;
+            }
+
+            .showcase-content h2 {
+                font-size: 2rem;
+            }
+
+            .showcase-image img {
+                height: auto;
+                max-height: 300px;
             }
 
             .page-header h1 {
@@ -546,6 +631,22 @@
                 </div>
                 <div class="chef-photo">
                     <img src="chef-photo.jpg" alt="Chef Marie" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxOCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkNoZWYgTWFyaWU8L3RleHQ+PC9zdmc+'">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="signature-showcase">
+        <div class="container">
+            <div class="showcase-container">
+                <div class="showcase-content">
+                    <h2 data-en="Culinary Artistry" data-fr="Art Culinaire">Culinary Artistry</h2>
+                    <p data-en="Every element in our kitchen represents the dedication to culinary excellence. From the finest ingredients to the most precise techniques, we create extraordinary dining experiences." data-fr="Chaque élément de notre cuisine représente le dévouement à l'excellence culinaire. Des ingrédients les plus fins aux techniques les plus précises, nous créons des expériences gastronomiques extraordinaires.">Every element in our kitchen represents the dedication to culinary excellence. From the finest ingredients to the most precise techniques, we create extraordinary dining experiences.</p>
+                    <p data-en="Our commitment to quality and attention to detail ensures that every meal is a celebration of flavor, creativity, and culinary passion." data-fr="Notre engagement envers la qualité et l'attention aux détails garantissent que chaque repas est une célébration de saveur, de créativité et de passion culinaire.">Our commitment to quality and attention to detail ensures that every meal is a celebration of flavor, creativity, and culinary passion.</p>
+                </div>
+                <div class="showcase-image">
+                    <div class="dish-badge" data-en="Culinary Art" data-fr="Art Culinaire">Culinary Art</div>
+                    <img src="CREVETTE.jpg" alt="Culinary Excellence" data-en="Culinary Excellence" data-fr="Excellence Culinaire">
                 </div>
             </div>
         </div>

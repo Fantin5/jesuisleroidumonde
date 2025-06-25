@@ -25,15 +25,15 @@ try {
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --navy-dark: #0a0f1a;
-            --navy-primary: #1a2332;
-            --navy-accent: #2c3e50;
+            --navy-dark: #26294c;
+            --navy-primary: #363a66;
+            --navy-accent: #3d2aa0;
             --white: #ffffff;
-            --black: #000000;
+            --black: #1c1c1c;
             --gray-light: #f8f9fa;
             --gray-medium: #6c757d;
             --gray-dark: #495057;
-            --electric-blue: #0066ff;
+            --accent-gold: #d4af37;
         }
 
         * {
@@ -59,10 +59,10 @@ try {
 
         /* Header */
         header {
-            background: var(--black);
+            background: var(--navy-dark);
             color: var(--white);
             padding: 1.5rem 0;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 8px 32px rgba(38, 41, 76, 0.5);
             position: sticky;
             top: 0;
             z-index: 1000;
@@ -109,7 +109,7 @@ try {
             left: 50%;
             width: 0;
             height: 2px;
-            background: var(--electric-blue);
+            background: var(--accent-gold);
             transition: all 0.3s ease;
             transform: translateX(-50%);
         }
@@ -121,7 +121,7 @@ try {
 
         .nav-links a:hover,
         .nav-links a.active {
-            color: var(--electric-blue);
+            color: var(--accent-gold);
         }
 
         .nav-right {
@@ -162,7 +162,7 @@ try {
         }
 
         .language-option.active {
-            background: var(--electric-blue);
+            background: var(--accent-gold);
             color: var(--white);
         }
 
@@ -228,7 +228,7 @@ try {
             font-family: 'Playfair Display', serif;
             font-size: 2.5rem;
             font-weight: 700;
-            color: var(--electric-blue);
+            color: var(--accent-gold);
             display: block;
             margin-bottom: 0.5rem;
         }
@@ -272,7 +272,7 @@ try {
             transform: translateX(-50%);
             width: 60px;
             height: 3px;
-            background: var(--electric-blue);
+            background: var(--accent-gold);
             border-radius: 2px;
         }
 
@@ -294,15 +294,15 @@ try {
             background: var(--white);
             border-radius: 15px;
             padding: 2rem;
-            box-shadow: 0 5px 20px rgba(26, 35, 50, 0.1);
-            border: 1px solid rgba(26, 35, 50, 0.05);
+            box-shadow: 0 5px 20px rgba(38, 41, 76, 0.1);
+            border: 1px solid rgba(38, 41, 76, 0.05);
             transition: all 0.3s ease;
         }
 
         .comment-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(26, 35, 50, 0.15);
-            border-color: var(--electric-blue);
+            box-shadow: 0 10px 30px rgba(38, 41, 76, 0.15);
+            border-color: var(--accent-gold);
         }
 
         .comment-header {
@@ -316,7 +316,7 @@ try {
             width: 60px;
             height: 60px;
             border-radius: 50%;
-            background: linear-gradient(135deg, var(--electric-blue), var(--navy-primary));
+            background: linear-gradient(135deg, var(--accent-gold), var(--navy-primary));
             display: flex;
             align-items: center;
             justify-content: center;
@@ -358,7 +358,7 @@ try {
             padding: 1.5rem;
             background: var(--gray-light);
             border-radius: 10px;
-            border-left: 4px solid var(--electric-blue);
+            border-left: 4px solid var(--accent-gold);
             margin-top: 1rem;
             position: relative;
         }
@@ -366,7 +366,7 @@ try {
         .comment-text::before {
             content: '"';
             font-size: 3rem;
-            color: var(--electric-blue);
+            color: var(--accent-gold);
             position: absolute;
             top: -5px;
             left: 10px;
@@ -378,7 +378,7 @@ try {
         .comment-text::after {
             content: '"';
             font-size: 3rem;
-            color: var(--electric-blue);
+            color: var(--accent-gold);
             position: absolute;
             bottom: -25px;
             right: 15px;
@@ -427,7 +427,7 @@ try {
 
         .cta-button {
             display: inline-block;
-            background: var(--electric-blue);
+            background: var(--accent-gold);
             color: var(--white);
             padding: 1rem 2.5rem;
             border-radius: 8px;
@@ -440,7 +440,7 @@ try {
         }
 
         .cta-button:hover {
-            background: #0052cc;
+            background: #b8941f;
             transform: translateY(-2px);
         }
 

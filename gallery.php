@@ -7,8 +7,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --navy-dark: #1a2332;
-            --navy-primary: #2c3e50;
+            --navy-dark: #26294c;
+            --navy-primary: #363a66;
             --white: #ffffff;
             --black: #1c1c1c;
             --gray-light: #f8f9fa;
@@ -45,7 +45,7 @@
             background: var(--navy-dark);
             color: var(--white);
             padding: 1.5rem 0;
-            box-shadow: 0 2px 20px rgba(26, 35, 50, 0.1);
+            box-shadow: 0 2px 20px rgba(38, 41, 76, 0.1);
             position: sticky;
             top: 0;
             z-index: 1000;
@@ -248,9 +248,9 @@
             background: var(--white);
             border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 8px 25px rgba(26, 35, 50, 0.1);
+            box-shadow: 0 8px 25px rgba(38, 41, 76, 0.1);
             transition: all 0.4s ease;
-            border: 1px solid rgba(26, 35, 50, 0.08);
+            border: 1px solid rgba(38, 41, 76, 0.08);
             position: relative;
             width: 100%;
             max-width: 450px;
@@ -261,7 +261,7 @@
             position: relative;
             height: 280px;
             overflow: hidden;
-            border-bottom: 1px solid rgba(26, 35, 50, 0.08);
+            border-bottom: 1px solid rgba(38, 41, 76, 0.08);
             width: 100%;
         }
 
